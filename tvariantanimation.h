@@ -2,6 +2,9 @@
 #define TVARIANTANIMATION_H
 
 #include <QVariantAnimation>
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
+#include <QDBusMessage>
 #include <QDebug>
 #include "the-libs_global.h"
 
@@ -13,8 +16,18 @@ public:
     tVariantAnimation(QObject *parent = Q_NULLPTR);
     ~tVariantAnimation();
 
+    void setForceAnimation(bool force);
+    bool forceAnimation();
+
 public slots:
     void start(QAbstractAnimation::DeletionPolicy policy = DeleteWhenStopped);
+
+private slots:
+    void powerStretchUpdate(bool isOn);
+
+private:
+    bool isPowerStretchOn = false;
+    bool forceAnim = false;
 };
 
 #endif // TVARIANTANIMATION_H

@@ -16,6 +16,17 @@ tPropertyAnimation::tPropertyAnimation(QObject *target, const QByteArray &proper
         emit this->finished();
     });*/
     connect(this, SIGNAL(valueChanged(QVariant)), this, SLOT(propertyChanged(QVariant)));
+    connect(targetObject, SIGNAL(destroyed(QObject*)), this, SLOT(deleteLater()));
+    connect(this, &QVariantAnimation::stateChanged, [=](State oldState, State newState) {
+       if (newState == Running) {
+           targetObject->setProperty("t-anim", propertyName);
+       } else {
+           targetObject->setProperty("t-anim", "");
+       }
+    });
+    connect(this, &QVariantAnimation::finished, [=]() {
+        targetObject->setProperty("t-anim", "");
+    });
 }
 
 tPropertyAnimation::~tPropertyAnimation() {
@@ -23,8 +34,10 @@ tPropertyAnimation::~tPropertyAnimation() {
 }
 
 void tPropertyAnimation::start(QAbstractAnimation::DeletionPolicy policy) {
-    qDebug() << "tPropertyAnimation::start() called";
-    tVariantAnimation::start(policy);
+    if (targetObject->property("t-anim") != targetName) {
+        targetObject->setProperty("t-anim", targetName);
+        tVariantAnimation::start(policy);
+    }
 }
 
 void tPropertyAnimation::propertyChanged(QVariant value) {
