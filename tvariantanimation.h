@@ -22,11 +22,7 @@ public:
 public slots:
     void start(QAbstractAnimation::DeletionPolicy policy = DeleteWhenStopped);
 
-private slots:
-    void powerStretchUpdate(bool isOn);
-
 private:
-    bool isPowerStretchOn = false;
     bool forceAnim = false;
 };
 

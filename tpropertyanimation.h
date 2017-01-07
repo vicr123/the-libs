@@ -9,7 +9,6 @@ class THELIBSSHARED_EXPORT tPropertyAnimation : public tVariantAnimation
     Q_OBJECT
 
 public:
-    //tPropertyAnimation(QObject *parent = Q_NULLPTR);
     tPropertyAnimation(QObject *target, const QByteArray &propertyName, QObject *parent = Q_NULLPTR);
     ~tPropertyAnimation();
 

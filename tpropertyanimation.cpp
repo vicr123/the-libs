@@ -1,23 +1,13 @@
 #include "tpropertyanimation.h"
 
-/*tPropertyAnimation::tPropertyAnimation(QObject* parent) :
-    tVariantAnimation(parent)
-{
-    //connect(tVariantAnimation, SIGNAL(finished()), this, SIGNAL(finished()));
-    //connect(QPropertyAnimation, SIGNAL(finished()), this, SIGNAL(finished()));
-}*/
-
 tPropertyAnimation::tPropertyAnimation(QObject *target, const QByteArray &propertyName, QObject *parent) :
     tVariantAnimation(parent) {
     targetObject = target;
     targetName = propertyName;
 
-    /*connect(this, tVariantAnimation::finished, [=]() {
-        emit this->finished();
-    });*/
     connect(this, SIGNAL(valueChanged(QVariant)), this, SLOT(propertyChanged(QVariant)));
     connect(targetObject, SIGNAL(destroyed(QObject*)), this, SLOT(deleteLater()));
-    connect(this, &QVariantAnimation::stateChanged, [=](State oldState, State newState) {
+    connect(this, &QVariantAnimation::stateChanged, [=](State newState, State oldState) {
        if (newState == Running) {
            targetObject->setProperty("t-anim", propertyName);
        } else {
@@ -34,7 +24,7 @@ tPropertyAnimation::~tPropertyAnimation() {
 }
 
 void tPropertyAnimation::start(QAbstractAnimation::DeletionPolicy policy) {
-    if (targetObject->property("t-anim") != targetName) {
+    if (targetObject->property("t-anim").toByteArray() != targetName) {
         targetObject->setProperty("t-anim", targetName);
         tVariantAnimation::start(policy);
     }
