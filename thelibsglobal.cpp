@@ -11,6 +11,7 @@ theLibsGlobal::theLibsGlobal() : QObject(NULL) {
 }
 
 theLibsGlobal* theLibsGlobal::instance() {
+    static theLibsGlobal* appInst;
     if (appInst == NULL) {
         appInst = new theLibsGlobal;
     }

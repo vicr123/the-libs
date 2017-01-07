@@ -34,10 +34,7 @@ signals:
 private:
     theLibsGlobal();
 
-    static theLibsGlobal* appInst;
-
     bool powerStretch = false;
 };
-inline theLibsGlobal* theLibsGlobal::appInst = NULL;
 
 #endif // THELIBS_GLOBAL_H
