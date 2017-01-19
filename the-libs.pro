@@ -25,11 +25,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += tvariantanimation.cpp \
     tpropertyanimation.cpp \
-    thelibsglobal.cpp
+    thelibsglobal.cpp \
+    ttoast.cpp
 
 HEADERS += tvariantanimation.h\
         the-libs_global.h \
-    tpropertyanimation.h
+    tpropertyanimation.h \
+    ttoast.h
 
 unix {
     target.path = /usr/lib

@@ -12,17 +12,23 @@ public:
     tPropertyAnimation(QObject *target, const QByteArray &propertyName, QObject *parent = Q_NULLPTR);
     ~tPropertyAnimation();
 
+    QObject* targetObject;
+    QByteArray targetName;
+
     using tVariantAnimation::finished;
 
 public slots:
     void start(QAbstractAnimation::DeletionPolicy policy = DeleteWhenStopped);
 
+protected slots:
+    void overtake();
+
 private slots:
     void propertyChanged(QVariant value);
 
 private:
-    QObject* targetObject;
-    QByteArray targetName;
 };
+
+Q_DECLARE_METATYPE(tPropertyAnimation*)
 
 #endif // TPROPERTYANIMATION_H
