@@ -25,6 +25,8 @@ tPropertyAnimation::~tPropertyAnimation() {
             targetObject->setProperty("t-anim", "");
         }
     }*/
+    disconnect(this, SIGNAL(stateChanged(QAbstractAnimation::State,QAbstractAnimation::State)));
+    disconnect(this, SIGNAL(finished()));
 }
 
 void tPropertyAnimation::start(QAbstractAnimation::DeletionPolicy policy) {
