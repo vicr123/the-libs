@@ -20,7 +20,7 @@ public:
     bool forceAnimation();
 
 public slots:
-    void start(QAbstractAnimation::DeletionPolicy policy = DeleteWhenStopped);
+    void start(QAbstractAnimation::DeletionPolicy policy = KeepWhenStopped);
 
 private:
     bool forceAnim = false;

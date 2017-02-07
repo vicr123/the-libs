@@ -18,7 +18,7 @@ public:
     using tVariantAnimation::finished;
 
 public slots:
-    void start(QAbstractAnimation::DeletionPolicy policy = DeleteWhenStopped);
+    void start(QAbstractAnimation::DeletionPolicy policy = KeepWhenStopped);
 
 protected slots:
     void overtake();

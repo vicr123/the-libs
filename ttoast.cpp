@@ -13,7 +13,6 @@ tToast::tToast(QObject *parent) : QObject(parent)
     QFont titleFont = titleLabel->font();
     titleFont.setBold(true);
     titleLabel->setFont(titleFont);
-
     layout->addWidget(titleLabel);
 
     textLabel = new QLabel;

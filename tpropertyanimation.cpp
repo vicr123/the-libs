@@ -9,13 +9,13 @@ tPropertyAnimation::tPropertyAnimation(QObject *target, const QByteArray &proper
     connect(targetObject, SIGNAL(destroyed(QObject*)), this, SLOT(deleteLater()));
     connect(this, &QVariantAnimation::stateChanged, [=](State newState, State oldState) {
        if (newState == Running) {
-           targetObject->setProperty("t-anim", QVariant::fromValue(this));
+           targetObject->setProperty("t-anim:" + targetName, QVariant::fromValue(this));
        } else {
-           targetObject->setProperty("t-anim", "");
+           targetObject->setProperty("t-anim:" + targetName, QVariant::fromValue((tPropertyAnimation*) NULL));
        }
     });
     connect(this, &QVariantAnimation::finished, [=]() {
-        targetObject->setProperty("t-anim", "");
+        targetObject->setProperty("t-anim:" + targetName, QVariant::fromValue((tPropertyAnimation*) NULL));
     });
 }
 
@@ -28,16 +28,18 @@ tPropertyAnimation::~tPropertyAnimation() {
 }
 
 void tPropertyAnimation::start(QAbstractAnimation::DeletionPolicy policy) {
-    if (targetObject->property("t-anim").value<tPropertyAnimation*>() == NULL) {
-        targetObject->setProperty("t-anim", QVariant::fromValue(this));
+    if (targetObject->property("t-anim:" + targetName).value<tPropertyAnimation*>() == NULL) {
+        targetObject->setProperty("t-anim:" + targetName, QVariant::fromValue(this));
         tVariantAnimation::start(policy);
     } else {
-        if (targetObject->property("t-anim").value<tPropertyAnimation*>()->targetName == targetName) {
-            targetObject->property("t-anim").value<tPropertyAnimation*>()->overtake();
+        if (targetObject->property("t-anim:" + targetName).value<tPropertyAnimation*>()->targetName == targetName) {
+            targetObject->property("t-anim:" + targetName).value<tPropertyAnimation*>()->overtake();
         }
-        targetObject->setProperty("t-anim", QVariant::fromValue(this));
+        targetObject->setProperty("t-anim:" + targetName, QVariant::fromValue(this));
         tVariantAnimation::start(policy);
     }
+    targetObject->setProperty("t-anim:" + targetName, QVariant::fromValue(this));
+    tVariantAnimation::start(policy);
 }
 
 void tPropertyAnimation::propertyChanged(QVariant value) {
