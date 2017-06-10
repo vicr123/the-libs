@@ -11,7 +11,7 @@ tVariantAnimation::~tVariantAnimation() {
 
 void tVariantAnimation::start(QAbstractAnimation::DeletionPolicy policy) {
     if (this->state() != Running) {
-        if (theLibsGlobal::instance()->powerStretchEnabled() && !forceAnim) {
+        if ((!theLibsGlobal::instance()->allowSystemAnimations() || theLibsGlobal::instance()->powerStretchEnabled()) && !forceAnim) {
             //emit valueChanged(this->endValue());
             QMetaObject::invokeMethod(this, "valueChanged", Qt::QueuedConnection, Q_ARG(QVariant, this->endValue()));
             QMetaObject::invokeMethod(this, "finished", Qt::QueuedConnection);

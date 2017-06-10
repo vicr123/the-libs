@@ -75,6 +75,8 @@ void tToast::show(QWidget *parent) {
     toastWidget->setVisible(true);
     toastWidget->raise();
 
+    parent->installEventFilter(this);
+
     tPropertyAnimation* anim = new tPropertyAnimation(toastWidget, "geometry");
     anim->setStartValue(toastWidget->geometry());
     anim->setEndValue(QRect(0, parent->height() - height, parent->width(), height));
@@ -102,6 +104,7 @@ void tToast::dismiss() {
         connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
         connect(anim, SIGNAL(finished()), this, SIGNAL(dismissed()));
         anim->start();
+        parent->removeEventFilter(this);
     }
 }
 
@@ -226,6 +229,10 @@ bool tToast::eventFilter(QObject *watched, QEvent *event) {
 
             painter.setPen(toastWidget->palette().color(QPalette::WindowText));
             painter.drawLine(rect.topLeft(), rect.topRight());
+        }
+    } else if (watched == toastWidget->parentWidget()) {
+        if (event->type() == QEvent::Resize) {
+            toastWidget->setGeometry(0, toastWidget->parentWidget()->height() - toastWidget->sizeHint().height(), toastWidget->parentWidget()->width(), toastWidget->sizeHint().height());
         }
     }
     return false;

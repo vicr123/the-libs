@@ -30,3 +30,7 @@ void theLibsGlobal::powerStretchChangedPrivate(bool isOn) {
     emit powerStretchChanged(isOn);
 
 }
+
+bool theLibsGlobal::allowSystemAnimations() {
+    return themeSettings->value("accessibility/systemAnimations", true).toBool();
+}

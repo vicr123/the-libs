@@ -9,6 +9,7 @@
 #include <QApplication>
 #include <QStyle>
 #include <QStyleFactory>
+#include <QSettings>
 
 #if defined(THELIBS_LIBRARY)
 #  define THELIBSSHARED_EXPORT Q_DECL_EXPORT
@@ -24,6 +25,7 @@ public:
 
 public slots:
     bool powerStretchEnabled();
+    bool allowSystemAnimations();
 
 private slots:
     void powerStretchChangedPrivate(bool isOn);
@@ -35,6 +37,7 @@ private:
     theLibsGlobal();
 
     bool powerStretch = false;
+    QSettings* themeSettings = new QSettings("theSuite", "ts-qtplatform");
 };
 
 #endif // THELIBS_GLOBAL_H
