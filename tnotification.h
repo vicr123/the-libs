@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QDBusMessage>
 #include <QDBusConnection>
-#include <QApplication>
+#include <QCoreApplication>
 #include <QDBusPendingReply>
 #include <QDBusPendingCallWatcher>
 

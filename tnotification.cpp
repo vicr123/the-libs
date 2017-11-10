@@ -21,7 +21,7 @@ void tNotification::post(bool deleteWhenDone) {
 
     QVariantList args;
     if (this->app == "") {
-        args.append(QApplication::applicationName());
+        args.append(QCoreApplication::applicationName());
     } else {
         args.append(this->app);
     }
