@@ -19,6 +19,10 @@ void tNotification::post(bool deleteWhenDone) {
         hints.insert("sound-file", this->snd);
     }
 
+    for (QString key : extraHints.keys()) {
+        hints.insert(key, extraHints.value(key));
+    }
+
     QVariantList args;
     if (this->app == "") {
         args.append(QCoreApplication::applicationName());
@@ -26,7 +30,7 @@ void tNotification::post(bool deleteWhenDone) {
         args.append(this->app);
     }
     args.append(replace);
-    args.append("");
+    args.append(aIcon);
     args.append(sum);
     args.append(txt);
     args.append(QStringList());
@@ -118,4 +122,16 @@ void tNotification::setAppName(QString appName) {
 
 QString tNotification::appName() {
     return this->app;
+}
+
+void tNotification::insertHint(QString key, QVariant hint) {
+    extraHints.insert(key, hint);
+}
+
+void tNotification::setAppIcon(QString appIcon) {
+    this->aIcon = appIcon;
+}
+
+QString tNotification::appIcon() {
+    return this->aIcon;
 }

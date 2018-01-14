@@ -28,14 +28,16 @@ SOURCES += tvariantanimation.cpp \
     thelibsglobal.cpp \
     ttoast.cpp \
     tnotification.cpp \
-    tvirtualkeyboard.cpp
+    tvirtualkeyboard.cpp \
+    tcircularspinner.cpp
 
 HEADERS += tvariantanimation.h\
         the-libs_global.h \
     tpropertyanimation.h \
     ttoast.h \
     tnotification.h \
-    tvirtualkeyboard.h
+    tvirtualkeyboard.h \
+    tcircularspinner.h
 
 unix {
     target.path = /usr/lib

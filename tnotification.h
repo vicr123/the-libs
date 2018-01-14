@@ -46,6 +46,11 @@ public:
 
     void setAppName(QString appName);
     QString appName();
+
+    void setAppIcon(QString appIcon);
+    QString appIcon();
+
+    void insertHint(QString key, QVariant hint);
 signals:
     void actionClicked(QString key);
 
@@ -55,11 +60,12 @@ public slots:
 private slots:
 
 private:
-    QString sum, txt, cat, snd, app;
+    QString sum, txt, cat, snd, app, aIcon;
     bool isTransient = false, noSound = false;
     uint replace = 0;
     int time = -1;
     Urgency urg = Normal;
+    QVariantMap extraHints;
 };
 
 #endif // TNOTIFICATION_H
