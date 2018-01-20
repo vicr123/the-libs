@@ -42,7 +42,7 @@ HEADERS += tvariantanimation.h\
 unix {
     target.path = /usr/lib
 
-    module.path = /usr/lib/qt/mkspecs/modules
+    module.path = $$[QT_INSTALL_ARCHDATA]/mkspecs/modules
     module.files = qt_thelib.pri
 
     header.path = /usr/include/the-libs
