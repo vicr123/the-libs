@@ -1,10 +1,10 @@
 language: cpp
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install libqt5core5a libqt5dbus5 libqt5gui5 libqt5x11extras5
+  - sudo apt-get install libqt5core5a libqt5dbus5 libqt5gui5 libqt5x11extras5 qtchooser qt5-default
 script:
   - qmake
   - make
 compiler:
   - gcc
-  - clang
+dist: xenial
