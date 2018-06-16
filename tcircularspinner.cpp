@@ -8,6 +8,7 @@ tCircularSpinner::tCircularSpinner(QWidget *parent) : QWidget(parent)
         this->rotation -= 16 * 5;
         this->update();
     });
+    connect(this, SIGNAL(destroyed(QObject*)), rotationTimer, SLOT(stop()));
     rotationTimer->start();
 
     this->arcLength = -16 * 5;
@@ -39,6 +40,8 @@ void tCircularSpinner::appear() {
             arcLength = value.toInt();
             this->update();
         });
+        connect(this, SIGNAL(destroyed(QObject*)), a, SLOT(stop()));
+        connect(this, SIGNAL(destroyed(QObject*)), a, SLOT(deleteLater()));
         connect(a, SIGNAL(finished()), this, SLOT(disappear()));
         connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
         a->start();
@@ -50,7 +53,11 @@ void tCircularSpinner::disappear() {
     this->arcLength = -this->arcLength;
 
     //Wait 250ms
-    QTimer::singleShot(250, [=] {
+    QTimer* timer = new QTimer();
+    timer->setInterval(250);
+    connect(timer, &QTimer::timeout, [=] {
+        timer->deleteLater();
+
         //Decrease arc length to 15 degrees
         tVariantAnimation* a = new tVariantAnimation();
         a->setStartValue(this->arcLength);
@@ -61,10 +68,15 @@ void tCircularSpinner::disappear() {
             arcLength = value.toInt();
             this->update();
         });
+        connect(this, SIGNAL(destroyed(QObject*)), a, SLOT(stop()));
+        connect(this, SIGNAL(destroyed(QObject*)), a, SLOT(deleteLater()));
         connect(a, SIGNAL(finished()), this, SLOT(appear()));
         connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
         a->start();
     });
+    connect(this, SIGNAL(destroyed(QObject*)), timer, SLOT(stop()));
+    connect(this, SIGNAL(destroyed(QObject*)), timer, SLOT(deleteLater()));
+    timer->start();
 }
 
 void tCircularSpinner::paintEvent(QPaintEvent *event) {
@@ -78,6 +90,7 @@ void tCircularSpinner::paintEvent(QPaintEvent *event) {
     spinnerArea.moveTop(this->height() / 2 - spinnerArea.height() / 2);
 
     int width = spinnerArea.width() / 12;
+    if (width < 2) width = 2;
     int adjFactor = width / 2;
     p.setPen(QPen(this->palette().brush(QPalette::WindowText), width));
 
