@@ -46,7 +46,7 @@ unix {
     INSTALLS += target module header
 }
 
-unix!macx {
+unix:!macx {
     target.path = /usr/lib
     header.path = /usr/include/the-libs
 }
