@@ -40,15 +40,20 @@ HEADERS += tvariantanimation.h\
     tcircularspinner.h
 
 unix {
-    target.path = /usr/lib
-
-    module.path = $$[QT_INSTALL_ARCHDATA]/mkspecs/modules
     module.files = qt_thelib.pri
-
-    header.path = /usr/include/the-libs
+    module.path = $$[QMAKE_MKSPECS]/modules
     header.files = *.h
-
     INSTALLS += target module header
+}
+
+unix:!macx {
+    target.path = /usr/lib
+    header.path = /usr/include/the-libs
+}
+
+macx {
+    target.path = /usr/local/lib
+    header.path = /usr/local/include/the-libs
 }
 
 DISTFILES += \

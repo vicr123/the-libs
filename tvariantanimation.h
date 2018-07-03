@@ -2,9 +2,6 @@
 #define TVARIANTANIMATION_H
 
 #include <QVariantAnimation>
-#include <QDBusConnection>
-#include <QDBusConnectionInterface>
-#include <QDBusMessage>
 #include <QDebug>
 #include "the-libs_global.h"
 
