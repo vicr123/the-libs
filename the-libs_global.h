@@ -23,6 +23,8 @@ class THELIBSSHARED_EXPORT theLibsGlobal : public QObject {
 public:
     static theLibsGlobal* instance();
 
+    static float getDPIScaling();
+
 public slots:
     bool powerStretchEnabled();
     bool allowSystemAnimations();

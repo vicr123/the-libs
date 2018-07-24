@@ -27,9 +27,9 @@ SOURCES += tvariantanimation.cpp \
     tpropertyanimation.cpp \
     thelibsglobal.cpp \
     ttoast.cpp \
-    tnotification.cpp \
     tvirtualkeyboard.cpp \
-    tcircularspinner.cpp
+    tcircularspinner.cpp \
+    tnotification/tnotification-common.cpp
 
 HEADERS += tvariantanimation.h\
         the-libs_global.h \
@@ -49,11 +49,27 @@ unix {
 unix:!macx {
     target.path = /usr/lib
     header.path = /usr/include/the-libs
+
+    SOURCES += tnotification/tnotification-linux.cpp
 }
 
 macx {
     target.path = /usr/local/lib
     header.path = /usr/local/include/the-libs
+}
+
+win32 {
+    module.files = qt_thelib.pri
+    module.path = $$[QMAKE_MKSPECS]/modules
+
+    header.files = *.h
+    header.path = C:/Program Files/thelibs/include
+
+    target.path = C:/Program Files/thelibs/lib
+
+    INSTALLS += target module header
+
+    SOURCES += tnotification/tnotification-win.cpp
 }
 
 DISTFILES += \

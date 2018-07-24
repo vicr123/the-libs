@@ -1,13 +1,17 @@
 #include "the-libs_global.h"
 
-theLibsGlobal::theLibsGlobal() : QObject(NULL) {
-    QDBusMessage message = QDBusMessage::createMethodCall("org.thesuite.theshell", "/org/thesuite/Power", "org.thesuite.Power", "powerStretch");
-    QDBusReply<bool> reply = QDBusConnection::sessionBus().call(message);
-    if (reply.isValid()) {
-        powerStretch = reply.value();
-    }
+#include <QDesktopWidget>
 
-    QDBusConnection::sessionBus().connect("org.thesuite.theshell", "/org/thesuite/Power", "org.thesuite.Power", "powerStretchChanged", this, SIGNAL(powerStretchChangedPrivate(bool)));
+theLibsGlobal::theLibsGlobal() : QObject(NULL) {
+    #ifdef Q_OS_UNIX
+        QDBusMessage message = QDBusMessage::createMethodCall("org.thesuite.theshell", "/org/thesuite/Power", "org.thesuite.Power", "powerStretch");
+        QDBusReply<bool> reply = QDBusConnection::sessionBus().call(message);
+        if (reply.isValid()) {
+            powerStretch = reply.value();
+        }
+
+        QDBusConnection::sessionBus().connect("org.thesuite.theshell", "/org/thesuite/Power", "org.thesuite.Power", "powerStretchChanged", this, SIGNAL(powerStretchChangedPrivate(bool)));
+    #endif
 }
 
 theLibsGlobal* theLibsGlobal::instance() {
@@ -32,5 +36,14 @@ void theLibsGlobal::powerStretchChangedPrivate(bool isOn) {
 }
 
 bool theLibsGlobal::allowSystemAnimations() {
-    return themeSettings->value("accessibility/systemAnimations", true).toBool();
+    #ifdef Q_OS_UNIX
+        return themeSettings->value("accessibility/systemAnimations", true).toBool();
+    #else
+        return true;
+    #endif
+}
+
+float theLibsGlobal::getDPIScaling() {
+    float currentDPI = QApplication::desktop()->logicalDpiX();
+    return currentDPI / (float) 96;
 }
