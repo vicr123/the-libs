@@ -1,6 +1,8 @@
 #include "the-libs_global.h"
 
 #include <QDesktopWidget>
+#include <QDir>
+#include <QDirIterator>
 
 theLibsGlobal::theLibsGlobal() : QObject(NULL) {
     #ifdef Q_OS_UNIX
@@ -46,4 +48,21 @@ bool theLibsGlobal::allowSystemAnimations() {
 float theLibsGlobal::getDPIScaling() {
     float currentDPI = QApplication::desktop()->logicalDpiX();
     return currentDPI / (float) 96;
+}
+
+QStringList theLibsGlobal::searchInPath(QString executable) {
+    QStringList executables;
+    QStringList pathDirs = QString(qgetenv("PATH")).split(":");
+    for (QString dir : pathDirs) {
+        QDir path(dir);
+        QDirIterator i(path);
+        while (i.hasNext()) {
+            i.next();
+            if (i.fileName() == executable) {
+                executables.append(i.filePath());
+            }
+        }
+    }
+
+    return executables;
 }

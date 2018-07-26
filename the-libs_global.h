@@ -17,6 +17,8 @@
 #  define THELIBSSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
+#define THE_LIBS_API_VERSION 1
+
 class THELIBSSHARED_EXPORT theLibsGlobal : public QObject {
     Q_OBJECT
 
@@ -24,6 +26,7 @@ public:
     static theLibsGlobal* instance();
 
     static float getDPIScaling();
+    static QStringList searchInPath(QString executable);
 
 public slots:
     bool powerStretchEnabled();
