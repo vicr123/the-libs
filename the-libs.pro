@@ -56,6 +56,8 @@ unix:!macx {
 macx {
     target.path = /usr/local/lib
     header.path = /usr/local/include/the-libs
+
+    SOURCES += tnotification/tnotification-mac.cpp
 }
 
 win32 {
