@@ -3,13 +3,20 @@
 
 #include <QtCore/qglobal.h>
 #include <QObject>
-#include <QDBusMessage>
-#include <QDBusReply>
-#include <QDBusConnection>
 #include <QApplication>
 #include <QStyle>
 #include <QStyleFactory>
 #include <QSettings>
+
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+#define T_OS_UNIX_NOT_MAC
+#endif
+
+#ifdef T_OS_UNIX_NOT_MAC
+#include <QDBusMessage>
+#include <QDBusReply>
+#include <QDBusConnection>
+#endif
 
 #if defined(THELIBS_LIBRARY)
 #  define THELIBSSHARED_EXPORT Q_DECL_EXPORT

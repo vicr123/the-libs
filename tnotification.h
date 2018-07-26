@@ -1,12 +1,16 @@
 #ifndef TNOTIFICATION_H
 #define TNOTIFICATION_H
 
+#include "the-libs_global.h"
 #include <QObject>
 #include <QDBusMessage>
 #include <QDBusConnection>
 #include <QCoreApplication>
+
+#ifdef T_OS_UNIX_NOT_MAC
 #include <QDBusPendingReply>
 #include <QDBusPendingCallWatcher>
+#endif
 
 class tNotification : public QObject
 {
