@@ -29,7 +29,8 @@ SOURCES += tvariantanimation.cpp \
     ttoast.cpp \
     tvirtualkeyboard.cpp \
     tcircularspinner.cpp \
-    tnotification/tnotification-common.cpp
+    tnotification/tnotification-common.cpp \
+    tapplication.cpp
 
 HEADERS += tvariantanimation.h\
         the-libs_global.h \
@@ -37,7 +38,8 @@ HEADERS += tvariantanimation.h\
     ttoast.h \
     tnotification.h \
     tvirtualkeyboard.h \
-    tcircularspinner.h
+    tcircularspinner.h \
+    tapplication.h
 
 unix {
     module.files = qt_thelib.pri
