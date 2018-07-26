@@ -63,9 +63,9 @@ win32 {
     module.path = $$[QMAKE_MKSPECS]/modules
 
     header.files = *.h
-    header.path = C:/Program Files/thelibs/include
+    header.path = "C:/Program Files/thelibs/include"
 
-    target.path = C:/Program Files/thelibs/lib
+    target.path = "C:/Program Files/thelibs/lib"
 
     INSTALLS += target module header
 
