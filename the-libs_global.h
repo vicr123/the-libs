@@ -49,9 +49,9 @@ private:
     theLibsGlobal();
 
     bool powerStretch = false;
-#ifdef Q_OS_UNIX
-    QSettings* themeSettings = new QSettings("theSuite", "ts-qtplatform");
-#endif
+    #ifdef T_OS_UNIX_NOT_MAC
+        QSettings* themeSettings = new QSettings("theSuite", "ts-qtplatform");
+    #endif
 };
 
 #endif // THELIBS_GLOBAL_H

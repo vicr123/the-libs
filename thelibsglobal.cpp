@@ -5,7 +5,7 @@
 #include <QDirIterator>
 
 theLibsGlobal::theLibsGlobal() : QObject(NULL) {
-    #ifdef Q_OS_UNIX
+    #ifdef T_OS_UNIX_NOT_MAC
         QDBusMessage message = QDBusMessage::createMethodCall("org.thesuite.theshell", "/org/thesuite/Power", "org.thesuite.Power", "powerStretch");
         QDBusReply<bool> reply = QDBusConnection::sessionBus().call(message);
         if (reply.isValid()) {
@@ -38,7 +38,7 @@ void theLibsGlobal::powerStretchChangedPrivate(bool isOn) {
 }
 
 bool theLibsGlobal::allowSystemAnimations() {
-    #ifdef Q_OS_UNIX
+    #ifdef T_OS_UNIX_NOT_MAC
         return themeSettings->value("accessibility/systemAnimations", true).toBool();
     #else
         return true;
