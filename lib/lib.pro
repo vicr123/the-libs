@@ -65,6 +65,8 @@ macx {
 }
 
 win32 {
+    CONFIG(debug, debug|release): TARGET = the-libsd
+
     module.files = qt_thelib.pri
     module.path = $$[QMAKE_MKSPECS]/modules
 
