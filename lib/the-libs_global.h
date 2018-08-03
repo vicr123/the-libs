@@ -8,7 +8,11 @@
 #include <QStyleFactory>
 #include <QSettings>
 
-#ifdef Q_OS_UNIX
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+#define T_OS_UNIX_NOT_MAC
+#endif
+
+#ifdef T_OS_UNIX_NOT_MAC
 #include <QDBusMessage>
 #include <QDBusReply>
 #include <QDBusConnection>
@@ -20,12 +24,16 @@
 #  define THELIBSSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
+#define THE_LIBS_API_VERSION 1
+
 class THELIBSSHARED_EXPORT theLibsGlobal : public QObject {
     Q_OBJECT
-    public:
-        static theLibsGlobal* instance();
 
-        static float getDPIScaling();
+    public:
+    static theLibsGlobal* instance();
+
+    static float getDPIScaling();
+    static QStringList searchInPath(QString executable);
 
     public slots:
         bool powerStretchEnabled();
@@ -41,7 +49,9 @@ class THELIBSSHARED_EXPORT theLibsGlobal : public QObject {
         theLibsGlobal();
 
         bool powerStretch = false;
-        QSettings* themeSettings;
+        #ifdef T_OS_UNIX_NOT_MAC
+            QSettings* themeSettings = new QSettings("theSuite", "ts-qtplatform");
+        #endif
 };
 
 #endif // THELIBS_GLOBAL_H

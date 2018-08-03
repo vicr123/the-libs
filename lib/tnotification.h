@@ -5,6 +5,14 @@
 #include <QObject>
 #include <QMap>
 #include <QVariant>
+#include <QCoreApplication>
+
+#ifdef T_OS_UNIX_NOT_MAC
+#include <QDBusPendingReply>
+#include <QDBusPendingCallWatcher>
+#include <QDBusMessage>
+#include <QDBusConnection>
+#endif
 
 class THELIBSSHARED_EXPORT tNotification : public QObject
 {
