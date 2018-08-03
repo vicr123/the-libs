@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += widgets
+QT       += widgets dbus
 CONFIG   += c++14
 
 TARGET = the-libs
@@ -49,8 +49,6 @@ unix {
 }
 
 unix:!macx {
-    QT += dbus
-
     target.path = /usr/lib
     header.path = /usr/include/the-libs
 
