@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += widgets dbus
+QT       += widgets
 CONFIG   += c++14
 
 TARGET = the-libs
@@ -29,7 +29,8 @@ SOURCES += tvariantanimation.cpp \
     ttoast.cpp \
     tvirtualkeyboard.cpp \
     tcircularspinner.cpp \
-    tnotification/tnotification-common.cpp
+    tnotification/tnotification-common.cpp \
+    tapplication.cpp
 
 HEADERS += tvariantanimation.h\
         the-libs_global.h \
@@ -37,7 +38,8 @@ HEADERS += tvariantanimation.h\
     ttoast.h \
     tnotification.h \
     tvirtualkeyboard.h \
-    tcircularspinner.h
+    tcircularspinner.h \
+    tapplication.h
 
 unix {
     module.files = qt_thelib.pri
@@ -47,6 +49,8 @@ unix {
 }
 
 unix:!macx {
+    QT += dbus
+
     target.path = /usr/lib
     header.path = /usr/include/the-libs
 
@@ -56,6 +60,8 @@ unix:!macx {
 macx {
     target.path = /usr/local/lib
     header.path = /usr/local/include/the-libs
+
+    SOURCES += tnotification/tnotification-mac.cpp
 }
 
 win32 {
@@ -70,8 +76,6 @@ win32 {
     INSTALLS += target module header
 
     SOURCES += tnotification/tnotification-win.cpp
-
-    LIBS += -lruntimeobject
 }
 
 DISTFILES += \
