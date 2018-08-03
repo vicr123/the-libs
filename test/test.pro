@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core widgets testlib
+QT       += core widgets testlib dbus
 
 TARGET = tst_unittesting
 CONFIG   += console testcase c++14
@@ -34,7 +34,7 @@ win32 {
     }
 } else {
     mac {
-        LIBS += -F$$OUT_PWD/../lib/ -framework the-libs
+        LIBS += -F$$OUT_PWD/../lib/ -lthe-libs
     } else {
         unix {
             LIBS += -L$$OUT_PWD/../lib/ -lthe-libs

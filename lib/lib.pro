@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += widgets dbus
+QT       += widgets
 CONFIG   += c++14
 
 TARGET = the-libs
