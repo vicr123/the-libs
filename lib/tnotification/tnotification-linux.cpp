@@ -1,5 +1,11 @@
 #include "tnotification.h"
 
+#include <QDBusMessage>
+#include <QDBusConnection>
+#include <QCoreApplication>
+#include <QDBusPendingReply>
+#include <QDBusPendingCallWatcher>
+
 void tNotification::post(bool deleteWhenDone) {
     QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.Notifications", "/org/freedesktop/Notifications", "org.freedesktop.Notifications", "Notify");
 

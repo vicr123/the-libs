@@ -4,6 +4,7 @@
 
 theLibsGlobal::theLibsGlobal() : QObject(NULL) {
     #ifdef Q_OS_UNIX
+        themeSettings = new QSettings("theSuite", "ts-qtplatform")
         QDBusMessage message = QDBusMessage::createMethodCall("org.thesuite.theshell", "/org/thesuite/Power", "org.thesuite.Power", "powerStretch");
         QDBusReply<bool> reply = QDBusConnection::sessionBus().call(message);
         if (reply.isValid()) {

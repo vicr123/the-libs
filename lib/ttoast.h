@@ -11,7 +11,7 @@
 #include <QPaintEvent>
 #include "tpropertyanimation.h"
 
-class tToast : public QObject
+class THELIBSSHARED_EXPORT tToast : public QObject
 {
     Q_OBJECT
 

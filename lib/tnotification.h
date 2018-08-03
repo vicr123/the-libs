@@ -1,14 +1,12 @@
 #ifndef TNOTIFICATION_H
 #define TNOTIFICATION_H
 
+#include "the-libs_global.h"
 #include <QObject>
-#include <QDBusMessage>
-#include <QDBusConnection>
-#include <QCoreApplication>
-#include <QDBusPendingReply>
-#include <QDBusPendingCallWatcher>
+#include <QMap>
+#include <QVariant>
 
-class tNotification : public QObject
+class THELIBSSHARED_EXPORT tNotification : public QObject
 {
     Q_OBJECT
 public:
