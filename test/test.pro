@@ -34,7 +34,7 @@ win32 {
     }
 } else {
     mac {
-        LIBS += -F$$OUT_PWD/../lib/ -lthe-libs
+        LIBS += -L$$OUT_PWD/../lib/ -lthe-libs
     } else {
         unix {
             LIBS += -L$$OUT_PWD/../lib/ -lthe-libs

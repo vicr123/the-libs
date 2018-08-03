@@ -49,6 +49,8 @@ unix {
 }
 
 unix:!macx {
+    QT += dbus
+
     target.path = /usr/lib
     header.path = /usr/include/the-libs
 
