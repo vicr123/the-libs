@@ -7,7 +7,7 @@ template <typename T> tPromise<T>::tPromise(std::function<T (QString&)> function
 
     runFutureWatcher = new QFutureWatcher<T>();
     runFutureWatcher->setFuture(runFuture);
-    connect(runFutureWatcher, &QFutureWatcher::finished, [=] {
+    connect(runFutureWatcher, &QFutureWatcher<T>::finished, [=] {
         if (errorString != "") {
             errored = true;
             if (functionSetToRunAfterFailure) {
