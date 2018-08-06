@@ -9,7 +9,7 @@
 #define TPROMISE_CALL_NO_ARGS(fn) QMetaObject::invokeMethod(this, fn, Qt::QueuedConnection)
 #define TPROMISE_CALL(fn, ...) QMetaObject::invokeMethod(this, fn, Qt::QueuedConnection, __VA_ARGS__)
 
-template <typename T> class THELIBSSHARED_EXPORT tPromise
+template <typename T> class tPromise
 {
     public:
         explicit tPromise(std::function<T(QString&)> functionToRun) {
