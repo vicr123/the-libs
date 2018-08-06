@@ -30,8 +30,7 @@ SOURCES += tvariantanimation.cpp \
     tvirtualkeyboard.cpp \
     tcircularspinner.cpp \
     tnotification/tnotification-common.cpp \
-    tapplication.cpp \
-    tpromise.cpp
+    tapplication.cpp
 
 HEADERS += tvariantanimation.h\
         the-libs_global.h \

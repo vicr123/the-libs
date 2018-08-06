@@ -12,14 +12,56 @@
 template <typename T> class THELIBSSHARED_EXPORT tPromise
 {
     public:
-        explicit tPromise(std::function<T(QString&)> functionToRun);
+        explicit tPromise(std::function<T(QString&)> functionToRun) {
+            runFuture = QtConcurrent::run([=]() -> T {
+                return functionToRun(errorString);
+            });
 
-        tPromise<T>* then(std::function<void(T)> functionToRunAfterSuccess);
-        tPromise<T>* error(std::function<void(QString)> functionToRunOnFailure);
+            runFutureWatcher = new QFutureWatcher<T>();
+            runFutureWatcher->setFuture(runFuture);
+            QObject::connect(runFutureWatcher, &QFutureWatcher<T>::finished, [=] {
+                if (errorString != "") {
+                    errored = true;
+                    if (functionSetToRunAfterFailure) {
+                        fnAfterFailure(errorString);
+                        delete this;
+                    }
+                } else {
+                    resolved = true;
+                    if (functionSetToRunAfterSuccess) {
+                        fnAfterSuccess(runFuture.result());
+                        delete this;
+                    }
+                }
+            });
+        }
 
-        bool isResolved();
-        bool isErrored();
-        bool isPending();
+        tPromise<T>* then(std::function<void(T)> functionToRunAfterSuccess) {
+            if (!resolved && !functionSetToRunAfterSuccess) {
+                this->fnAfterSuccess = functionToRunAfterSuccess;
+                functionSetToRunAfterSuccess = true;
+            }
+            return this;
+        }
+        tPromise<T>* error(std::function<void(QString)> functionToRunOnFailure) {
+            if (!resolved && !functionSetToRunAfterFailure) {
+                this->fnAfterFailure = functionToRunOnFailure;
+                functionSetToRunAfterFailure = true;
+            }
+            return this;
+        }
+
+        bool isResolved() {
+            return resolved;
+        }
+
+        bool isErrored() {
+            return errored;
+        }
+
+        bool isPending() {
+            return !resolved && !errored;
+        }
 
     private:
         bool resolved = false;
