@@ -25,7 +25,7 @@ template <typename T> tPromise<T>::tPromise(std::function<T (QString&)> function
 }
 
 template <typename T> tPromise<T>* tPromise<T>::then(std::function<void (T)> functionToRunAfterSuccess) {
-    if (!resolved && !functionToRunAfterSuccess) {
+    if (!resolved && !functionSetToRunAfterSuccess) {
         this->fnAfterSuccess = functionToRunAfterSuccess;
         functionSetToRunAfterSuccess = true;
     }
@@ -33,7 +33,7 @@ template <typename T> tPromise<T>* tPromise<T>::then(std::function<void (T)> fun
 }
 
 template <typename T> tPromise<T>* tPromise<T>::error(std::function<void (QString)> functionToRunAfterFailure) {
-    if (!resolved && !functionToRunAfterSuccess) {
+    if (!resolved && !functionSetToRunAfterFailure) {
         this->fnAfterFailure = functionToRunAfterFailure;
         functionSetToRunAfterFailure = true;
     }
