@@ -37,11 +37,3 @@ int tVirtualKeyboard::height() {
         return -1;
     }
 }
-
-bool tVirtualKeyboard::keyboardVisible() {
-    if (isKeyboardRunning()) {
-        return keyboardInterface->call(QDBus::Block, "keyboardVisible").arguments().first().toBool();
-    } else {
-        return false;
-    }
-}

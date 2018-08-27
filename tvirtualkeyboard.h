@@ -19,7 +19,6 @@ public slots:
     void showKeyboard();
     void hideKeyboard();
     bool isKeyboardRunning();
-    bool keyboardVisible();
 
 private:
     tVirtualKeyboard();
