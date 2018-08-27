@@ -24,6 +24,9 @@ public slots:
     void hideKeyboard();
     bool isKeyboardRunning();
 
+    bool keyboardVisible();
+    void setKeyboardType(QString type);
+
 private:
     tVirtualKeyboard();
 

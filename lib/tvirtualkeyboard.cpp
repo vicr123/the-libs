@@ -51,3 +51,21 @@ int tVirtualKeyboard::height() {
     return -1;
 #endif
 }
+
+bool tVirtualKeyboard::keyboardVisible() {
+#ifdef T_OS_UNIX_NOT_MAC
+    if (isKeyboardRunning()) {
+        return keyboardInterface->call(QDBus::Block, "keyboardVisible").arguments().first().toBool();
+    } else {
+        return false;
+    }
+#endif
+}
+
+void tVirtualKeyboard::setKeyboardType(QString type) {
+#ifdef T_OS_UNIX_NOT_MAC
+    if (isKeyboardRunning()) {
+        keyboardInterface->call(QDBus::NoBlock, "setKeyboardType", type);
+    }
+#endif
+}
