@@ -59,6 +59,8 @@ bool tVirtualKeyboard::keyboardVisible() {
     } else {
         return false;
     }
+#else
+    return false;
 #endif
 }
 
@@ -66,6 +68,38 @@ void tVirtualKeyboard::setKeyboardType(QString type) {
 #ifdef T_OS_UNIX_NOT_MAC
     if (isKeyboardRunning()) {
         keyboardInterface->call(QDBus::NoBlock, "setKeyboardType", type);
+    }
+#endif
+}
+
+void tVirtualKeyboard::setPredictive(bool predictive) {
+#ifdef T_OS_UNIX_NOT_MAC
+    if (isKeyboardRunning()) {
+        keyboardInterface->call(QDBus::NoBlock, "setPredictive", predictive);
+    }
+#endif
+}
+
+void tVirtualKeyboard::setHidden(bool hidden) {
+#ifdef T_OS_UNIX_NOT_MAC
+    if (isKeyboardRunning()) {
+        keyboardInterface->call(QDBus::NoBlock, "setHidden", hidden);
+    }
+#endif
+}
+
+void tVirtualKeyboard::setSensitive(bool sensitive) {
+#ifdef T_OS_UNIX_NOT_MAC
+    if (isKeyboardRunning()) {
+        keyboardInterface->call(QDBus::NoBlock, "setSensitive", sensitive);
+    }
+#endif
+}
+
+void tVirtualKeyboard::setAutoUppercase(bool autoUpperCase) {
+#ifdef T_OS_UNIX_NOT_MAC
+    if (isKeyboardRunning()) {
+        keyboardInterface->call(QDBus::NoBlock, "setAutoUpperCase", autoUpperCase);
     }
 #endif
 }

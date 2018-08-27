@@ -26,6 +26,10 @@ public slots:
 
     bool keyboardVisible();
     void setKeyboardType(QString type);
+    void setPredictive(bool predictive);
+    void setHidden(bool hidden);
+    void setSensitive(bool sensitive);
+    void setAutoUppercase(bool autoUpperCase);
 
 private:
     tVirtualKeyboard();

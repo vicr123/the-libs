@@ -3,10 +3,13 @@
 
 #include <QtCore/qglobal.h>
 #include <QObject>
+#include <QSettings>
+
+#ifdef QT_WIDGETS_LIB
 #include <QApplication>
 #include <QStyle>
 #include <QStyleFactory>
-#include <QSettings>
+#endif
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
 #define T_OS_UNIX_NOT_MAC
@@ -32,7 +35,9 @@ class THELIBSSHARED_EXPORT theLibsGlobal : public QObject {
     public:
     static theLibsGlobal* instance();
 
+#ifdef QT_WIDGETS_LIB
     static float getDPIScaling();
+#endif
     static QStringList searchInPath(QString executable);
 
     public slots:

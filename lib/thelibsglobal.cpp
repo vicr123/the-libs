@@ -45,10 +45,12 @@ bool theLibsGlobal::allowSystemAnimations() {
     #endif
 }
 
+#ifdef QT_WIDGETS_LIB
 float theLibsGlobal::getDPIScaling() {
     float currentDPI = QApplication::desktop()->logicalDpiX();
     return currentDPI / (float) 96;
 }
+#endif
 
 QStringList theLibsGlobal::searchInPath(QString executable) {
     QStringList executables;
