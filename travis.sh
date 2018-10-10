@@ -1,5 +1,7 @@
 if [ $STAGE = "script" ]; then
   if [ $TRAVIS_OS_NAME = "linux" ]; then
+    echo "[TRAVIS] Preparing build environment"
+    source /opt/qt510/bin/qt510-env.sh
     echo "[TRAVIS] Running qmake"
     qmake
     echo "[TRAVIS] Building project"
