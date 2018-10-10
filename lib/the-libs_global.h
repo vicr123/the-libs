@@ -27,7 +27,7 @@
 #  define THELIBSSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
-#define THE_LIBS_API_VERSION 1
+#define THE_LIBS_API_VERSION 2
 
 class THELIBSSHARED_EXPORT theLibsGlobal : public QObject {
     Q_OBJECT

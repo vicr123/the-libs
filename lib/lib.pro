@@ -30,7 +30,8 @@ SOURCES += tvariantanimation.cpp \
     tvirtualkeyboard.cpp \
     tcircularspinner.cpp \
     tnotification/tnotification-common.cpp \
-    tapplication.cpp
+    tapplication.cpp \
+    tshortcuthud.cpp
 
 HEADERS += tvariantanimation.h\
         the-libs_global.h \
@@ -40,7 +41,8 @@ HEADERS += tvariantanimation.h\
     tvirtualkeyboard.h \
     tcircularspinner.h \
     tapplication.h \
-    tpromise.h
+    tpromise.h \
+    tshortcuthud.h
 
 unix {
     module.files = qt_thelib.pri
@@ -83,3 +85,6 @@ win32 {
 
 DISTFILES += \
     qt_thelib.pri
+
+FORMS += \
+    tshortcuthud.ui

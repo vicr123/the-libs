@@ -30,6 +30,7 @@ public slots:
     void setHidden(bool hidden);
     void setSensitive(bool sensitive);
     void setAutoUppercase(bool autoUpperCase);
+    void setEnterKeyType(QString type);
 
 private:
     tVirtualKeyboard();
