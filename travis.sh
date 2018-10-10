@@ -17,8 +17,9 @@ if [ $STAGE = "script" ]; then
   fi
 elif [ $STAGE = "before_install" ]; then
   if [ $TRAVIS_OS_NAME = "linux" ]; then
-    sudo apt-get update -qq
-    sudo apt-get install libqt5core5a libqt5dbus5 libqt5gui5 libqt5x11extras5 qtchooser qt5-default
+      sudo add-apt-repository -y ppa:beineri/opt-qt-5.10.0-xenial
+      sudo apt-get update -qq
+      sudo apt-get install qt510-meta-minimal qt510x11extras qt510tools qt510translations qt510svg qt510websockets xorg-dev libxcb-util0-dev libgl1-mesa-dev
   else
     echo "[TRAVIS] Preparing to build for macOS"
     brew update
