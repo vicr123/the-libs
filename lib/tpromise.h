@@ -20,6 +20,7 @@ template <typename T> class tPromise
             runFutureWatcher = new QFutureWatcher<T>();
             runFutureWatcher->setFuture(runFuture);
             QObject::connect(runFutureWatcher, &QFutureWatcher<T>::finished, [=] {
+                runFutureWatcher->deleteLater();
                 if (errorString != "") {
                     errored = true;
                     if (functionSetToRunAfterFailure) {
