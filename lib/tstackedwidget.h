@@ -13,7 +13,7 @@
 
 class tStackedWidgetPrivate;
 
-class tStackedWidget : public QStackedWidget
+class THELIBSSHARED_EXPORT tStackedWidget : public QStackedWidget
 {
     Q_OBJECT
     Q_PROPERTY(Animation CurrentAnimation READ CurrentAnimation WRITE setCurrentAnimation NOTIFY CurrentAnimationChanged)

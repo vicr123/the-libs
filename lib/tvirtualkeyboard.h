@@ -9,7 +9,7 @@
 #include <QDBusConnectionInterface>
 #endif
 
-class tVirtualKeyboard : public QObject
+class THELIBSSHARED_EXPORT tVirtualKeyboard : public QObject
 {
     Q_OBJECT
 public:
