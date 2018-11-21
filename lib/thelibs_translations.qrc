@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/">
+    <qresource prefix="/the-libs">
         <file>translations/au_AU.qm</file>
         <file>translations/cy_GB.qm</file>
         <file>translations/da_DK.qm</file>

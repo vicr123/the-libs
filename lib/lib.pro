@@ -272,4 +272,4 @@ FORMS += \
     tshortcuthud.ui
 
 RESOURCES += \
-    translations.qrc
+    thelibs_translations.qrc

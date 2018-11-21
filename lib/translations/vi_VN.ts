@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US">
+<TS version="2.1" language="vi_VN" sourcelanguage="en_US">
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../tapplication.cpp" line="9"/>
-        <source>Services</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tapplication.cpp" line="10"/>
-        <source>Hide %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tapplication.cpp" line="11"/>
-        <source>Hide Others</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tapplication.cpp" line="12"/>
-        <source>Show All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tapplication.cpp" line="13"/>
-        <source>Preferences...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tapplication.cpp" line="14"/>
-        <source>About %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../tapplication.cpp" line="15"/>
+        <source>Services</source>
+        <translation>Dịch vụ</translation>
+    </message>
+    <message>
+        <location filename="../tapplication.cpp" line="16"/>
+        <source>Hide %1</source>
+        <translation>Ẩn %1</translation>
+    </message>
+    <message>
+        <location filename="../tapplication.cpp" line="17"/>
+        <source>Hide Others</source>
+        <translation>Ẩn các mục khác</translation>
+    </message>
+    <message>
+        <location filename="../tapplication.cpp" line="18"/>
+        <source>Show All</source>
+        <translation>Hiển thị tất cả</translation>
+    </message>
+    <message>
+        <location filename="../tapplication.cpp" line="19"/>
+        <source>Preferences...</source>
+        <translation>Cài đặt...</translation>
+    </message>
+    <message>
+        <location filename="../tapplication.cpp" line="20"/>
+        <source>About %1</source>
+        <translation>Giới thiệu về %1</translation>
+    </message>
+    <message>
+        <location filename="../tapplication.cpp" line="21"/>
         <source>Quit %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Thoát %1</translation>
     </message>
 </context>
 <context>
