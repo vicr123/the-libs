@@ -39,12 +39,4 @@
         <translation>Thoát %1</translation>
     </message>
 </context>
-<context>
-    <name>tShortcutHud</name>
-    <message>
-        <location filename="../tshortcuthud.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
 </TS>
