@@ -31,7 +31,8 @@ SOURCES += tvariantanimation.cpp \
     tcircularspinner.cpp \
     tnotification/tnotification-common.cpp \
     tapplication.cpp \
-    tshortcuthud.cpp
+    tshortcuthud.cpp \
+    tstackedwidget.cpp
 
 HEADERS += tvariantanimation.h\
         the-libs_global.h \
@@ -42,7 +43,8 @@ HEADERS += tvariantanimation.h\
     tcircularspinner.h \
     tapplication.h \
     tpromise.h \
-    tshortcuthud.h
+    tshortcuthud.h \
+    tstackedwidget.h
 
 unix {
     module.files = qt_thelib.pri
