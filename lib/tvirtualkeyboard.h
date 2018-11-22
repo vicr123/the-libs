@@ -9,7 +9,7 @@
 #include <QDBusConnectionInterface>
 #endif
 
-class tVirtualKeyboard : public QObject
+class THELIBSSHARED_EXPORT tVirtualKeyboard : public QObject
 {
     Q_OBJECT
 public:
@@ -30,6 +30,7 @@ public slots:
     void setHidden(bool hidden);
     void setSensitive(bool sensitive);
     void setAutoUppercase(bool autoUpperCase);
+    void setEnterKeyType(QString type);
 
 private:
     tVirtualKeyboard();

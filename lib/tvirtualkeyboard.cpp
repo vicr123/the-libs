@@ -103,3 +103,11 @@ void tVirtualKeyboard::setAutoUppercase(bool autoUpperCase) {
     }
 #endif
 }
+
+void tVirtualKeyboard::setEnterKeyType(QString type) {
+#ifdef T_OS_UNIX_NOT_MAC
+    if (isKeyboardRunning()) {
+        keyboardInterface->call(QDBus::NoBlock, "setEnterKeyType", type);
+    }
+#endif
+}

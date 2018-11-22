@@ -27,7 +27,7 @@
 #  define THELIBSSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
-#define THE_LIBS_API_VERSION 1
+#define THE_LIBS_API_VERSION 2
 
 class THELIBSSHARED_EXPORT theLibsGlobal : public QObject {
     Q_OBJECT
@@ -57,6 +57,8 @@ class THELIBSSHARED_EXPORT theLibsGlobal : public QObject {
         #ifdef T_OS_UNIX_NOT_MAC
             QSettings* themeSettings = new QSettings("theSuite", "ts-qtplatform");
         #endif
+
+
 };
 
 #endif // THELIBS_GLOBAL_H

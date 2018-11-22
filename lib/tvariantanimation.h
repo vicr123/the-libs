@@ -10,7 +10,7 @@ class THELIBSSHARED_EXPORT tVariantAnimation : public QVariantAnimation
     Q_OBJECT
 
 public:
-    tVariantAnimation(QObject *parent = Q_NULLPTR);
+    tVariantAnimation(QObject *parent = nullptr);
     ~tVariantAnimation();
 
     void setForceAnimation(bool force);
