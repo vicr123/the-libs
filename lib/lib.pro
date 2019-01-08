@@ -32,7 +32,8 @@ SOURCES += tvariantanimation.cpp \
     tnotification/tnotification-common.cpp \
     tapplication.cpp \
     tshortcuthud.cpp \
-    tstackedwidget.cpp
+    tstackedwidget.cpp \
+    tpopover.cpp
 
 HEADERS += tvariantanimation.h\
         the-libs_global.h \
@@ -44,7 +45,8 @@ HEADERS += tvariantanimation.h\
     tapplication.h \
     tpromise.h \
     tshortcuthud.h \
-    tstackedwidget.h
+    tstackedwidget.h \
+    tpopover.h
 
 TRANSLATIONS += \
     translations/au_AU.ts \
