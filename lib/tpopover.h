@@ -21,9 +21,10 @@
 #define TPOPOVER_H
 
 #include <QObject>
+#include <the-libs_global.h>
 
 struct tPopoverPrivate;
-class tPopover : public QObject
+class THELIBSSHARED_EXPORT tPopover : public QObject
 {
         Q_OBJECT
     public:

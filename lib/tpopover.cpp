@@ -67,6 +67,10 @@ void tPopover::show(QWidget* parent) {
     d->parentWidget = parent;
     d->parentWidget->installEventFilter(this);
 
+    d->blanker->hide();
+    d->verticalSeperator->hide();
+    d->popoverWidget->hide();
+
     d->blanker->setParent(parent);
     d->popoverWidget->setParent(parent);
     d->verticalSeperator->setParent(parent);
@@ -75,6 +79,8 @@ void tPopover::show(QWidget* parent) {
     d->verticalSeperator->resize(1, parent->height());
     if (d->width == -1) {
         d->popoverWidget->resize(parent->width(), parent->height());
+    } else if (d->width < 0) {
+        d->popoverWidget->resize(parent->width() + d->width, parent->height());
     } else {
         d->popoverWidget->resize(d->width, parent->height());
     }
@@ -152,6 +158,8 @@ bool tPopover::eventFilter(QObject* watched, QEvent* event) {
 
                 if (d->width == -1) {
                     d->popoverWidget->resize(d->parentWidget->width(), d->parentWidget->height());
+                } else if (d->width < 0) {
+                    d->popoverWidget->setGeometry(-d->width, 0, d->parentWidget->width() + d->width, d->parentWidget->height());
                 } else {
                     d->popoverWidget->setGeometry(d->parentWidget->width() - d->width, 0, d->width, d->parentWidget->height());
                 }
