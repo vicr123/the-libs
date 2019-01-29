@@ -35,6 +35,7 @@ struct tPopoverPrivate {
 
     int width = -1;
     bool showing = false;
+    bool performBlanking = true;
 
     static QMap<QWidget*, tPopover*> activePopovers;
 };
@@ -76,6 +77,10 @@ void tPopover::setPopoverSide(PopoverSide side) {
     d->side = side;
 }
 
+void tPopover::setPerformBlanking(bool performBlanking) {
+    d->performBlanking = performBlanking;
+}
+
 void tPopover::show(QWidget* parent) {
     if (d->showing) return;
     tPopoverPrivate::activePopovers.insert(d->popoverWidget, this);
@@ -101,13 +106,15 @@ void tPopover::show(QWidget* parent) {
         d->popoverWidget->resize(d->width, parent->height());
     }
 
-    tPropertyAnimation* blankerAnim = new tPropertyAnimation(d->blankerEffect, "opacity");
-    blankerAnim->setStartValue(d->blankerEffect->opacity());
-    blankerAnim->setEndValue((qreal) 0.75);
-    blankerAnim->setDuration(250);
-    blankerAnim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(blankerAnim, &tVariantAnimation::finished, blankerAnim, &tVariantAnimation::deleteLater);
-    blankerAnim->start();
+    if (d->performBlanking) {
+        tPropertyAnimation* blankerAnim = new tPropertyAnimation(d->blankerEffect, "opacity");
+        blankerAnim->setStartValue(d->blankerEffect->opacity());
+        blankerAnim->setEndValue((qreal) 0.75);
+        blankerAnim->setDuration(250);
+        blankerAnim->setEasingCurve(QEasingCurve::OutCubic);
+        connect(blankerAnim, &tVariantAnimation::finished, blankerAnim, &tVariantAnimation::deleteLater);
+        blankerAnim->start();
+    }
 
     tVariantAnimation* popoverAnim = new tVariantAnimation();
     if (isOpeningOnRight()) {
@@ -146,12 +153,14 @@ void tPopover::show(QWidget* parent) {
 void tPopover::dismiss() {
     if (!d->showing) return;
 
-    tPropertyAnimation* blankerAnim = new tPropertyAnimation(d->blankerEffect, "opacity");
-    blankerAnim->setStartValue(d->blankerEffect->opacity());
-    blankerAnim->setEndValue((qreal) 0);
-    blankerAnim->setDuration(250);
-    blankerAnim->setEasingCurve(QEasingCurve::OutCubic);
-    blankerAnim->start();
+    if (d->performBlanking) {
+        tPropertyAnimation* blankerAnim = new tPropertyAnimation(d->blankerEffect, "opacity");
+        blankerAnim->setStartValue(d->blankerEffect->opacity());
+        blankerAnim->setEndValue((qreal) 0);
+        blankerAnim->setDuration(250);
+        blankerAnim->setEasingCurve(QEasingCurve::OutCubic);
+        blankerAnim->start();
+    }
 
     tVariantAnimation* popoverAnim = new tVariantAnimation();
     popoverAnim->setStartValue(d->popoverWidget->x());

@@ -38,6 +38,7 @@ class THELIBSSHARED_EXPORT tPopover : public QObject
 
         void setPopoverWidth(int width);
         void setPopoverSide(PopoverSide side);
+        void setPerformBlanking(bool performBlanking);
 
         static tPopover* popoverForWidget(QWidget* popoverWidget);
 
