@@ -31,7 +31,15 @@ class THELIBSSHARED_EXPORT tPopover : public QObject
         explicit tPopover(QWidget* popoverWidget, QObject *parent = nullptr);
         ~tPopover();
 
+        enum PopoverSide {
+            Leading,
+            Trailing
+        };
+
         void setPopoverWidth(int width);
+        void setPopoverSide(PopoverSide side);
+
+        static tPopover* popoverForWidget(QWidget* popoverWidget);
 
     signals:
         void dismissed();
@@ -44,6 +52,7 @@ class THELIBSSHARED_EXPORT tPopover : public QObject
         tPopoverPrivate* d;
 
         bool eventFilter(QObject* watched, QEvent* event);
+        bool isOpeningOnRight();
 };
 
 #endif // TPOPOVER_H
