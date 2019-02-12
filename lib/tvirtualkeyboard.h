@@ -15,10 +15,10 @@ class THELIBSSHARED_EXPORT tVirtualKeyboard : public QObject
 public:
     static tVirtualKeyboard* instance();
 
-signals:
+Q_SIGNALS:
     void keyboardVisibleChanged(bool isVisible);
 
-public slots:
+public Q_SLOTS:
     int height();
     void showKeyboard();
     void hideKeyboard();

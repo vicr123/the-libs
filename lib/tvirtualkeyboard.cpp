@@ -1,6 +1,6 @@
 #include "tvirtualkeyboard.h"
 
-tVirtualKeyboard::tVirtualKeyboard() : QObject(NULL) {
+tVirtualKeyboard::tVirtualKeyboard() : QObject(nullptr) {
 #ifdef T_OS_UNIX_NOT_MAC
     keyboardInterface = new QDBusInterface("org.thesuite.tskbd", "/org/thesuite/tskbd", "org.thesuite.tskbd");
     QDBusConnection::sessionBus().connect("org.thesuite.tskbd", "/org/thesuite/tskbd", "org.thesuite.tskbd", "keyboardVisibleChanged", this, SIGNAL(keyboardVisibleChanged(bool)));
@@ -9,7 +9,7 @@ tVirtualKeyboard::tVirtualKeyboard() : QObject(NULL) {
 
 tVirtualKeyboard* tVirtualKeyboard::instance() {
     static tVirtualKeyboard* appInst;
-    if (appInst == NULL) {
+    if (appInst == nullptr) {
         appInst = new tVirtualKeyboard;
     }
 

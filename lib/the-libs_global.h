@@ -40,14 +40,14 @@ class THELIBSSHARED_EXPORT theLibsGlobal : public QObject {
 #endif
     static QStringList searchInPath(QString executable);
 
-    public slots:
+    public Q_SLOTS:
         bool powerStretchEnabled();
         bool allowSystemAnimations();
 
-    private slots:
+    private Q_SLOTS:
         void powerStretchChangedPrivate(bool isOn);
 
-    signals:
+    Q_SIGNALS:
         void powerStretchChanged(bool isOn);
 
     private:
