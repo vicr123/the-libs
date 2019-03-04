@@ -4,7 +4,7 @@
 #include "the-libs_global.h"
 #include <QApplication>
 
-class tApplicationPrivate;
+struct tApplicationPrivate;
 
 class THELIBSSHARED_EXPORT tApplication : public QApplication
 {
@@ -13,10 +13,13 @@ public:
     explicit tApplication(int &argc, char **argv);
     ~tApplication();
 
+    static QIcon applicationIcon();
+
 signals:
     void openFile(QString file);
 
 public slots:
+    static void setApplicationIcon(QIcon icon);
 
 private:
     bool event(QEvent * event);

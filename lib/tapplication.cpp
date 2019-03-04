@@ -2,13 +2,17 @@
 #include <QFileOpenEvent>
 #include <QTranslator>
 
-class tApplicationPrivate {
-    public:
-        QTranslator translator;
+struct tApplicationPrivate {
+    QTranslator translator;
+
+    QIcon applicationIcon;
 };
+
+tApplication* tApplicationInstance;
 
 tApplication::tApplication(int& argc, char** argv) : QApplication(argc, argv)
 {
+    tApplicationInstance = this;
     d = new tApplicationPrivate();
     //Mark some strings for translation so apps look right on macOS
     if (false) {
@@ -39,4 +43,12 @@ bool tApplication::event(QEvent *event) {
 
 tApplication::~tApplication() {
     delete d;
+}
+
+QIcon tApplication::applicationIcon() {
+    return tApplicationInstance->d->applicationIcon;
+}
+
+void tApplication::setApplicationIcon(QIcon icon) {
+    tApplicationInstance->d->applicationIcon = icon;
 }

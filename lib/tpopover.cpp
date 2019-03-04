@@ -23,10 +23,19 @@
 #include <QGraphicsOpacityEffect>
 #include "tpropertyanimation.h"
 
+#ifdef Q_OS_MAC
+#include <QDialog>
+#include <QBoxLayout>
+#endif
+
 struct tPopoverPrivate {
     QWidget* popoverWidget;
     QWidget* parentWidget;
     QFrame* verticalSeperator;
+
+#ifdef Q_OS_MAC
+    QDialog* wrapperDialog;
+#endif
 
     QWidget* blanker;
     QGraphicsOpacityEffect* blankerEffect;
@@ -85,6 +94,22 @@ void tPopover::show(QWidget* parent) {
     if (d->showing) return;
     tPopoverPrivate::activePopovers.insert(d->popoverWidget, this);
 
+#ifdef Q_OS_MAC
+    //Just show the popover as a sheet
+
+    d->wrapperDialog = new QDialog(parent);
+    d->wrapperDialog->resize(d->popoverWidget->size());
+
+    QBoxLayout* l = new QBoxLayout(QBoxLayout::TopToBottom);
+    l->setMargin(0);
+    l->addWidget(d->popoverWidget);
+    d->wrapperDialog->setLayout(l);
+
+    d->wrapperDialog->setWindowModality(Qt::ApplicationModal); //Keyboard focus issues if this is window modal
+    d->wrapperDialog->setWindowFlag(Qt::Sheet);
+    d->wrapperDialog->open();
+#else
+    d->popoverWidget->setWindowFlags(Qt::Widget);
     d->parentWidget = parent;
     d->parentWidget->installEventFilter(this);
 
@@ -146,6 +171,7 @@ void tPopover::show(QWidget* parent) {
     d->popoverWidget->raise();
 
     d->popoverWidget->setFocus();
+#endif
 
     d->showing = true;
 }
@@ -153,6 +179,13 @@ void tPopover::show(QWidget* parent) {
 void tPopover::dismiss() {
     if (!d->showing) return;
 
+#ifdef Q_OS_MAC
+    //d->popoverWidget->hide();
+    d->wrapperDialog->close();
+    d->wrapperDialog->deleteLater();
+    d->showing = false;
+    emit dismissed();
+#else
     if (d->performBlanking) {
         tPropertyAnimation* blankerAnim = new tPropertyAnimation(d->blankerEffect, "opacity");
         blankerAnim->setStartValue(d->blankerEffect->opacity());
@@ -195,6 +228,7 @@ void tPopover::dismiss() {
         emit dismissed();
     });
     popoverAnim->start();
+#endif
 }
 
 bool tPopover::eventFilter(QObject* watched, QEvent* event) {
