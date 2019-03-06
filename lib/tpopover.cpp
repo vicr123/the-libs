@@ -45,6 +45,7 @@ struct tPopoverPrivate {
     int width = -1;
     bool showing = false;
     bool performBlanking = true;
+    bool dismissable = true;
 
     static QMap<QWidget*, tPopover*> activePopovers;
 };
@@ -88,6 +89,10 @@ void tPopover::setPopoverSide(PopoverSide side) {
 
 void tPopover::setPerformBlanking(bool performBlanking) {
     d->performBlanking = performBlanking;
+}
+
+void tPopover::setDismissable(bool dismissable) {
+    d->dismissable = dismissable;
 }
 
 void tPopover::show(QWidget* parent) {
@@ -261,7 +266,7 @@ bool tPopover::eventFilter(QObject* watched, QEvent* event) {
             }
         }
     } else if (watched == d->blanker) {
-        if (event->type() == QEvent::MouseButtonPress) {
+        if (event->type() == QEvent::MouseButtonPress && d->dismissable) {
             this->dismiss();
         }
     }
