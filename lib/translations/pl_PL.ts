@@ -6,37 +6,37 @@
     <message>
         <location filename="../tapplication.cpp" line="19"/>
         <source>Services</source>
-        <translation type="unfinished"></translation>
+        <translation>Usługi</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="20"/>
         <source>Hide %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukryj %1</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="21"/>
         <source>Hide Others</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukryj inne</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="22"/>
         <source>Show All</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaż wszystko</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="23"/>
         <source>Preferences...</source>
-        <translation type="unfinished"></translation>
+        <translation>Preferencje...</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="24"/>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>O %1</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="25"/>
         <source>Quit %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyjdź z %1</translation>
     </message>
 </context>
 </TS>
