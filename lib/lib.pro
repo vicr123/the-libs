@@ -10,6 +10,17 @@ CONFIG   += c++14
 TARGET = the-libs
 TEMPLATE = lib
 
+system("pkg-config --version") {
+    CONFIG += link_pkgconfig
+    system("pkg-config --exists libunwind") {
+        message("Building with libunwind support");
+        PKGCONFIG += libunwind
+        DEFINES += HAVE_LIBUNWIND
+    } else {
+        message("libunwind not found on this system.");
+    }
+}
+
 DEFINES += THELIBS_LIBRARY
 
 # The following define makes your compiler emit warnings if you use
@@ -34,7 +45,8 @@ SOURCES += tvariantanimation.cpp \
     tshortcuthud.cpp \
     tstackedwidget.cpp \
     tpopover.cpp \
-    tmessagebox.cpp
+    tmessagebox.cpp \
+    tswitch.cpp
 
 HEADERS += tvariantanimation.h\
         the-libs_global.h \
@@ -48,7 +60,8 @@ HEADERS += tvariantanimation.h\
     tshortcuthud.h \
     tstackedwidget.h \
     tpopover.h \
-    tmessagebox.h
+    tmessagebox.h \
+    tswitch.h
 
 TRANSLATIONS += \
     translations/au_AU.ts \

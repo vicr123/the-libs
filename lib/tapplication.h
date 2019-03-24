@@ -9,22 +9,24 @@ struct tApplicationPrivate;
 class THELIBSSHARED_EXPORT tApplication : public QApplication
 {
     Q_OBJECT
-public:
-    explicit tApplication(int &argc, char **argv);
-    ~tApplication();
+    public:
+        explicit tApplication(int &argc, char **argv);
+        ~tApplication();
 
-    static QIcon applicationIcon();
+        static QIcon applicationIcon();
 
-signals:
-    void openFile(QString file);
+    Q_SIGNALS:
+        void openFile(QString file);
 
-public slots:
-    static void setApplicationIcon(QIcon icon);
+    public Q_SLOTS:
+        void registerCrashTrap();
+        static QStringList exportBacktrace();
+        static void setApplicationIcon(QIcon icon);
 
-private:
-    bool event(QEvent * event);
+    private:
+        bool event(QEvent * event);
 
-    tApplicationPrivate* d;
+        static tApplicationPrivate* d;
 };
 
 #endif // TAPPLICATION_H

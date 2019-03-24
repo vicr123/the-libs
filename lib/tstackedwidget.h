@@ -37,6 +37,7 @@ class THELIBSSHARED_EXPORT tStackedWidget : public QStackedWidget
     signals:
         void switchingFrame(int switchTo);
         void CurrentAnimationChanged(Animation currentAnimation);
+        void resized();
 
     public slots:
         void setCurrentIndex(int index, bool doAnimation = true);
@@ -45,6 +46,8 @@ class THELIBSSHARED_EXPORT tStackedWidget : public QStackedWidget
 
     private:
         tStackedWidgetPrivate* d;
+
+        void resizeEvent(QResizeEvent* event);
 
         void doSetCurrentIndex(int index);
 };

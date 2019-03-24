@@ -7,14 +7,14 @@ tPropertyAnimation::tPropertyAnimation(QObject *target, const QByteArray &proper
 
     connect(this, SIGNAL(valueChanged(QVariant)), this, SLOT(propertyChanged(QVariant)));
     connect(targetObject, SIGNAL(destroyed(QObject*)), this, SLOT(deleteLater()));
-    connect(this, &QVariantAnimation::stateChanged, [=](State newState, State oldState) {
+    connect(this, &QVariantAnimation::stateChanged, targetObject, [=](State newState, State oldState) {
        if (newState == Running) {
            targetObject->setProperty("t-anim:" + targetName, QVariant::fromValue(this));
        } else {
            targetObject->setProperty("t-anim:" + targetName, QVariant::fromValue((tPropertyAnimation*) NULL));
        }
     });
-    connect(this, &QVariantAnimation::finished, [=]() {
+    connect(this, &QVariantAnimation::finished, targetObject, [=]() {
         targetObject->setProperty("t-anim:" + targetName, QVariant::fromValue((tPropertyAnimation*) NULL));
     });
 }

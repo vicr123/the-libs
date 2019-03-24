@@ -4,7 +4,7 @@
 #include <QDir>
 #include <QDirIterator>
 
-theLibsGlobal::theLibsGlobal() : QObject(NULL) {
+theLibsGlobal::theLibsGlobal() : QObject(nullptr) {
     #ifdef T_OS_UNIX_NOT_MAC
         QDBusMessage message = QDBusMessage::createMethodCall("org.thesuite.theshell", "/org/thesuite/Power", "org.thesuite.Power", "powerStretch");
         QDBusReply<bool> reply = QDBusConnection::sessionBus().call(message);
@@ -18,7 +18,7 @@ theLibsGlobal::theLibsGlobal() : QObject(NULL) {
 
 theLibsGlobal* theLibsGlobal::instance() {
     static theLibsGlobal* appInst;
-    if (appInst == NULL) {
+    if (appInst == nullptr) {
         appInst = new theLibsGlobal;
     }
 
@@ -46,9 +46,9 @@ bool theLibsGlobal::allowSystemAnimations() {
 }
 
 #ifdef QT_WIDGETS_LIB
-float theLibsGlobal::getDPIScaling() {
-    float currentDPI = QApplication::desktop()->logicalDpiX();
-    return currentDPI / (float) 96;
+double theLibsGlobal::getDPIScaling() {
+    double currentDPI = QApplication::desktop()->logicalDpiX();
+    return currentDPI / 96.0;
 }
 #endif
 

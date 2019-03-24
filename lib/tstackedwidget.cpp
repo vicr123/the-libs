@@ -1,6 +1,6 @@
 /****************************************
  *
- *   theShell - Desktop Environment
+ *   the-libs - Libraries for the* Apps
  *   Copyright (C) 2018 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -60,8 +60,8 @@ void tStackedWidget::setCurrentIndex(int index, bool doAnimation) {
 }
 
 void tStackedWidget::doSetCurrentIndex(int index) {
-    //Check if Power Stretch is on
-    if (theLibsGlobal::instance()->powerStretchEnabled()) {
+    //Check if Power Stretch is on or if animations are disabled
+    if (theLibsGlobal::instance()->powerStretchEnabled() || !theLibsGlobal::instance()->allowSystemAnimations()) {
         //Forego animations; power stretch is on
         QStackedWidget::setCurrentIndex(index);
     } else {
@@ -99,6 +99,9 @@ void tStackedWidget::doSetCurrentIndex(int index) {
                     animation->setEndValue(QRect(0, 0, this->width(), this->height()));
                     animation->setEasingCurve(QEasingCurve::OutCubic);
                     animation->setDuration(250);
+                    connect(this, &tStackedWidget::resized, animation, [=] {
+                        animation->setEndValue(QRect(0, 0, this->width(), this->height()));
+                    });
                     group->addAnimation(animation);
 
                     tPropertyAnimation* animation2 = new tPropertyAnimation(currentWidget, "geometry");
@@ -137,6 +140,9 @@ void tStackedWidget::doSetCurrentIndex(int index) {
                     animation->setEndValue(QRect(0, 0, this->width(), this->height()));
                     animation->setEasingCurve(QEasingCurve::OutCubic);
                     animation->setDuration(250);
+                    connect(this, &tStackedWidget::resized, animation, [=] {
+                        animation->setEndValue(QRect(0, 0, this->width(), this->height()));
+                    });
                     group->addAnimation(animation);
 
                     tPropertyAnimation* animation2 = new tPropertyAnimation(currentWidget, "geometry");
@@ -199,6 +205,9 @@ void tStackedWidget::doSetCurrentIndex(int index) {
                     animation->setEndValue(QRect(0, 0, this->width(), this->height()));
                     animation->setEasingCurve(QEasingCurve::OutCubic);
                     animation->setDuration(250);
+                    connect(this, &tStackedWidget::resized, animation, [=] {
+                        animation->setEndValue(QRect(0, 0, this->width(), this->height()));
+                    });
                     group->addAnimation(animation);
 
                     QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect();
@@ -249,4 +258,8 @@ int tStackedWidget::addWidget(QWidget* w) {
 int tStackedWidget::insertWidget(int index, QWidget* w) {
     w->setAutoFillBackground(true);
     return QStackedWidget::insertWidget(index, w);
+}
+
+void tStackedWidget::resizeEvent(QResizeEvent *event) {
+    emit resized();
 }

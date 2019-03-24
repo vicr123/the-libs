@@ -29,6 +29,11 @@
 
 #define THE_LIBS_API_VERSION 3
 
+#ifdef QT_WIDGETS_LIB
+    #define SC_DPI(pixels) static_cast<int>(pixels * theLibsGlobal::getDPIScaling())
+    #define SC_DPI_T(value, type) static_cast<type>(value * theLibsGloba::getDPIScaling())
+#endif
+
 class THELIBSSHARED_EXPORT theLibsGlobal : public QObject {
     Q_OBJECT
 
@@ -36,7 +41,7 @@ class THELIBSSHARED_EXPORT theLibsGlobal : public QObject {
     static theLibsGlobal* instance();
 
 #ifdef QT_WIDGETS_LIB
-    static float getDPIScaling();
+    static double getDPIScaling();
 #endif
     static QStringList searchInPath(QString executable);
 
@@ -57,7 +62,6 @@ class THELIBSSHARED_EXPORT theLibsGlobal : public QObject {
         #ifdef T_OS_UNIX_NOT_MAC
             QSettings* themeSettings = new QSettings("theSuite", "ts-qtplatform");
         #endif
-
 
 };
 
