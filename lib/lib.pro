@@ -256,6 +256,7 @@ unix:!macx {
     target.path = /usr/lib
     header.path = /usr/include/the-libs
 
+    HEADERS += tnotification/tnotification-linux.h
     SOURCES += tnotification/tnotification-linux.cpp
 }
 

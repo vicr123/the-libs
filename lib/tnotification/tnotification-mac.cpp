@@ -1,5 +1,17 @@
 #include "tnotification.h"
 
+struct tNotificationPrivateByOS {
+
+};
+
 void tNotification::post(bool deleteWhenDone) {
 
+}
+
+void tNotification::initialize() {
+    dd = new tNotificationPrivateByOS();
+}
+
+void tNotification::destroy() {
+    delete dd;
 }

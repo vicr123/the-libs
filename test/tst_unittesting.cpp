@@ -34,7 +34,16 @@ void UnitTesting::cleanupTestCase()
 void UnitTesting::notification()
 {
     tNotification* notification = new tNotification("Notification", "This is a test notification");
-    notification->post();
+    notification->insertAction("okay", "With Actions!");
+    notification->post(false);
+
+    QEventLoop* loop = new QEventLoop();
+    connect(notification, &tNotification::actionClicked, [=](QString key) {
+        loop->quit();
+    });
+    loop->exec();
+    loop->deleteLater();
+
     QVERIFY(true);
 }
 
