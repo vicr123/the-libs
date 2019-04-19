@@ -3,6 +3,7 @@
 #include <QCoreApplication>
 
 #include <tnotification.h>
+#include <tsystemsound.h>
 
 class UnitTesting : public QObject
 {
@@ -14,6 +15,8 @@ class UnitTesting : public QObject
     private Q_SLOTS:
         void initTestCase();
         void cleanupTestCase();
+
+        void sound();
         void notification();
 };
 
@@ -37,14 +40,24 @@ void UnitTesting::notification()
     notification->insertAction("okay", "With Actions!");
     notification->post(false);
 
-    QEventLoop* loop = new QEventLoop();
-    connect(notification, &tNotification::actionClicked, [=](QString key) {
-        loop->quit();
-    });
-    loop->exec();
-    loop->deleteLater();
-
     QVERIFY(true);
+}
+
+void UnitTesting::sound() {
+    tSystemSound* sound = tSystemSound::play("desktop-login");
+    if (sound == nullptr) {
+        //Didn't work
+        QVERIFY(false);
+    } else {
+        QEventLoop* loop = new QEventLoop();
+        connect(sound, &tSystemSound::done, [=] {
+            loop->quit();
+        });
+        loop->exec();
+        loop->deleteLater();
+
+        QVERIFY(true);
+    }
 }
 
 QTEST_MAIN(UnitTesting)

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += widgets
+QT       += widgets multimedia
 CONFIG   += c++14
 
 TARGET = the-libs
@@ -46,7 +46,8 @@ SOURCES += tvariantanimation.cpp \
     tstackedwidget.cpp \
     tpopover.cpp \
     tmessagebox.cpp \
-    tswitch.cpp
+    tswitch.cpp \
+    tsystemsound.cpp
 
 HEADERS += tvariantanimation.h\
         the-libs_global.h \
@@ -61,7 +62,8 @@ HEADERS += tvariantanimation.h\
     tstackedwidget.h \
     tpopover.h \
     tmessagebox.h \
-    tswitch.h
+    tswitch.h \
+    tsystemsound.h
 
 TRANSLATIONS += \
     translations/au_AU.ts \
