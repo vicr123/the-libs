@@ -226,7 +226,7 @@ void tApplication::installTranslators() {
     CFStringRef macPath = CFURLCopyFileSystemPath(appUrlRef, kCFURLPOSIXPathStyle);
     const char *pathPtr = CFStringGetCStringPtr(macPath, CFStringGetSystemEncoding());
 
-    bundlePath = QString::fromLocal8Bit(pathPtr);
+    QString bundlePath = QString::fromLocal8Bit(pathPtr);
     localTranslator->load(QLocale::system().name(), bundlePath + "/Contents/translations/");
 
     CFRelease(appUrlRef);
