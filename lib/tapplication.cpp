@@ -8,6 +8,11 @@
 #include <signal.h>
 #endif
 
+#ifdef Q_OS_MAC
+#include <CoreFoundation/CFBundle.h>
+#endif
+
+
 #ifdef HAVE_LIBUNWIND
 #define UNW_LOCAL_ONLY
 #include <libunwind.h>
@@ -23,6 +28,8 @@ struct tApplicationPrivate {
 
     bool crashHandlingEnabled = false;
     QIcon applicationIcon;
+
+    QString shareDir;
 };
 
 tApplicationPrivate* tApplication::d = nullptr;
@@ -46,6 +53,10 @@ tApplication::tApplication(int& argc, char** argv) : QApplication(argc, argv)
     Q_INIT_RESOURCE(thelibs_translations);
     d->translator.load(QLocale::system().name(), ":/the-libs/translations/");
     installTranslator(&d->translator);
+
+#ifdef Q_OS_MAC
+    this->setAttribute(Qt::AA_DontShowIconsInMenus, true);
+#endif
 }
 
 bool tApplication::event(QEvent *event) {
@@ -196,4 +207,39 @@ QIcon tApplication::applicationIcon() {
 
 void tApplication::setApplicationIcon(QIcon icon) {
     d->applicationIcon = icon;
+}
+
+QString tApplication::shareDir() {
+    return d->shareDir;
+}
+
+void tApplication::setShareDir(QString shareDir) {
+    d->shareDir = shareDir;
+}
+
+void tApplication::installTranslators() {
+    QTranslator* localTranslator = new QTranslator();
+#ifdef Q_OS_MAC
+    this->setAttribute(Qt::AA_DontShowIconsInMenus, true);
+
+    CFURLRef appUrlRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
+    CFStringRef macPath = CFURLCopyFileSystemPath(appUrlRef, kCFURLPOSIXPathStyle);
+    const char *pathPtr = CFStringGetCStringPtr(macPath, CFStringGetSystemEncoding());
+
+    bundlePath = QString::fromLocal8Bit(pathPtr);
+    localTranslator->load(QLocale::system().name(), bundlePath + "/Contents/translations/");
+
+    CFRelease(appUrlRef);
+    CFRelease(macPath);
+#endif
+
+#ifdef Q_OS_LINUX
+    localTranslator->load(QLocale::system().name(), d->shareDir + "/translations");
+#endif
+
+#ifdef Q_OS_WIN
+    localTranslator->load(QLocale::system().name(), a.applicationDirPath() + "\\translations");
+#endif
+
+    this->installTranslator(localTranslator);
 }

@@ -14,6 +14,7 @@ class THELIBSSHARED_EXPORT tApplication : public QApplication
         ~tApplication();
 
         static QIcon applicationIcon();
+        static QString shareDir();
 
     Q_SIGNALS:
         void openFile(QString file);
@@ -21,7 +22,11 @@ class THELIBSSHARED_EXPORT tApplication : public QApplication
     public Q_SLOTS:
         void registerCrashTrap();
         static QStringList exportBacktrace();
+
         static void setApplicationIcon(QIcon icon);
+        static void setShareDir(QString shareDir);
+
+        void installTranslators();
 
     private:
         bool event(QEvent * event);
