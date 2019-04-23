@@ -238,7 +238,7 @@ void tApplication::installTranslators() {
 #endif
 
 #ifdef Q_OS_WIN
-    localTranslator->load(QLocale::system().name(), a.applicationDirPath() + "\\translations");
+    localTranslator->load(QLocale::system().name(), this->applicationDirPath() + "\\translations");
 #endif
 
     this->installTranslator(localTranslator);
