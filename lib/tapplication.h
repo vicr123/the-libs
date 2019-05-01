@@ -27,6 +27,7 @@ class THELIBSSHARED_EXPORT tApplication : public QApplication
         static void setShareDir(QString shareDir);
 
         void installTranslators();
+        static QString macOSBundlePath();
 
     private:
         bool event(QEvent * event);

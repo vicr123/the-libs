@@ -219,27 +219,28 @@ void tApplication::setShareDir(QString shareDir) {
 
 void tApplication::installTranslators() {
     QTranslator* localTranslator = new QTranslator();
-#ifdef Q_OS_MAC
-    this->setAttribute(Qt::AA_DontShowIconsInMenus, true);
+#if defined(Q_OS_MAC)
+    localTranslator->load(QLocale::system().name(), macOSBundlePath() + "/Contents/translations/");
+#elif defined(Q_OS_LINUX)
+    localTranslator->load(QLocale::system().name(), d->shareDir + "/translations");
+#elif defined(Q_OS_WIN)
+    localTranslator->load(QLocale::system().name(), this->applicationDirPath() + "\\translations");
+#endif
+    this->installTranslator(localTranslator);
+}
 
+QString tApplication::macOSBundlePath() {
+#ifdef Q_OS_MAC
     CFURLRef appUrlRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
     CFStringRef macPath = CFURLCopyFileSystemPath(appUrlRef, kCFURLPOSIXPathStyle);
     const char *pathPtr = CFStringGetCStringPtr(macPath, CFStringGetSystemEncoding());
 
     QString bundlePath = QString::fromLocal8Bit(pathPtr);
-    localTranslator->load(QLocale::system().name(), bundlePath + "/Contents/translations/");
 
     CFRelease(appUrlRef);
     CFRelease(macPath);
+    return bundlePath;
+#else
+    return "";
 #endif
-
-#ifdef Q_OS_LINUX
-    localTranslator->load(QLocale::system().name(), d->shareDir + "/translations");
-#endif
-
-#ifdef Q_OS_WIN
-    localTranslator->load(QLocale::system().name(), this->applicationDirPath() + "\\translations");
-#endif
-
-    this->installTranslator(localTranslator);
 }
