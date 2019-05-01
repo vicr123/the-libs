@@ -21,6 +21,10 @@ system("pkg-config --version") {
     }
 }
 
+macx {
+    LIBS += -framework CoreFoundation
+}
+
 DEFINES += THELIBS_LIBRARY
 
 # The following define makes your compiler emit warnings if you use
