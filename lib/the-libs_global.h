@@ -34,6 +34,7 @@
     #define SC_DPI_T(value, type) static_cast<type>(value * theLibsGloba::getDPIScaling())
 #endif
 
+struct theLibsGlobalPrivate;
 class THELIBSSHARED_EXPORT theLibsGlobal : public QObject {
     Q_OBJECT
 
@@ -58,10 +59,7 @@ class THELIBSSHARED_EXPORT theLibsGlobal : public QObject {
     private:
         theLibsGlobal();
 
-        bool powerStretch = false;
-        #ifdef T_OS_UNIX_NOT_MAC
-            QSettings* themeSettings = new QSettings("theSuite", "ts-qtplatform");
-        #endif
+        theLibsGlobalPrivate* d;
 
 };
 

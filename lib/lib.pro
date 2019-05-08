@@ -25,6 +25,11 @@ macx {
     LIBS += -framework CoreFoundation
 }
 
+win32 {
+    LIBS += -lUser32 -lKernel32
+    DEFINES += _WIN32_WINNT=0x0601 # Windows 7 or up
+}
+
 DEFINES += THELIBS_LIBRARY
 
 # The following define makes your compiler emit warnings if you use
@@ -39,6 +44,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += tvariantanimation.cpp \
+    private/nativeeventfilter.cpp \
     terrorflash.cpp \
     tpropertyanimation.cpp \
     thelibsglobal.cpp \
@@ -55,6 +61,7 @@ SOURCES += tvariantanimation.cpp \
     tsystemsound.cpp
 
 HEADERS += tvariantanimation.h\
+    private/nativeeventfilter.h \
     terrorflash.h \
         the-libs_global.h \
     tpropertyanimation.h \
