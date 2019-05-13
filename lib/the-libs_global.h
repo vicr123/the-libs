@@ -31,7 +31,7 @@
 
 #ifdef QT_WIDGETS_LIB
     #define SC_DPI(pixels) static_cast<int>(pixels * theLibsGlobal::getDPIScaling())
-    #define SC_DPI_T(value, type) static_cast<type>(value * theLibsGloba::getDPIScaling())
+    #define SC_DPI_T(value, type) static_cast<type>(value * theLibsGlobal::getDPIScaling())
 #endif
 
 class THELIBSSHARED_EXPORT theLibsGlobal : public QObject {

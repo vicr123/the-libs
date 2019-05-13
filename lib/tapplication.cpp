@@ -51,6 +51,7 @@ tApplication::tApplication(int& argc, char** argv) : QApplication(argc, argv)
     }
 
     Q_INIT_RESOURCE(thelibs_translations);
+    Q_INIT_RESOURCE(thelibs_icons);
     d->translator.load(QLocale::system().name(), ":/the-libs/translations/");
     installTranslator(&d->translator);
 

@@ -19,6 +19,15 @@ system("pkg-config --version") {
     } else {
         message("libunwind not found on this system.");
     }
+
+    system("pkg-config --exists x11") {
+        message("Building with X11 support");
+        PKGCONFIG += x11
+        DEFINES += HAVE_X11
+        QT += x11extras
+    } else {
+        message("X11 not found on this system.");
+    }
 }
 
 macx {
@@ -39,6 +48,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += tvariantanimation.cpp \
+    tcsdtools.cpp \
+    tcsdtools/csdbuttonbox.cpp \
+    tcsdtools/csdsizegrip.cpp \
     terrorflash.cpp \
     tpropertyanimation.cpp \
     thelibsglobal.cpp \
@@ -55,6 +67,9 @@ SOURCES += tvariantanimation.cpp \
     tsystemsound.cpp
 
 HEADERS += tvariantanimation.h\
+    tcsdtools.h \
+    tcsdtools/csdbuttonbox.h \
+    tcsdtools/csdsizegrip.h \
     terrorflash.h \
         the-libs_global.h \
     tpropertyanimation.h \
@@ -295,7 +310,9 @@ DISTFILES += \
     qt_thelib.pri
 
 FORMS += \
+    tcsdtools/csdbuttonbox.ui \
     tshortcuthud.ui
 
 RESOURCES += \
+    thelibs_icons.qrc \
     thelibs_translations.qrc
