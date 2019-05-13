@@ -293,7 +293,7 @@ unix:!macx {
 }
 
 macx {
-    debug: TARGET = the-libs_debug
+    CONFIG(debug, debug|release): TARGET = the-libs_debug
 
     target.path = /usr/local/lib
     header.path = /usr/local/include/the-libs
