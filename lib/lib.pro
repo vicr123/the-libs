@@ -34,6 +34,11 @@ macx {
     LIBS += -framework CoreFoundation
 }
 
+win32 {
+    LIBS += -lUser32 -lKernel32
+    DEFINES += _WIN32_WINNT=0x0601 # Windows 7 or up
+}
+
 DEFINES += THELIBS_LIBRARY
 
 # The following define makes your compiler emit warnings if you use
@@ -51,6 +56,7 @@ SOURCES += tvariantanimation.cpp \
     tcsdtools.cpp \
     tcsdtools/csdbuttonbox.cpp \
     tcsdtools/csdsizegrip.cpp \
+    private/nativeeventfilter.cpp \
     terrorflash.cpp \
     tpropertyanimation.cpp \
     thelibsglobal.cpp \
@@ -70,8 +76,9 @@ HEADERS += tvariantanimation.h\
     tcsdtools.h \
     tcsdtools/csdbuttonbox.h \
     tcsdtools/csdsizegrip.h \
+    private/nativeeventfilter.h \
     terrorflash.h \
-        the-libs_global.h \
+    the-libs_global.h \
     tpropertyanimation.h \
     ttoast.h \
     tnotification.h \
