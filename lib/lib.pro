@@ -273,11 +273,12 @@ rellang.commands = "$$LRELEASE -removeidentical $$_PRO_FILE_"
 QMAKE_EXTRA_TARGETS = genlang rellang
 PRE_TARGETDEPS = genlang rellang
 
+# Install rules
+header.files = *.h
+module.path = $$[QMAKE_MKSPECS]/modules
+
 unix {
     module.files = qt_thelib.pri
-    module.path = $$[QMAKE_MKSPECS]/modules
-    header.files = *.h
-    INSTALLS += target module header
 }
 
 unix:!macx {
@@ -285,14 +286,18 @@ unix:!macx {
 
     target.path = /usr/lib
     header.path = /usr/include/the-libs
+    module.files = qt_thelib.pri
 
     HEADERS += tnotification/tnotification-linux.h
     SOURCES += tnotification/tnotification-linux.cpp
 }
 
 macx {
+    debug: TARGET = the-libs_debug
+
     target.path = /usr/local/lib
     header.path = /usr/local/include/the-libs
+    module.files = qt_thelib_mac.pri
 
     SOURCES += tnotification/tnotification-mac.cpp
 }
@@ -301,11 +306,7 @@ win32 {
     CONFIG(debug, debug|release): TARGET = the-libsd
 
     module.files = qt_thelib.pri
-    module.path = $$[QMAKE_MKSPECS]/modules
-
-    header.files = *.h
     header.path = "C:/Program Files/thelibs/include"
-
     target.path = "C:/Program Files/thelibs/lib"
 
     INSTALLS += target module header
@@ -313,8 +314,11 @@ win32 {
     SOURCES += tnotification/tnotification-win.cpp
 }
 
+INSTALLS += target module header
+
 DISTFILES += \
-    qt_thelib.pri
+    qt_thelib.pri \
+    qt_thelib_mac.pri
 
 FORMS += \
     tcsdtools/csdbuttonbox.ui \
