@@ -22,6 +22,7 @@
 #include <QDir>
 #include <QMediaPlayer>
 #include <QDirIterator>
+#include "tapplication.h"
 
 tSystemSound::tSystemSound(QObject *parent) : QObject(parent)
 {
@@ -166,6 +167,24 @@ tSystemSound::tSystemSound(QObject *parent) : QObject(parent)
         settings.beginGroup("sound");
         settings.setValue("snd-" + soundName, isEnabled);
     }
+#elif defined(Q_OS_MAC)
+tSystemSound* tSystemSound::play(QString soundName) {
+    if (soundName == "bell") tApplication::beep();
+    return nullptr;
+}
+
+QString tSystemSound::soundLocation(QString soundName) {
+    return "";
+}
+
+bool tSystemSound::isSoundEnabled(QString soundName) {
+    if (soundName == "bell") return true;
+    return false;
+}
+
+void tSystemSound::setSoundEnabled(QString soundName, bool isEnabled) {
+    //do nothing for now
+}
 #else
     tSystemSound* tSystemSound::play(QString soundName) {
         return nullptr;
