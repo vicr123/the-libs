@@ -113,7 +113,7 @@ unix:!macx {
     target.path = /usr/lib
     header.path = /usr/include/the-libs
     module.files = qt_thelib.pri
-    prifiles.path = /usr/share/the-libs
+    prifiles.path = /usr/share/the-libs/pri
 
     HEADERS += tnotification/tnotification-linux.h
     SOURCES += tnotification/tnotification-linux.cpp
@@ -124,7 +124,7 @@ macx {
 
     target.path = /usr/local/lib
     header.path = /usr/local/include/the-libs
-    prifiles.path = /usr/local/share/the-libs
+    prifiles.path = /usr/local/share/the-libs/pri
     module.files = qt_thelib_mac.pri
 
     SOURCES += tnotification/tnotification-mac.cpp
