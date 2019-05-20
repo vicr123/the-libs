@@ -2,7 +2,7 @@
 
 unix:!macx {
     # UNIX: Put translations in /usr/share/appname/translations
-    !defined(SHARE_APP_NAME) {
+    isEmpty(SHARE_APP_NAME) {
         error(Please define SHARE_APP_NAME with the name of the folder to store data in /usr/share.)
     }
 
