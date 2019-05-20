@@ -185,6 +185,3 @@ rellang.depends = genlang
 
 QMAKE_EXTRA_TARGETS = genlang rellang
 PRE_TARGETDEPS = genlang rellang
-
-DISTFILES += \
-    $$PWD/installtranslations.pri
