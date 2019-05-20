@@ -130,6 +130,8 @@ void tCsdTools::installResizeAction(QWidget* widget) {
         int border = CsdSizeGrip::borderWidth();
         widget->setContentsMargins(border, border, border, border);
         widget->setWindowFlag(Qt::FramelessWindowHint);
+        widget->setAttribute(Qt::WA_NoSystemBackground);
+        widget->setAttribute(Qt::WA_TranslucentBackground);
     }
 
     ResizeWidget* resize = new ResizeWidget();
@@ -183,9 +185,13 @@ void tCsdTools::csdsEnabledChanged(bool enabled) {
             int border = CsdSizeGrip::borderWidth();
             rw->widget->setContentsMargins(border, border, border, border);
             rw->widget->setWindowFlag(Qt::FramelessWindowHint);
+            rw->widget->setAttribute(Qt::WA_NoSystemBackground);
+            rw->widget->setAttribute(Qt::WA_TranslucentBackground);
         } else {
             rw->widget->setContentsMargins(0, 0, 0, 0);
             rw->widget->setWindowFlag(Qt::FramelessWindowHint, false);
+            rw->widget->setAttribute(Qt::WA_NoSystemBackground, false);
+            rw->widget->setAttribute(Qt::WA_TranslucentBackground, false);
         }
         //rw->widget->setWindowState(states);
         if (showing) rw->widget->show();

@@ -6,6 +6,8 @@
 #include <Windows.h>
 #endif
 
+using namespace theLibsPrivate;
+
 NativeEventFilter::NativeEventFilter(QObject *parent) : QObject(parent), QAbstractNativeEventFilter()
 {
 

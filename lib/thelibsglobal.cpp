@@ -19,7 +19,7 @@
 
 struct theLibsGlobalPrivate {
     bool powerStretch = false;
-    NativeEventFilter* filter;
+    theLibsPrivate::NativeEventFilter* filter;
 #ifdef T_OS_UNIX_NOT_MAC
     QSettings* themeSettings = new QSettings("theSuite", "ts-qtplatform");
 #endif
@@ -29,9 +29,9 @@ theLibsGlobal::theLibsGlobal() : QObject(nullptr) {
     d = new theLibsGlobalPrivate();
 
     //Install the native event filter
-    d->filter = new NativeEventFilter(this);
+    d->filter = new theLibsPrivate::NativeEventFilter(this);
     QApplication::instance()->installNativeEventFilter(d->filter);
-    connect(d->filter, &NativeEventFilter::powerStretchChanged, this, &theLibsGlobal::powerStretchChangedPrivate);
+    connect(d->filter, &theLibsPrivate::NativeEventFilter::powerStretchChanged, this, &theLibsGlobal::powerStretchChangedPrivate);
 
     #ifdef T_OS_UNIX_NOT_MAC
         QDBusMessage message = QDBusMessage::createMethodCall("org.thesuite.theshell", "/org/thesuite/Power", "org.thesuite.Power", "powerStretch");
