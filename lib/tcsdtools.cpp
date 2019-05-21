@@ -22,12 +22,19 @@
 #include <QWidget>
 #include <QMouseEvent>
 #include <QDebug>
+#include <QDir>
 #include <tcsdtools/csdsizegrip.h>
 #include <tcsdtools/csdbuttonbox.h>
 
 #ifdef HAVE_X11
 #include <QX11Info>
 #include <X11/Xlib.h>
+#include <X11/Xatom.h>
+
+#ifdef HAVE_GSETTINGS
+#include <QGSettings>
+#endif
+
 #endif
 
 struct tCsdGlobalPrivate {
@@ -95,15 +102,57 @@ tCsdTools::~tCsdTools() {
 }
 
 tCsdGlobal::WindowControlSide tCsdGlobal::windowControlsEdge() {
-    #ifdef HAVE_X11
-        return Right;
-    #elif defined(Q_OS_MAC)
+    #ifdef Q_OS_MAC
+        //Window controls always on the left
         return Left;
-    #elif defined(Q_OS_WIN)
-        return Right;
-    #else
+    #endif
+
+    #ifdef Q_OS_WIN
+        //Window controls always on the right
         return Right;
     #endif
+
+    #ifdef HAVE_X11
+        //Check the current window manager
+        Atom actualType;
+        int actualFormat;
+        unsigned long items, bytesRemain;
+        unsigned char* data;
+        XGetWindowProperty(QX11Info::display(), QX11Info::appRootWindow(), XInternAtom(QX11Info::display(), "_NET_SUPPORTING_WM_CHECK", False), 0, 32, False, XA_WINDOW, &actualType, &actualFormat, &items, &bytesRemain, &data);
+        quint32 supportingWindow = reinterpret_cast<quint32*>(data)[0];
+        XFree(data);
+
+        //Get the name of the window manager
+        XGetWindowProperty(QX11Info::display(), supportingWindow, XInternAtom(QX11Info::display(), "_NET_WM_NAME", False), 0, 1024, False, XInternAtom(QX11Info::display(), "UTF8_STRING", False), &actualType, &actualFormat, &items, &bytesRemain, &data);
+        QString windowManagerName = QString::fromUtf8(reinterpret_cast<char*>(data));
+        XFree(data);
+
+        if (windowManagerName == "GNOME Shell") {
+            #ifdef HAVE_GSETTINGS
+            //Use GNOME settings
+            QGSettings gsettings("org.gnome.desktop.wm.preferences");
+            QString buttonLayout = gsettings.get("button-layout").toString();
+            QString buttonsOnLeft = buttonLayout.split(":").first();
+            if (buttonsOnLeft.contains("close")) {
+                return Left;
+            } else {
+                return Right;
+            }
+            #endif
+        } else if (windowManagerName == "KWin") {
+            //Use KWin settings
+            QSettings kwinSettings(QDir::homePath() + "/.config/kwinrc", QSettings::IniFormat);
+            kwinSettings.beginGroup("org.kde.kdecoration2");
+            if (kwinSettings.value("ButtonsOnLeft", "M").toString().contains("X")) {
+                return Left;
+            } else {
+                return Right;
+            }
+        }
+    #endif
+
+    //Default to right hand side
+    return Right;
 }
 
 void tCsdTools::installMoveAction(QWidget* widget) {

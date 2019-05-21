@@ -28,6 +28,14 @@ system("pkg-config --version") {
     } else {
         message("X11 not found on this system.");
     }
+
+    packagesExist(gsettings-qt) {
+        message("Building with GSettings support");
+        PKGCONFIG += gsettings-qt
+        DEFINES += HAVE_GSETTINGS
+    } else {
+        message("GSettings not found on this system.");
+    }
 }
 
 macx {
