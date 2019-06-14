@@ -116,6 +116,10 @@ tSystemSound::tSystemSound(QObject *parent) : QObject(parent)
         return "";
     }
 
+    tSystemSound* tSystemSound::play(QString soundName) {
+        return play(soundName, 1);
+    }
+
     tSystemSound* tSystemSound::play(QString soundName, qreal volume) {
         QString soundPath = soundLocation(soundName);
         if (soundPath != "") {
