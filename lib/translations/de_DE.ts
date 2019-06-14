@@ -6,7 +6,7 @@
     <message>
         <location filename="../tcsdtools/csdbuttonbox.ui" line="20"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Form</translation>
     </message>
 </context>
 <context>
@@ -14,37 +14,37 @@
     <message>
         <location filename="../tapplication.cpp" line="44"/>
         <source>Services</source>
-        <translation type="unfinished"></translation>
+        <translation>Dienste</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="45"/>
         <source>Hide %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ausblenden</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="46"/>
         <source>Hide Others</source>
-        <translation type="unfinished"></translation>
+        <translation>Andere ausblenden</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="47"/>
         <source>Show All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle anzeigen</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="48"/>
         <source>Preferences...</source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungen...</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="49"/>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Über %1</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="50"/>
         <source>Quit %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Beende %1</translation>
     </message>
 </context>
 </TS>
