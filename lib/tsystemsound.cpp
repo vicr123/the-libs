@@ -29,6 +29,10 @@ tSystemSound::tSystemSound(QObject *parent) : QObject(parent)
 
 }
 
+tSystemSound* tSystemSound::play(QString soundName) {
+    return play(soundName, 1);
+}
+
 #ifdef T_OS_UNIX_NOT_MAC
     QSettings::Format desktopFormat = QSettings::InvalidFormat;
 
@@ -114,10 +118,6 @@ tSystemSound::tSystemSound(QObject *parent) : QObject(parent)
         }
 
         return "";
-    }
-
-    tSystemSound* tSystemSound::play(QString soundName) {
-        return play(soundName, 1);
     }
 
     tSystemSound* tSystemSound::play(QString soundName, qreal volume) {
