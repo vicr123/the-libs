@@ -116,7 +116,7 @@ tSystemSound::tSystemSound(QObject *parent) : QObject(parent)
         return "";
     }
 
-    tSystemSound* tSystemSound::play(QString soundName) {
+    tSystemSound* tSystemSound::play(QString soundName, qreal volume) {
         QString soundPath = soundLocation(soundName);
         if (soundPath != "") {
             tSystemSound* engine = new tSystemSound();
@@ -124,6 +124,7 @@ tSystemSound::tSystemSound(QObject *parent) : QObject(parent)
             QMediaPlayer* player = new QMediaPlayer(engine, QMediaPlayer::LowLatency);
             player->setAudioRole(QAudio::NotificationRole);
             player->setMedia(QUrl::fromLocalFile(soundPath));
+            player->setVolume(qRound(QAudio::convertVolume(volume, QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale) * 100));
             connect(player, &QMediaPlayer::stateChanged, engine, [=](QMediaPlayer::State state) {
                 if (state == QMediaPlayer::StoppedState) {
                     //We're done here
@@ -168,7 +169,7 @@ tSystemSound::tSystemSound(QObject *parent) : QObject(parent)
         settings.setValue("snd-" + soundName, isEnabled);
     }
 #elif defined(Q_OS_MAC)
-tSystemSound* tSystemSound::play(QString soundName) {
+tSystemSound* tSystemSound::play(QString soundName, qreal volume) {
     if (soundName == "bell") tApplication::beep();
     return nullptr;
 }
@@ -186,7 +187,7 @@ void tSystemSound::setSoundEnabled(QString soundName, bool isEnabled) {
     //do nothing for now
 }
 #else
-    tSystemSound* tSystemSound::play(QString soundName) {
+    tSystemSound* tSystemSound::play(QString soundName, qreal volume) {
         return nullptr;
     }
 

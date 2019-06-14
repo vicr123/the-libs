@@ -35,7 +35,7 @@ class THELIBSSHARED_EXPORT tSystemSound : public QObject
         void done();
 
     public slots:
-        static tSystemSound* play(QString soundName);
+        static tSystemSound* play(QString soundName, qreal volume = 1);
 
     private:
         explicit tSystemSound(QObject *parent = nullptr);
