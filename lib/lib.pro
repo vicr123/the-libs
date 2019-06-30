@@ -65,6 +65,9 @@ SOURCES += tvariantanimation.cpp \
     tcsdtools/csdbuttonbox.cpp \
     tcsdtools/csdsizegrip.cpp \
     private/nativeeventfilter.cpp \
+    tdatetimepicker.cpp \
+    tdatetimepicker/datetimepart.cpp \
+    tdatetimepicker/datetimepartbutton.cpp \
     terrorflash.cpp \
     tpropertyanimation.cpp \
     thelibsglobal.cpp \
@@ -85,6 +88,9 @@ HEADERS += tvariantanimation.h\
     tcsdtools/csdbuttonbox.h \
     tcsdtools/csdsizegrip.h \
     private/nativeeventfilter.h \
+    tdatetimepicker.h \
+    tdatetimepicker/datetimepart.h \
+    tdatetimepicker/datetimepartbutton.h \
     terrorflash.h \
     the-libs_global.h \
     tpropertyanimation.h \
