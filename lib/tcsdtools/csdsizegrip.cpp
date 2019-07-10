@@ -45,7 +45,7 @@ CsdSizeGrip::CsdSizeGrip(int side, QWidget *parent) : QWidget(parent)
 
 void CsdSizeGrip::resizeGrip() {
     if (!tCsdGlobal::csdsEnabled()) return;
-    if (this->parentWidget->isMaximized()) {
+    if (this->parentWidget->isMaximized() || this->parentWidget->isFullScreen()) {
         //Disable the size grips while maximised
         this->setVisible(false);
     } else {

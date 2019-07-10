@@ -314,7 +314,7 @@ bool tCsdTools::eventFilter(QObject *watched, QEvent *event) {
         ResizeWidget* rw = getResizeWidget(widget);
         if (rw != nullptr) {
             bool marginsEnabled = true;
-            if (widget->isMaximized()) marginsEnabled = false;
+            if (widget->isMaximized() || widget->isFullScreen()) marginsEnabled = false;
             rw->setMarginsEnabled(marginsEnabled);
         }
     }
