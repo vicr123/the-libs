@@ -39,7 +39,7 @@ system("pkg-config --version") {
 }
 
 macx {
-    LIBS += -framework CoreFoundation
+    LIBS += -framework CoreFoundation -framework Cocoa
 }
 
 win32 {
@@ -141,7 +141,7 @@ macx {
     prifiles.path = /usr/local/share/the-libs/pri
     module.files = qt_thelib_mac.pri
 
-    SOURCES += tnotification/tnotification-mac.cpp
+    SOURCES += tnotification/tnotification-mac.mm
 }
 
 win32 {
