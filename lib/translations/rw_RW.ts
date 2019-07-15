@@ -2,14 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="rw_RW" sourcelanguage="en_US">
 <context>
-    <name>CsdButtonBox</name>
-    <message>
-        <location filename="../tcsdtools/csdbuttonbox.ui" line="20"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
         <location filename="../tapplication.cpp" line="52"/>
@@ -49,11 +41,6 @@
 </context>
 <context>
     <name>tAboutDialog</name>
-    <message>
-        <location filename="../taboutdialog.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../taboutdialog.ui" line="194"/>
         <source>SOFTWARE</source>
