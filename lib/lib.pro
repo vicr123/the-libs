@@ -162,6 +162,8 @@ INSTALLS += target module header prifiles
 DISTFILES += \
     prifiles/buildmaster.pri \
     prifiles/gentranslations.pri \
+    prifiles/installtranslations.pri \
+    prifiles/checkblueprint.pri \
     qt_thelib.pri \
     qt_thelib_mac.pri
 
