@@ -66,25 +66,13 @@ theLibsGlobal* theLibsGlobal::instance() {
 }
 
 bool theLibsGlobal::powerStretchEnabled() {
-//#ifdef Q_OS_WIN
-//    SYSTEM_POWER_STATUS powerStatus;
-//    BOOL success = GetSystemPowerStatus(&powerStatus);
-//    if (success) {
-//        return powerStatus.SystemStatusFlag;
-//    } else {
-//        return false;
-//    }
-//#else
     return d->powerStretch;
-//#endif
 }
 
 void theLibsGlobal::powerStretchChangedPrivate(bool isOn) {
     d->powerStretch = isOn;
-    //QApplication::setStyle(QApplication::style()->)
 
     emit powerStretchChanged(isOn);
-
 }
 
 bool theLibsGlobal::allowSystemAnimations() {

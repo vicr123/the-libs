@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += widgets multimedia
+QT       += widgets multimedia svg
 CONFIG   += c++14
 
 TARGET = the-libs
@@ -61,6 +61,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += tvariantanimation.cpp \
+    taboutdialog.cpp \
     tcsdtools.cpp \
     tcsdtools/csdbuttonbox.cpp \
     tcsdtools/csdsizegrip.cpp \
@@ -84,6 +85,7 @@ SOURCES += tvariantanimation.cpp \
     tsystemsound.cpp
 
 HEADERS += tvariantanimation.h\
+    taboutdialog.h \
     tcsdtools.h \
     tcsdtools/csdbuttonbox.h \
     tcsdtools/csdsizegrip.h \
@@ -164,6 +166,7 @@ DISTFILES += \
     qt_thelib_mac.pri
 
 FORMS += \
+    taboutdialog.ui \
     tcsdtools/csdbuttonbox.ui \
     tshortcuthud.ui
 
