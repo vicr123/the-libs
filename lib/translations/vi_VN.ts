@@ -44,23 +44,23 @@
     <message>
         <location filename="../taboutdialog.ui" line="194"/>
         <source>SOFTWARE</source>
-        <translation type="unfinished"></translation>
+        <translation>PHẦN MỀM</translation>
     </message>
     <message>
         <location filename="../taboutdialog.ui" line="239"/>
         <source>COPYRIGHT</source>
-        <translation type="unfinished"></translation>
+        <translation>BẢN QUYỀN</translation>
     </message>
     <message>
         <location filename="../taboutdialog.ui" line="299"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../taboutdialog.cpp" line="14"/>
         <location filename="../taboutdialog.cpp" line="15"/>
         <source>About %1</source>
-        <translation type="unfinished">Giới thiệu về %1</translation>
+        <translation>Giới thiệu về %1</translation>
     </message>
 </context>
 <context>
@@ -68,7 +68,7 @@
     <message>
         <location filename="../tapplication.cpp" line="351"/>
         <source>Copyright © %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bản Quyền © %1.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="324"/>
@@ -80,43 +80,43 @@
         <location filename="../tapplication.cpp" line="342"/>
         <location filename="../tapplication.cpp" line="345"/>
         <source>Licensed under the terms of the %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Được cấp phép theo điều khoản của %1.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="324"/>
         <source>GNU General Public License, version 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Giấy phép Công cộng GNU, phiên bản 3</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="327"/>
         <location filename="../tapplication.cpp" line="339"/>
         <source>GNU General Public License, version 3, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>Giấy phép Công cộng GNU, phiên bản 3, hoặc mới hơn</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="330"/>
         <source>GNU General Public License, version 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Giấy phép Công cộng GNU, phiên bản 2</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="333"/>
         <source>GNU General Public License, version 2, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>Giấy phép Công cộng GNU, phiên bản 2, hoặc mới hơn</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="336"/>
         <source>GNU Lesser General Public License, version 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Giấy phép Công cộng GNU Hạn chế, phiên bản 3</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="342"/>
         <source>GNU General Public License, version 2.1</source>
-        <translation type="unfinished"></translation>
+        <translation>Giấy phép Công cộng GNU Hạn chế, phiên bản 2.1</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="345"/>
         <source>GNU General Public License, version 2.1, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>Giấy phép Công cộng GNU Hạn chế, phiên bản 2.1, hoặc mới hơn</translation>
     </message>
 </context>
 </TS>
