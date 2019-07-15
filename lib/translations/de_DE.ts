@@ -44,23 +44,23 @@
     <message>
         <location filename="../taboutdialog.ui" line="194"/>
         <source>SOFTWARE</source>
-        <translation type="unfinished"></translation>
+        <translation>SOFTWARE</translation>
     </message>
     <message>
         <location filename="../taboutdialog.ui" line="239"/>
         <source>COPYRIGHT</source>
-        <translation type="unfinished"></translation>
+        <translation>COPYRIGHT</translation>
     </message>
     <message>
         <location filename="../taboutdialog.ui" line="299"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../taboutdialog.cpp" line="14"/>
         <location filename="../taboutdialog.cpp" line="15"/>
         <source>About %1</source>
-        <translation type="unfinished">Über %1</translation>
+        <translation>Über %1</translation>
     </message>
 </context>
 <context>
@@ -68,7 +68,7 @@
     <message>
         <location filename="../tapplication.cpp" line="353"/>
         <source>Copyright © %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright © %1.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="326"/>
@@ -80,7 +80,7 @@
         <location filename="../tapplication.cpp" line="344"/>
         <location filename="../tapplication.cpp" line="347"/>
         <source>Licensed under the terms of the %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lizenziert unter den Bedingungen der %1.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="326"/>
