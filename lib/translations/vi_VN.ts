@@ -110,17 +110,17 @@
     <message>
         <location filename="../tapplication.cpp" line="341"/>
         <source>GNU Lesser General Public License, version 3, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>Giấy phép Công cộng GNU Hạn chế, phiên bản 3, hoặc mới hơn</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="344"/>
         <source>GNU Lesser General Public License, version 2.1</source>
-        <translation type="unfinished">Giấy phép Công cộng GNU Hạn chế, phiên bản 2.1</translation>
+        <translation>Giấy phép Công cộng GNU Hạn chế, phiên bản 2.1</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="347"/>
         <source>GNU Lesser General Public License, version 2.1, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>Giấy phép Công cộng GNU Hạn chế, phiên bản 2.1, hoặc mới hơn</translation>
     </message>
 </context>
 </TS>
