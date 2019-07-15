@@ -336,13 +336,13 @@ QStringList tApplication::copyrightLines()
             copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(tr("GNU Lesser General Public License, version 3")));
             break;
         case Lgpl3OrLater:
-            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(tr("GNU General Public License, version 3, or later")));
+            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(tr("GNU Lesser General Public License, version 3, or later")));
             break;
         case Lgpl2_1:
-            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(tr("GNU General Public License, version 2.1")));
+            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(tr("GNU Lesser General Public License, version 2.1")));
             break;
         case Lgpl2_1OrLater:
-            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(tr("GNU General Public License, version 2.1, or later")));
+            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(tr("GNU Lesser General Public License, version 2.1, or later")));
             break;
         case Other: ;
     }
