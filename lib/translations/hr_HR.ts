@@ -66,56 +66,60 @@
 <context>
     <name>tApplication</name>
     <message>
-        <location filename="../tapplication.cpp" line="351"/>
+        <location filename="../tapplication.cpp" line="353"/>
         <source>Copyright © %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="324"/>
-        <location filename="../tapplication.cpp" line="327"/>
-        <location filename="../tapplication.cpp" line="330"/>
-        <location filename="../tapplication.cpp" line="333"/>
-        <location filename="../tapplication.cpp" line="336"/>
-        <location filename="../tapplication.cpp" line="339"/>
-        <location filename="../tapplication.cpp" line="342"/>
-        <location filename="../tapplication.cpp" line="345"/>
+        <location filename="../tapplication.cpp" line="326"/>
+        <location filename="../tapplication.cpp" line="329"/>
+        <location filename="../tapplication.cpp" line="332"/>
+        <location filename="../tapplication.cpp" line="335"/>
+        <location filename="../tapplication.cpp" line="338"/>
+        <location filename="../tapplication.cpp" line="341"/>
+        <location filename="../tapplication.cpp" line="344"/>
+        <location filename="../tapplication.cpp" line="347"/>
         <source>Licensed under the terms of the %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="324"/>
+        <location filename="../tapplication.cpp" line="326"/>
         <source>GNU General Public License, version 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="327"/>
-        <location filename="../tapplication.cpp" line="339"/>
+        <location filename="../tapplication.cpp" line="329"/>
         <source>GNU General Public License, version 3, or later</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="330"/>
+        <location filename="../tapplication.cpp" line="332"/>
         <source>GNU General Public License, version 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="333"/>
+        <location filename="../tapplication.cpp" line="335"/>
         <source>GNU General Public License, version 2, or later</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="336"/>
+        <location filename="../tapplication.cpp" line="338"/>
         <source>GNU Lesser General Public License, version 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="342"/>
-        <source>GNU General Public License, version 2.1</source>
+        <location filename="../tapplication.cpp" line="341"/>
+        <source>GNU Lesser General Public License, version 3, or later</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="345"/>
-        <source>GNU General Public License, version 2.1, or later</source>
+        <location filename="../tapplication.cpp" line="344"/>
+        <source>GNU Lesser General Public License, version 2.1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tapplication.cpp" line="347"/>
+        <source>GNU Lesser General Public License, version 2.1, or later</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

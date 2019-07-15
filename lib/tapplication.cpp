@@ -67,6 +67,7 @@ tApplication::tApplication(int& argc, char** argv) : QApplication(argc, argv)
     this->setAttribute(Qt::AA_DontShowIconsInMenus, true);
 #endif
 
+    d->versions.append({"the-libs", QStringLiteral("%1 (API %2)").arg(THE_LIBS_VERSION).arg(THE_LIBS_API_VERSION)});
     d->versions.append({"Qt", qVersion()});
 }
 
@@ -310,8 +311,9 @@ QPixmap tApplication::aboutDialogSplashGraphic()
 
 QList<QPair<QString, QString>> tApplication::versions()
 {
-    QList<QPair<QString, QString>> versions = d->versions;
-    versions.prepend({tApplication::applicationName(), tApplication::applicationVersion()});
+    QList<QPair<QString, QString>> versions;
+    versions.append({tApplication::applicationName(), tApplication::applicationVersion()});
+    versions.append(d->versions);
     return versions;
 }
 
