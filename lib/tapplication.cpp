@@ -26,6 +26,7 @@
 
 struct tApplicationPrivate {
     QTranslator translator;
+    QTranslator* localTranslator = nullptr;
     tApplication* applicationInstance;
 
     bool crashHandlingEnabled = false;
@@ -75,6 +76,17 @@ bool tApplication::event(QEvent *event) {
     if (event->type() == QEvent::FileOpen) {
         QFileOpenEvent *openEvent = (QFileOpenEvent*) event;
         emit openFile(openEvent->file());
+    } else if (event->type() == QEvent::LocaleChange) {
+        if (d->localTranslator != nullptr) {
+            //Reinstall the-libs translator
+            d->translator.load(QLocale::system().name(), ":/the-libs/translations/");
+
+            //Reinstall the application translators
+            installTranslators();
+        }
+
+        //Tell everyone the translations have changed
+        emit updateTranslators();
     }
 
     return QApplication::event(event);
@@ -230,15 +242,21 @@ void tApplication::setShareDir(QString shareDir) {
 }
 
 void tApplication::installTranslators() {
-    QTranslator* localTranslator = new QTranslator();
+    if (d->localTranslator != nullptr) {
+        //Remove the old translator
+        removeTranslator(d->localTranslator);
+        d->localTranslator->deleteLater();
+    }
+
+    d->localTranslator = new QTranslator();
 #if defined(Q_OS_MAC)
-    localTranslator->load(QLocale::system().name(), macOSBundlePath() + "/Contents/translations/");
+    d->localTranslator->load(QLocale::system().name(), macOSBundlePath() + "/Contents/translations/");
 #elif defined(Q_OS_LINUX)
-    localTranslator->load(QLocale::system().name(), d->shareDir + "/translations");
+    d->localTranslator->load(QLocale::system().name(), d->shareDir + "/translations");
 #elif defined(Q_OS_WIN)
-    localTranslator->load(QLocale::system().name(), this->applicationDirPath() + "\\translations");
+    d->localTranslator->load(QLocale::system().name(), this->applicationDirPath() + "\\translations");
 #endif
-    this->installTranslator(localTranslator);
+    this->installTranslator(d->localTranslator);
 }
 
 QString tApplication::macOSBundlePath() {

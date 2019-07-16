@@ -37,6 +37,7 @@ class THELIBSSHARED_EXPORT tApplication : public QApplication
 
     Q_SIGNALS:
         void openFile(QString file);
+        void updateTranslators();
 
     public Q_SLOTS:
         void registerCrashTrap();
