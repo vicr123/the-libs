@@ -85,42 +85,42 @@
     <message>
         <location filename="../tapplication.cpp" line="344"/>
         <source>GNU General Public License, version 3</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU General Public License, Version 3</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="347"/>
         <source>GNU General Public License, version 3, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU General Public License, Version 3, oder neuer</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="350"/>
         <source>GNU General Public License, version 2</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU General Public License, Version 2</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="353"/>
         <source>GNU General Public License, version 2, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU General Public License, Version 2, oder neuer</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="356"/>
         <source>GNU Lesser General Public License, version 3</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU Lesser General Public License, Version 3</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="359"/>
         <source>GNU Lesser General Public License, version 3, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU Lesser General Public License, Version 3, oder neuer</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="362"/>
         <source>GNU Lesser General Public License, version 2.1</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU Lesser General Public License, Version 2.1</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="365"/>
         <source>GNU Lesser General Public License, version 2.1, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU Lesser General Public License, Version 2.1, oder neuer</translation>
     </message>
 </context>
 </TS>
