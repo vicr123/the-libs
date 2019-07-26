@@ -44,23 +44,23 @@
     <message>
         <location filename="../taboutdialog.ui" line="194"/>
         <source>SOFTWARE</source>
-        <translation type="unfinished"></translation>
+        <translation>SOFTWARE</translation>
     </message>
     <message>
         <location filename="../taboutdialog.ui" line="239"/>
         <source>COPYRIGHT</source>
-        <translation type="unfinished"></translation>
+        <translation>COPYRIGHT</translation>
     </message>
     <message>
         <location filename="../taboutdialog.ui" line="299"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../taboutdialog.cpp" line="14"/>
         <location filename="../taboutdialog.cpp" line="15"/>
         <source>About %1</source>
-        <translation type="unfinished">Over %1</translation>
+        <translation>Ongeveer %1</translation>
     </message>
 </context>
 <context>
@@ -68,7 +68,7 @@
     <message>
         <location filename="../tapplication.cpp" line="371"/>
         <source>Copyright © %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright © %1.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="344"/>
@@ -80,47 +80,47 @@
         <location filename="../tapplication.cpp" line="362"/>
         <location filename="../tapplication.cpp" line="365"/>
         <source>Licensed under the terms of the %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelicenseerd onder de termen van de %1.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="344"/>
         <source>GNU General Public License, version 3</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU General Public License, versie 3</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="347"/>
         <source>GNU General Public License, version 3, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU General Public License, versie 3, of later</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="350"/>
         <source>GNU General Public License, version 2</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU General Public License, versie 2</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="353"/>
         <source>GNU General Public License, version 2, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU General Public License, versie 2, of later</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="356"/>
         <source>GNU Lesser General Public License, version 3</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU Lesser General Public License, versie 3</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="359"/>
         <source>GNU Lesser General Public License, version 3, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU Lesser General Public License, versie 3, of later</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="362"/>
         <source>GNU Lesser General Public License, version 2.1</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU Lesser General Public License, versie 2.1</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="365"/>
         <source>GNU Lesser General Public License, version 2.1, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU Lesser General Public License, versie 2.1, of later</translation>
     </message>
 </context>
 </TS>
