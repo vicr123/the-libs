@@ -28,6 +28,7 @@
 #endif
 
 #define THE_LIBS_API_VERSION 3
+#define THE_LIBS_VERSION "2.0"
 
 #ifdef QT_WIDGETS_LIB
     #define SC_DPI(pixels) static_cast<int>(pixels * theLibsGlobal::getDPIScaling())

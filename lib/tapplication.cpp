@@ -2,6 +2,8 @@
 #include <QFileOpenEvent>
 #include <QTranslator>
 #include <QSysInfo>
+#include <QPainter>
+#include <QSvgRenderer>
 
 #ifdef T_OS_UNIX_NOT_MAC
 #include <QProcess>
@@ -24,12 +26,19 @@
 
 struct tApplicationPrivate {
     QTranslator translator;
+    QTranslator* localTranslator = nullptr;
     tApplication* applicationInstance;
 
     bool crashHandlingEnabled = false;
     QIcon applicationIcon;
 
     QString shareDir;
+    QString genericName;
+    QPixmap aboutDialogSplashGraphic;
+    QList<QPair<QString, QString>> versions;
+    QStringList copyrightLines;
+    tApplication::KnownLicenses license = tApplication::Other;
+    QString copyrightHolder, copyrightYear;
 };
 
 tApplicationPrivate* tApplication::d = nullptr;
@@ -58,12 +67,26 @@ tApplication::tApplication(int& argc, char** argv) : QApplication(argc, argv)
 #ifdef Q_OS_MAC
     this->setAttribute(Qt::AA_DontShowIconsInMenus, true);
 #endif
+
+    d->versions.append({"the-libs", QStringLiteral("%1 (API %2)").arg(THE_LIBS_VERSION).arg(THE_LIBS_API_VERSION)});
+    d->versions.append({"Qt", qVersion()});
 }
 
 bool tApplication::event(QEvent *event) {
     if (event->type() == QEvent::FileOpen) {
         QFileOpenEvent *openEvent = (QFileOpenEvent*) event;
         emit openFile(openEvent->file());
+    } else if (event->type() == QEvent::LocaleChange) {
+        if (d->localTranslator != nullptr) {
+            //Reinstall the-libs translator
+            d->translator.load(QLocale::system().name(), ":/the-libs/translations/");
+
+            //Reinstall the application translators
+            installTranslators();
+        }
+
+        //Tell everyone the translations have changed
+        emit updateTranslators();
     }
 
     return QApplication::event(event);
@@ -219,15 +242,21 @@ void tApplication::setShareDir(QString shareDir) {
 }
 
 void tApplication::installTranslators() {
-    QTranslator* localTranslator = new QTranslator();
+    if (d->localTranslator != nullptr) {
+        //Remove the old translator
+        removeTranslator(d->localTranslator);
+        d->localTranslator->deleteLater();
+    }
+
+    d->localTranslator = new QTranslator();
 #if defined(Q_OS_MAC)
-    localTranslator->load(QLocale::system().name(), macOSBundlePath() + "/Contents/translations/");
+    d->localTranslator->load(QLocale::system().name(), macOSBundlePath() + "/Contents/translations/");
 #elif defined(Q_OS_LINUX)
-    localTranslator->load(QLocale::system().name(), d->shareDir + "/translations");
+    d->localTranslator->load(QLocale::system().name(), d->shareDir + "/translations");
 #elif defined(Q_OS_WIN)
-    localTranslator->load(QLocale::system().name(), this->applicationDirPath() + "\\translations");
+    d->localTranslator->load(QLocale::system().name(), this->applicationDirPath() + "\\translations");
 #endif
-    this->installTranslator(localTranslator);
+    this->installTranslator(d->localTranslator);
 }
 
 QString tApplication::macOSBundlePath() {
@@ -244,4 +273,118 @@ QString tApplication::macOSBundlePath() {
 #else
     return "";
 #endif
+}
+
+void tApplication::setGenericName(QString genericName) {
+    d->genericName = genericName;
+}
+
+void tApplication::setAboutDialogSplashGraphic(QPixmap aboutDialogSplashGraphic)
+{
+    d->aboutDialogSplashGraphic = aboutDialogSplashGraphic;
+}
+
+void tApplication::addLibraryVersion(QString libraryName, QString version)
+{
+    d->versions.append({libraryName, version});
+}
+
+void tApplication::addCopyrightLine(QString copyrightLine)
+{
+    d->copyrightLines.append(copyrightLine);
+}
+
+void tApplication::setCopyrightHolder(QString copyrightHolder)
+{
+    d->copyrightHolder = copyrightHolder;
+}
+
+void tApplication::setCopyrightYear(QString copyrightYear)
+{
+    d->copyrightYear = copyrightYear;
+}
+
+void tApplication::setApplicationLicense(tApplication::KnownLicenses license)
+{
+    d->license = license;
+}
+
+QPixmap tApplication::aboutDialogSplashGraphicFromSvg(QString svgFile)
+{
+    QImage image(SC_DPI_T(QSize(100, 340), QSize), QImage::Format_ARGB32);
+    QPainter painter(&image);
+    QSvgRenderer renderer(svgFile);
+    renderer.render(&painter, QRectF(QPointF(0, 0), SC_DPI_T(QSizeF(100, 340), QSizeF)));
+    return QPixmap::fromImage(image);
+}
+
+QString tApplication::genericName() {
+    return d->genericName;
+}
+
+QPixmap tApplication::aboutDialogSplashGraphic()
+{
+    return d->aboutDialogSplashGraphic;
+}
+
+QList<QPair<QString, QString>> tApplication::versions()
+{
+    QList<QPair<QString, QString>> versions;
+    versions.append({tApplication::applicationName(), tApplication::applicationVersion()});
+    versions.append(d->versions);
+    return versions;
+}
+
+QStringList tApplication::copyrightLines()
+{
+    QStringList copyrightLines = d->copyrightLines;
+
+    switch (d->license) {
+        case Gpl3:
+            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(tr("GNU General Public License, version 3")));
+            break;
+        case Gpl3OrLater:
+            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(tr("GNU General Public License, version 3, or later")));
+            break;
+        case Gpl2:
+            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(tr("GNU General Public License, version 2")));
+            break;
+        case Gpl2OrLater:
+            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(tr("GNU General Public License, version 2, or later")));
+            break;
+        case Lgpl3:
+            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(tr("GNU Lesser General Public License, version 3")));
+            break;
+        case Lgpl3OrLater:
+            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(tr("GNU Lesser General Public License, version 3, or later")));
+            break;
+        case Lgpl2_1:
+            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(tr("GNU Lesser General Public License, version 2.1")));
+            break;
+        case Lgpl2_1OrLater:
+            copyrightLines.prepend(tr("Licensed under the terms of the %1.").arg(tr("GNU Lesser General Public License, version 2.1, or later")));
+            break;
+        case Other: ;
+    }
+
+    if (!d->copyrightHolder.isEmpty()) {
+        copyrightLines.prepend(tr("Copyright © %1.").arg(d->copyrightYear.isEmpty() ? d->copyrightHolder : d->copyrightHolder + " " + d->copyrightYear));
+    }
+
+    return copyrightLines;
+}
+
+tApplication::KnownLicenses tApplication::applicationLicense()
+{
+    return d->license;
+}
+
+QString tApplication::copyrightHolder()
+{
+    return d->copyrightHolder;
+}
+
+QString tApplication::copyrightYear()
+{
+    return d->copyrightYear;
 }

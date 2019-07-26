@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += widgets multimedia
+QT       += widgets multimedia svg
 CONFIG   += c++14
 
 TARGET = the-libs
@@ -39,7 +39,7 @@ system("pkg-config --version") {
 }
 
 macx {
-    LIBS += -framework CoreFoundation
+    LIBS += -framework CoreFoundation -framework Cocoa
 }
 
 win32 {
@@ -61,6 +61,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += tvariantanimation.cpp \
+    taboutdialog.cpp \
     tcsdtools.cpp \
     tcsdtools/csdbuttonbox.cpp \
     tcsdtools/csdsizegrip.cpp \
@@ -84,6 +85,7 @@ SOURCES += tvariantanimation.cpp \
     tsystemsound.cpp
 
 HEADERS += tvariantanimation.h\
+    taboutdialog.h \
     tcsdtools.h \
     tcsdtools/csdbuttonbox.h \
     tcsdtools/csdsizegrip.h \
@@ -141,7 +143,7 @@ macx {
     prifiles.path = /usr/local/share/the-libs/pri
     module.files = qt_thelib_mac.pri
 
-    SOURCES += tnotification/tnotification-mac.cpp
+    SOURCES += tnotification/tnotification-mac.mm
 }
 
 win32 {
@@ -160,10 +162,13 @@ INSTALLS += target module header prifiles
 DISTFILES += \
     prifiles/buildmaster.pri \
     prifiles/gentranslations.pri \
+    prifiles/installtranslations.pri \
+    prifiles/checkblueprint.pri \
     qt_thelib.pri \
     qt_thelib_mac.pri
 
 FORMS += \
+    taboutdialog.ui \
     tcsdtools/csdbuttonbox.ui \
     tshortcuthud.ui
 

@@ -11,6 +11,7 @@
 #include <QPaintEvent>
 #include "tpropertyanimation.h"
 
+struct tToastPrivate;
 class THELIBSSHARED_EXPORT tToast : public QObject
 {
     Q_OBJECT
@@ -42,20 +43,14 @@ public slots:
     void dismiss();
 
 private:
-    QMap<QString, QString> actn;
-
-    QWidget *toastWidget, *announceActionWidget;
-    QLabel *titleLabel, *textLabel, *announceActionLabel;
-    QBoxLayout* buttons;
-
-    tVariantAnimation* hideTimer;
-    int currentAnimationValue;
+    tToastPrivate* d;
 
     bool canAnnounceAction = false;
     bool announcingAction = false;
     bool timerStopped = false;
 
     bool eventFilter(QObject *watched, QEvent *event);
+    void updateToastGeometry();
 };
 
 #endif // TTOAST_H
