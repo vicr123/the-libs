@@ -28,6 +28,7 @@ class tNotificationLinuxHelper : public QObject {
         ~tNotificationLinuxHelper();
 
         void setListeningId(uint id);
+        void dismiss();
 
     Q_SIGNALS:
         void didClick(QString key);

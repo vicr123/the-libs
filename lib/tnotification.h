@@ -60,6 +60,7 @@ public:
 
     void insertAction(QString key, QString text);
     void removeAction(QString key);
+    void clearActions();
 
     void insertHint(QString key, QVariant hint);
 signals:
@@ -67,6 +68,7 @@ signals:
 
 public slots:
     void post(bool deleteWhenDone = true);
+    void dismiss();
 
 private slots:
 

@@ -66,7 +66,6 @@ tPopover::tPopover(QWidget* popoverWidget, QObject *parent) : QObject(parent)
     d->blanker->setGraphicsEffect(d->blankerEffect);
 
     d->verticalSeperator = new QFrame();
-    d->verticalSeperator->setFrameShape(QFrame::VLine);
 }
 
 tPopover::~tPopover() {
@@ -126,14 +125,31 @@ void tPopover::show(QWidget* parent) {
     d->popoverWidget->setParent(parent);
     d->verticalSeperator->setParent(parent);
 
+    if (d->side == Bottom) {
+        d->verticalSeperator->resize(parent->width(), 1);
+        d->verticalSeperator->setFrameShape(QFrame::HLine);
+    } else {
+        d->verticalSeperator->resize(1, parent->height());
+        d->verticalSeperator->setFrameShape(QFrame::VLine);
+    }
+
     d->blanker->setGeometry(0, 0, parent->width(), parent->height());
-    d->verticalSeperator->resize(1, parent->height());
     if (d->width == -1) {
         d->popoverWidget->resize(parent->width(), parent->height());
-    } else if (d->width < 0) {
-        d->popoverWidget->resize(parent->width() + d->width, parent->height());
     } else {
-        d->popoverWidget->resize(d->width, parent->height());
+        if (d->side == Bottom) {
+            if (d->width < 0) {
+                d->popoverWidget->resize(parent->width(), parent->height() + d->width);
+            } else {
+                d->popoverWidget->resize(parent->width(), d->width);
+            }
+        } else {
+            if (d->width < 0) {
+                d->popoverWidget->resize(parent->width() + d->width, parent->height());
+            } else {
+                d->popoverWidget->resize(d->width, parent->height());
+            }
+        }
     }
 
     if (d->performBlanking) {
@@ -147,7 +163,10 @@ void tPopover::show(QWidget* parent) {
     }
 
     tVariantAnimation* popoverAnim = new tVariantAnimation();
-    if (isOpeningOnRight()) {
+    if (d->side == Bottom) {
+        popoverAnim->setStartValue(parent->height());
+        popoverAnim->setEndValue(parent->height() - d->popoverWidget->height());
+    } else if (isOpeningOnRight()) {
         popoverAnim->setStartValue(parent->width());
         popoverAnim->setEndValue(parent->width() - d->popoverWidget->width());
     } else {
@@ -157,10 +176,14 @@ void tPopover::show(QWidget* parent) {
     popoverAnim->setDuration(250);
     popoverAnim->setEasingCurve(QEasingCurve::OutCubic);
     connect(popoverAnim, &tVariantAnimation::valueChanged, [=](QVariant value) {
-        d->popoverWidget->move(value.toInt(), 0);
-        if (isOpeningOnRight()) {
+        if (d->side == Bottom) {
+            d->popoverWidget->move(0, value.toInt());
+            d->verticalSeperator->move(0, value.toInt() - 1);
+        } else if (isOpeningOnRight()) {
+            d->popoverWidget->move(value.toInt(), 0);
             d->verticalSeperator->move(value.toInt() - 1, 0);
         } else {
+            d->popoverWidget->move(value.toInt(), 0);
             d->verticalSeperator->move(value.toInt() + d->popoverWidget->width(), 0);
         }
     });
@@ -201,21 +224,30 @@ void tPopover::dismiss() {
     }
 
     tVariantAnimation* popoverAnim = new tVariantAnimation();
-    popoverAnim->setStartValue(d->popoverWidget->x());
-    if (isOpeningOnRight()) {
+    if (d->side == Bottom) {
+        //Opening on the bottom
+        popoverAnim->setStartValue(d->popoverWidget->y());
+        popoverAnim->setEndValue(d->parentWidget->height());
+    } else if (isOpeningOnRight()) {
         //Opening on the right
+        popoverAnim->setStartValue(d->popoverWidget->x());
         popoverAnim->setEndValue(d->parentWidget->width());
     } else {
+        //Opening on the left
+        popoverAnim->setStartValue(d->popoverWidget->x());
         popoverAnim->setEndValue(-d->parentWidget->width());
     }
     popoverAnim->setDuration(250);
     popoverAnim->setEasingCurve(QEasingCurve::OutCubic);
     connect(popoverAnim, &tVariantAnimation::valueChanged, [=](QVariant value) {
-        d->popoverWidget->move(value.toInt(), 0);
-
-        if (isOpeningOnRight()) {
+        if (d->side == Bottom) {
+            d->popoverWidget->move(0, value.toInt());
+            d->verticalSeperator->move(0, value.toInt() - 1);
+        } else if (isOpeningOnRight()) {
+            d->popoverWidget->move(value.toInt(), 0);
             d->verticalSeperator->move(value.toInt() - 1, 0);
         } else {
+            d->popoverWidget->move(value.toInt(), 0);
             d->verticalSeperator->move(value.toInt() + d->popoverWidget->width(), 0);
         }
     });
@@ -245,20 +277,26 @@ bool tPopover::eventFilter(QObject* watched, QEvent* event) {
                 if (d->width == -1) {
                     d->popoverWidget->resize(d->parentWidget->width(), d->parentWidget->height());
                 } else if (d->width < 0) {
-                    if (isOpeningOnRight()) {
+                    if (d->side == Bottom) {
+                        d->popoverWidget->setGeometry(0, -d->width, d->parentWidget->width(), d->parentWidget->height() + d->width);
+                    } else if (isOpeningOnRight()) {
                         d->popoverWidget->setGeometry(-d->width, 0, d->parentWidget->width() + d->width, d->parentWidget->height());
                     } else {
                         d->popoverWidget->setGeometry(0, 0, d->parentWidget->width() - d->width, d->parentWidget->height());
                     }
                 } else {
-                    if (isOpeningOnRight()) {
+                    if (d->side == Bottom) {
+                        d->popoverWidget->setGeometry(0, d->parentWidget->height() - d->width, d->parentWidget->width(), d->width);
+                    } else if (isOpeningOnRight()) {
                         d->popoverWidget->setGeometry(d->parentWidget->width() - d->width, 0, d->width, d->parentWidget->height());
                     } else {
                         d->popoverWidget->setGeometry(0, 0, d->width, d->parentWidget->height());
                     }
                 }
 
-                if (isOpeningOnRight()) {
+                if (d->side == Bottom) {
+                    d->verticalSeperator->setGeometry(0, d->popoverWidget->y() - 1, d->parentWidget->width(), 1);
+                } else if (isOpeningOnRight()) {
                     d->verticalSeperator->setGeometry(d->popoverWidget->x() - 1, 0, 1, d->parentWidget->height());
                 } else {
                     d->verticalSeperator->setGeometry(d->popoverWidget->geometry().right() + 1, 0, 1, d->parentWidget->height());

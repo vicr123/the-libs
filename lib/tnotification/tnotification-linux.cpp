@@ -65,6 +65,10 @@ void tNotification::post(bool deleteWhenDone) {
     });
 }
 
+void tNotification::dismiss() {
+    dd->h->dismiss();
+}
+
 void tNotification::initialize() {
     dd = new tNotificationPrivateByOS();
     dd->h = new tNotificationLinuxHelper();
@@ -96,4 +100,10 @@ void tNotificationLinuxHelper::actionClicked(uint id, QString key) {
 
 void tNotificationLinuxHelper::setListeningId(uint id) {
     this->currentId = id;
+}
+
+void tNotificationLinuxHelper::dismiss() {
+    QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.Notifications", "/org/freedesktop/Notifications", "org.freedesktop.Notifications", "CloseNotification");
+    message.setArguments({this->currentId});
+    QDBusConnection::sessionBus().asyncCall(message);
 }

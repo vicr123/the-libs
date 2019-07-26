@@ -105,3 +105,7 @@ void tNotification::insertAction(QString key, QString text) {
 void tNotification::removeAction(QString key) {
     this->actions.remove(key);
 }
+
+void tNotification::clearActions() {
+    this->actions.clear();
+}

@@ -33,7 +33,8 @@ class THELIBSSHARED_EXPORT tPopover : public QObject
 
         enum PopoverSide {
             Leading,
-            Trailing
+            Trailing,
+            Bottom
         };
 
         void setPopoverWidth(int width);
