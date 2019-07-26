@@ -6,7 +6,7 @@
     <message>
         <location filename="../tapplication.cpp" line="53"/>
         <source>Services</source>
-        <translation>Diensten</translation>
+        <translation>Voorzieningen</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="54"/>
@@ -16,12 +16,12 @@
     <message>
         <location filename="../tapplication.cpp" line="55"/>
         <source>Hide Others</source>
-        <translation>Verberg anderen</translation>
+        <translation>Verberg andere</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="56"/>
         <source>Show All</source>
-        <translation>Alles weergeven</translation>
+        <translation>Toon alles</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="57"/>
@@ -36,7 +36,7 @@
     <message>
         <location filename="../tapplication.cpp" line="59"/>
         <source>Quit %1</source>
-        <translation>%1 afsluiten</translation>
+        <translation>Stop %1</translation>
     </message>
 </context>
 <context>
@@ -60,7 +60,7 @@
         <location filename="../taboutdialog.cpp" line="14"/>
         <location filename="../taboutdialog.cpp" line="15"/>
         <source>About %1</source>
-        <translation>Ongeveer %1</translation>
+        <translation>Over %1</translation>
     </message>
 </context>
 <context>
