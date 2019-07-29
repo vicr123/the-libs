@@ -56,3 +56,7 @@ void tNotification::initialize() {
 void tNotification::destroy() {
     delete dd;
 }
+
+void tNotification::dismiss() {
+
+}
