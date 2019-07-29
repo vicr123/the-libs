@@ -14,6 +14,7 @@
 #include <QDBusConnection>
 #endif
 
+struct tNotificationPrivateByOS;
 class THELIBSSHARED_EXPORT tNotification : public QObject
 {
     Q_OBJECT
@@ -25,6 +26,7 @@ public:
     };
 
     explicit tNotification(QString summary = "", QString text = "", QObject *parent = 0);
+    ~tNotification();
 
     void setTransient(bool transient);
     bool transient();
@@ -56,22 +58,32 @@ public:
     void setAppIcon(QString appIcon);
     QString appIcon();
 
+    void insertAction(QString key, QString text);
+    void removeAction(QString key);
+    void clearActions();
+
     void insertHint(QString key, QVariant hint);
 signals:
     void actionClicked(QString key);
 
 public slots:
     void post(bool deleteWhenDone = true);
+    void dismiss();
 
 private slots:
 
 private:
     QString sum, txt, cat, snd, app, aIcon;
     bool isTransient = false, noSound = false;
-    uint replace = 0;
     int time = -1;
     Urgency urg = Normal;
     QVariantMap extraHints;
+    QMap<QString, QString> actions;
+
+    tNotificationPrivateByOS* dd;
+
+    void initialize();
+    void destroy();
 };
 
 #endif // TNOTIFICATION_H

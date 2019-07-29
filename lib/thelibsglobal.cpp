@@ -3,22 +3,62 @@
 #include <QDesktopWidget>
 #include <QDir>
 #include <QDirIterator>
+#include <QDebug>
 
-theLibsGlobal::theLibsGlobal() : QObject(NULL) {
+#include "private/nativeeventfilter.h"
+
+#ifdef Q_OS_MAC
+#define DPI_100_PERCENT 72.0
+#else
+#define DPI_100_PERCENT 96.0
+#endif
+
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
+
+struct theLibsGlobalPrivate {
+    bool powerStretch = false;
+    theLibsPrivate::NativeEventFilter* filter;
+#ifdef T_OS_UNIX_NOT_MAC
+    QSettings* themeSettings = new QSettings("theSuite", "ts-qtplatform");
+#endif
+};
+
+theLibsGlobal::theLibsGlobal() : QObject(nullptr) {
+    d = new theLibsGlobalPrivate();
+
+    //Install the native event filter
+    d->filter = new theLibsPrivate::NativeEventFilter(this);
+    QApplication::instance()->installNativeEventFilter(d->filter);
+    connect(d->filter, &theLibsPrivate::NativeEventFilter::powerStretchChanged, this, &theLibsGlobal::powerStretchChangedPrivate);
+
     #ifdef T_OS_UNIX_NOT_MAC
         QDBusMessage message = QDBusMessage::createMethodCall("org.thesuite.theshell", "/org/thesuite/Power", "org.thesuite.Power", "powerStretch");
         QDBusReply<bool> reply = QDBusConnection::sessionBus().call(message);
         if (reply.isValid()) {
-            powerStretch = reply.value();
+            d->powerStretch = reply.value();
         }
 
         QDBusConnection::sessionBus().connect("org.thesuite.theshell", "/org/thesuite/Power", "org.thesuite.Power", "powerStretchChanged", this, SIGNAL(powerStretchChangedPrivate(bool)));
+    #elif defined(Q_OS_WIN)
+        //Register for power notifications
+        QWidget* powerNotificationHandleWidget = new QWidget();
+        RegisterPowerSettingNotification(HWND(powerNotificationHandleWidget->winId()), &GUID_POWER_SAVING_STATUS, 0);
+
+        //Query power saver
+        SYSTEM_POWER_STATUS powerStatus;
+        BOOL success = GetSystemPowerStatus(&powerStatus);
+        if (success) {
+            d->powerStretch = powerStatus.SystemStatusFlag;
+        }
+
     #endif
 }
 
 theLibsGlobal* theLibsGlobal::instance() {
     static theLibsGlobal* appInst;
-    if (appInst == NULL) {
+    if (appInst == nullptr) {
         appInst = new theLibsGlobal;
     }
 
@@ -26,29 +66,27 @@ theLibsGlobal* theLibsGlobal::instance() {
 }
 
 bool theLibsGlobal::powerStretchEnabled() {
-    return powerStretch;
+    return d->powerStretch;
 }
 
 void theLibsGlobal::powerStretchChangedPrivate(bool isOn) {
-    this->powerStretch = isOn;
-    //QApplication::setStyle(QApplication::style()->)
+    d->powerStretch = isOn;
 
     emit powerStretchChanged(isOn);
-
 }
 
 bool theLibsGlobal::allowSystemAnimations() {
     #ifdef T_OS_UNIX_NOT_MAC
-        return themeSettings->value("accessibility/systemAnimations", true).toBool();
+        return d->themeSettings->value("accessibility/systemAnimations", true).toBool();
     #else
         return true;
     #endif
 }
 
 #ifdef QT_WIDGETS_LIB
-float theLibsGlobal::getDPIScaling() {
-    float currentDPI = QApplication::desktop()->logicalDpiX();
-    return currentDPI / (float) 96;
+double theLibsGlobal::getDPIScaling() {
+    double currentDPI = QApplication::desktop()->logicalDpiX();
+    return currentDPI / DPI_100_PERCENT;
 }
 #endif
 

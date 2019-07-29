@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>tcsdtools/close.svg</file>
+        <file>tcsdtools/max.svg</file>
+        <file>tcsdtools/min.svg</file>
+        <file>tcsdtools/res.svg</file>
+    </qresource>
+    <qresource prefix="/the-libs">
+        <file>icons/go-previous.svg</file>
+    </qresource>
+</RCC>

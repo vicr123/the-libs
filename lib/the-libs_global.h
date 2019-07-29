@@ -27,8 +27,15 @@
 #  define THELIBSSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
-#define THE_LIBS_API_VERSION 2
+#define THE_LIBS_API_VERSION 3
+#define THE_LIBS_VERSION "2.0"
 
+#ifdef QT_WIDGETS_LIB
+    #define SC_DPI(pixels) static_cast<int>(pixels * theLibsGlobal::getDPIScaling())
+    #define SC_DPI_T(value, type) static_cast<type>(value * theLibsGlobal::getDPIScaling())
+#endif
+
+struct theLibsGlobalPrivate;
 class THELIBSSHARED_EXPORT theLibsGlobal : public QObject {
     Q_OBJECT
 
@@ -36,28 +43,24 @@ class THELIBSSHARED_EXPORT theLibsGlobal : public QObject {
     static theLibsGlobal* instance();
 
 #ifdef QT_WIDGETS_LIB
-    static float getDPIScaling();
+    static double getDPIScaling();
 #endif
     static QStringList searchInPath(QString executable);
 
-    public slots:
+    public Q_SLOTS:
         bool powerStretchEnabled();
         bool allowSystemAnimations();
 
-    private slots:
+    private Q_SLOTS:
         void powerStretchChangedPrivate(bool isOn);
 
-    signals:
+    Q_SIGNALS:
         void powerStretchChanged(bool isOn);
 
     private:
         theLibsGlobal();
 
-        bool powerStretch = false;
-        #ifdef T_OS_UNIX_NOT_MAC
-            QSettings* themeSettings = new QSettings("theSuite", "ts-qtplatform");
-        #endif
-
+        theLibsGlobalPrivate* d;
 
 };
 

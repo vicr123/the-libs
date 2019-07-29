@@ -3,6 +3,10 @@
 #include <QSystemTrayIcon>
 #include <QTimer>
 
+struct tNotificationPrivateByOS {
+
+};
+
 void tNotification::post(bool deleteWhenDone) {
     QSystemTrayIcon* ic = new QSystemTrayIcon(QApplication::style()->standardIcon(QStyle::SP_MessageBoxInformation));
     ic->show();
@@ -11,4 +15,16 @@ void tNotification::post(bool deleteWhenDone) {
         ic->hide();
         ic->deleteLater();
     });
+}
+
+void tNotification::initialize() {
+    dd = new tNotificationPrivateByOS();
+}
+
+void tNotification::destroy() {
+    delete dd;
+}
+
+void tNotification::dismiss() {
+
 }

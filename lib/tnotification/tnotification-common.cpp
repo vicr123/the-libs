@@ -4,6 +4,14 @@ tNotification::tNotification(QString summary, QString text, QObject *parent) : Q
 {
     this->sum = summary;
     this->txt = text;
+
+    //Call the operating system specific handler
+    initialize();
+}
+
+tNotification::~tNotification() {
+    //Call the operating system specific handler
+    destroy();
 }
 
 void tNotification::setTransient(bool transient) {
@@ -88,4 +96,16 @@ void tNotification::setAppIcon(QString appIcon) {
 
 QString tNotification::appIcon() {
     return this->aIcon;
+}
+
+void tNotification::insertAction(QString key, QString text) {
+    this->actions.insert(key, text);
+}
+
+void tNotification::removeAction(QString key) {
+    this->actions.remove(key);
+}
+
+void tNotification::clearActions() {
+    this->actions.clear();
 }
