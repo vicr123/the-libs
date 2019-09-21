@@ -48,8 +48,9 @@ tApplication::tApplication(int& argc, char** argv) : QApplication(argc, argv)
     d = new tApplicationPrivate();
     d->applicationInstance = this;
 
-    //Mark some strings for translation so apps look right on macOS
+    //Mark some strings for translation
     if (false) {
+        //macOS Application Menu
         (void) QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Services");
         (void) QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Hide %1");
         (void) QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Hide Others");
@@ -57,6 +58,18 @@ tApplication::tApplication(int& argc, char** argv) : QApplication(argc, argv)
         (void) QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Preferences...");
         (void) QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "About %1");
         (void) QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Quit %1");
+
+        //QCommandLineParser
+        (void) QT_TRANSLATE_NOOP("QCommandLineParser", "Displays version information.");
+        (void) QT_TRANSLATE_NOOP("QCommandLineParser", "Displays this help.");
+        (void) QT_TRANSLATE_NOOP("QCommandLineParser", "Unknown option '%1'.");
+        (void) QT_TRANSLATE_NOOP("QCommandLineParser", "Unknown options: %1.");
+        (void) QT_TRANSLATE_NOOP("QCommandLineParser", "Missing value after '%1'.");
+        (void) QT_TRANSLATE_NOOP("QCommandLineParser", "Unexpected value after '%1'.");
+        (void) QT_TRANSLATE_NOOP("QCommandLineParser", "[options]");
+        (void) QT_TRANSLATE_NOOP("QCommandLineParser", "Usage: %1");
+        (void) QT_TRANSLATE_NOOP("QCommandLineParser", "Options:");
+        (void) QT_TRANSLATE_NOOP("QCommandLineParser", "Arguments:");
     }
 
     Q_INIT_RESOURCE(thelibs_translations);
