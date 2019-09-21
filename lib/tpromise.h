@@ -23,14 +23,19 @@ template<> struct tPromiseResults<void> {
 
 
 template <typename T> struct tPromisePrivate {
+    enum State {
+        Pending,
+        Resolved,
+        Errored
+    };
+
     using SuccessFunction = std::function<void(T)>;
     using FailureFunction = std::function<void(QString)>;
 
     using RunFunction = std::function<T(QString&)>;
     using RunAsyncFunction = std::function<void(SuccessFunction, FailureFunction)>;
 
-    bool resolved = false;
-    bool errored = false;
+    State state = Pending;
     bool functionSetToRunAfterSuccess = false;
     bool functionSetToRunAfterFailure = false;
     bool deleteAfter = false;
@@ -39,17 +44,30 @@ template <typename T> struct tPromisePrivate {
 
     SuccessFunction fnAfterSuccess;
     FailureFunction fnAfterFailure;
+
+    void callSuccessFunction() {
+        fnAfterSuccess(resolvedValue.result);
+    }
+
+    void callFailureFunction() {
+        fnAfterFailure(resolvedValue.error);
+    }
 };
 
-template <> struct tPromisePrivate<void> {
+template<> struct tPromisePrivate<void> {
+    enum State {
+        Pending,
+        Resolved,
+        Errored
+    };
+
     using SuccessFunction = std::function<void()>;
     using FailureFunction = std::function<void(QString)>;
 
     using RunFunction = std::function<void(QString&)>;
     using RunAsyncFunction = std::function<void(SuccessFunction, FailureFunction)>;
 
-    bool resolved = false;
-    bool errored = false;
+    State state = Pending;
     bool functionSetToRunAfterSuccess = false;
     bool functionSetToRunAfterFailure = false;
     bool deleteAfter = false;
@@ -58,9 +76,17 @@ template <> struct tPromisePrivate<void> {
 
     SuccessFunction fnAfterSuccess;
     FailureFunction fnAfterFailure;
+
+    void callSuccessFunction() {
+        fnAfterSuccess();
+    }
+
+    void callFailureFunction() {
+        fnAfterFailure(resolvedValue.error);
+    }
 };
 
-template <typename T> class tPromise
+template<typename T> class tPromise
 {
     public:
         explicit tPromise(typename tPromisePrivate<T>::RunFunction functionToRun);
@@ -72,15 +98,15 @@ template <typename T> class tPromise
         tPromiseResults<T> await();
 
         bool isResolved() {
-            return d->resolved;
+            return d->state == tPromisePrivate<T>::Resolved;
         }
 
         bool isErrored() {
-            return d->errored;
+            return d->state == tPromisePrivate<T>::Errored;
         }
 
         bool isPending() {
-            return !d->resolved && !d->errored;
+            return d->state == tPromisePrivate<T>::Pending;
         }
 
         void setDeleteAfter(bool deleteAfter) {
@@ -107,12 +133,12 @@ template<typename T> void tPromise<T>::watch()
         runFutureWatcher->deleteLater();
 
         if (d->resolvedValue.error != "") {
-            d->errored = true;
+            d->state = tPromisePrivate<T>::Errored;
             if (d->functionSetToRunAfterFailure) {
                 d->fnAfterFailure(d->resolvedValue.error);
             }
         } else {
-            d->resolved = true;
+            d->state = tPromisePrivate<T>::Resolved;
             if (d->functionSetToRunAfterSuccess) {
                 d->fnAfterSuccess(d->resolvedValue.result);
             }
@@ -130,12 +156,12 @@ template<> void tPromise<void>::watch()
         runFutureWatcher->deleteLater();
 
         if (d->resolvedValue.error != "") {
-            d->errored = true;
+            d->state = tPromisePrivate<void>::Errored;
             if (d->functionSetToRunAfterFailure) {
                 d->fnAfterFailure(d->resolvedValue.error);
             }
         } else {
-            d->resolved = true;
+            d->state = tPromisePrivate<void>::Resolved;
             if (d->functionSetToRunAfterSuccess) {
                 d->fnAfterSuccess();
             }
@@ -225,9 +251,13 @@ template<typename T> tPromise<T>::~tPromise()
 
 template<typename T> tPromise<T>* tPromise<T>::then(typename tPromisePrivate<T>::SuccessFunction functionToRunAfterSuccess) {
     Q_ASSERT(!d->functionSetToRunAfterSuccess);
-    if (!d->resolved && !d->functionSetToRunAfterSuccess) {
-        d->fnAfterSuccess = functionToRunAfterSuccess;
-        d->functionSetToRunAfterSuccess = true;
+    if (d->functionSetToRunAfterSuccess) return this;
+
+    d->fnAfterSuccess = functionToRunAfterSuccess;
+    d->functionSetToRunAfterSuccess = true;
+    if (isResolved()) {
+        d->callSuccessFunction();
+    } else {
         d->deleteAfter = true;
     }
     return this;
@@ -235,9 +265,13 @@ template<typename T> tPromise<T>* tPromise<T>::then(typename tPromisePrivate<T>:
 
 template<typename T> tPromise<T>* tPromise<T>::error(typename tPromisePrivate<T>::FailureFunction functionToRunOnFailure) {
     Q_ASSERT(!d->functionSetToRunAfterFailure);
-    if (!d->resolved && !d->functionSetToRunAfterFailure) {
-        d->fnAfterFailure = functionToRunOnFailure;
-        d->functionSetToRunAfterFailure = true;
+    if (d->functionSetToRunAfterFailure) return this;
+
+    d->fnAfterFailure = functionToRunOnFailure;
+    d->functionSetToRunAfterFailure = true;
+    if (isResolved()) {
+        d->callFailureFunction();
+    } else {
         d->deleteAfter = true;
     }
     return this;
