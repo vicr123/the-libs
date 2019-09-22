@@ -125,7 +125,7 @@ template<typename T> class tPromise
         void watch();
 };
 
-template<typename T> void tPromise<T>::watch()
+template<typename T> inline void tPromise<T>::watch()
 {
     QFutureWatcher<void>* runFutureWatcher = new QFutureWatcher<void>();
     runFutureWatcher->setFuture(d->runFuture);
@@ -148,7 +148,7 @@ template<typename T> void tPromise<T>::watch()
     });
 }
 
-template<> void tPromise<void>::watch()
+template<> inline void tPromise<void>::watch()
 {
     QFutureWatcher<void>* runFutureWatcher = new QFutureWatcher<void>();
     runFutureWatcher->setFuture(d->runFuture);
@@ -171,7 +171,7 @@ template<> void tPromise<void>::watch()
     });
 }
 
-template<typename T> tPromise<T>::tPromise(typename tPromisePrivate<T>::RunFunction functionToRun) {
+template<typename T> inline tPromise<T>::tPromise(typename tPromisePrivate<T>::RunFunction functionToRun) {
     d = new tPromisePrivate<T>;
     d->runFuture = QtConcurrent::run([=]() -> void {
         QString err;
@@ -182,7 +182,7 @@ template<typename T> tPromise<T>::tPromise(typename tPromisePrivate<T>::RunFunct
     watch();
 }
 
-template<> tPromise<void>::tPromise(typename tPromisePrivate<void>::RunFunction functionToRun) {
+template<> inline tPromise<void>::tPromise(typename tPromisePrivate<void>::RunFunction functionToRun) {
     d = new tPromisePrivate<void>;
     d->runFuture = QtConcurrent::run([=]() -> void {
         QString err;
@@ -193,9 +193,8 @@ template<> tPromise<void>::tPromise(typename tPromisePrivate<void>::RunFunction 
     watch();
 }
 
-template<typename T> tPromise<T>::tPromise(typename tPromisePrivate<T>::RunAsyncFunction functionToRun)
+template<typename T> inline tPromise<T>::tPromise(typename tPromisePrivate<T>::RunAsyncFunction functionToRun)
 {
-
     d = new tPromisePrivate<T>;
     d->runFuture = QtConcurrent::run([=]() -> void {
         QEventLoop* loop = new QEventLoop;
@@ -219,9 +218,8 @@ template<typename T> tPromise<T>::tPromise(typename tPromisePrivate<T>::RunAsync
     watch();
 }
 
-template<> tPromise<void>::tPromise(typename tPromisePrivate<void>::RunAsyncFunction functionToRun)
+template<> inline tPromise<void>::tPromise(typename tPromisePrivate<void>::RunAsyncFunction functionToRun)
 {
-
     d = new tPromisePrivate<void>;
     d->runFuture = QtConcurrent::run([=]() -> void {
         QEventLoop* loop = new QEventLoop;
@@ -244,12 +242,12 @@ template<> tPromise<void>::tPromise(typename tPromisePrivate<void>::RunAsyncFunc
     watch();
 }
 
-template<typename T> tPromise<T>::~tPromise()
+template<typename T> inline tPromise<T>::~tPromise()
 {
     delete d;
 }
 
-template<typename T> tPromise<T>* tPromise<T>::then(typename tPromisePrivate<T>::SuccessFunction functionToRunAfterSuccess) {
+template<typename T> inline tPromise<T>* tPromise<T>::then(typename tPromisePrivate<T>::SuccessFunction functionToRunAfterSuccess) {
     Q_ASSERT(!d->functionSetToRunAfterSuccess);
     if (d->functionSetToRunAfterSuccess) return this;
 
@@ -263,7 +261,7 @@ template<typename T> tPromise<T>* tPromise<T>::then(typename tPromisePrivate<T>:
     return this;
 }
 
-template<typename T> tPromise<T>* tPromise<T>::error(typename tPromisePrivate<T>::FailureFunction functionToRunOnFailure) {
+template<typename T> inline tPromise<T>* tPromise<T>::error(typename tPromisePrivate<T>::FailureFunction functionToRunOnFailure) {
     Q_ASSERT(!d->functionSetToRunAfterFailure);
     if (d->functionSetToRunAfterFailure) return this;
 
@@ -277,7 +275,7 @@ template<typename T> tPromise<T>* tPromise<T>::error(typename tPromisePrivate<T>
     return this;
 }
 
-template<typename T> tPromiseResults<T> tPromise<T>::await() {
+template<typename T> inline tPromiseResults<T> tPromise<T>::await() {
     if (this->isPending()) {
         QEventLoop* loop = new QEventLoop();
         this->then(std::bind(&QEventLoop::quit, loop));
