@@ -7,6 +7,10 @@
 
 #include "private/nativeeventfilter.h"
 
+#ifdef QT_WIDGETS_LIB
+#include <QPainter>
+#endif
+
 #ifdef Q_OS_MAC
 #define DPI_100_PERCENT 72.0
 #else
@@ -106,3 +110,29 @@ QStringList theLibsGlobal::searchInPath(QString executable) {
 
     return executables;
 }
+
+#ifdef QT_WIDGETS_LIB
+void theLibsGlobal::tintImage(QImage &image, QColor tint) {
+    //bool doPaint = true;
+    int failNum = 0;
+    for (int y = 0; y < image.height(); y++) {
+        for (int x = 0; x < image.width(); x++) {
+            QColor pixelCol = image.pixelColor(x, y);
+            //int blue = pixelCol.blue(), green = pixelCol.green(), red = pixelCol.red();
+            if ((pixelCol.blue() > pixelCol.green() - 10 && pixelCol.blue() < pixelCol.green() + 10) &&
+                    (pixelCol.green() > pixelCol.red() - 10 && pixelCol.green() < pixelCol.red() + 10)) {
+            } else {
+                failNum++;
+                //doPaint = false;
+            }
+        }
+    }
+
+    if (failNum < (image.size().width() * image.size().height()) / 8) {
+        QPainter painter(&image);
+        painter.setCompositionMode(QPainter::CompositionMode_SourceAtop);
+        painter.fillRect(0, 0, image.width(), image.height(), tint);
+        painter.end();
+    }
+}
+#endif

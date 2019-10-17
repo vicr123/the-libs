@@ -44,6 +44,7 @@ class THELIBSSHARED_EXPORT theLibsGlobal : public QObject {
 
 #ifdef QT_WIDGETS_LIB
     static double getDPIScaling();
+    static void tintImage(QImage &image, QColor tint);
 #endif
     static QStringList searchInPath(QString executable);
 
