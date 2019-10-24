@@ -15,7 +15,7 @@ const fs = require('fs');
     let qmakeFile;
     let files = fs.readdirSync(process.cwd());
     for (let file of files) {
-        if (file.endsWith(".pro")) qmakeFile = `${process.cwd()}/file`;
+        if (file.endsWith(".pro")) qmakeFile = `${process.cwd()}/${file}`;
     }
     
     await exec.exec(`qmake ${qmakeFile}`, [], options);
