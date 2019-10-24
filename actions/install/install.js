@@ -31,7 +31,7 @@ if (process.platform == 'linux') {
 }
 
 if (commands) {
-    const child_process = require('child-process');
+    const child_process = require('child_process');
     let retval = child_process.spawnSync(commands.join("; "), [], {
         shell: "/bin/bash"
     });
