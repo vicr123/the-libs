@@ -52,4 +52,6 @@ const fs = require('fs');
         core.setFailed("Not running on a supported platform.");
         return;
     }
-})();
+})().catch(function() {
+    core.setFailed("Catastrophic Failure");
+});
