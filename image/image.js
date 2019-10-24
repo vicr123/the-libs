@@ -13,10 +13,13 @@ if (process.platform === 'linux') {
     
     commands = [
         "source /opt/qt512/bin/qt512-env.sh",
-        'wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"'
-        "chmod a+x linuxdeployqt-continuous-x86_64.AppImage"
-        `./linuxdeployqt-continuous-x86_64.AppImage ~/appdir/usr/share/applications/*.desktop -appimage -extra-plugins=iconengines/libqsvgicon.so,imageformats/libqsvg.so${extraPlugins}`
+        'wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"',
+        "chmod a+x linuxdeployqt-continuous-x86_64.AppImage",
+        `./linuxdeployqt-continuous-x86_64.AppImage ~/appdir/usr/share/applications/*.desktop -appimage -extra-plugins=iconengines/libqsvgicon.so,imageformats/libqsvg.so${extraPlugins}`,
+        `cp *.AppImage ~/${core.getInput("image-name-linux")}`
     ];
+    
+    core.setOutput("image-path", `~/${core.getInput("image-name-linux")}`);
 } else if (process.platform === 'darwin') {
 //     commands = [
 //         "qmake",
