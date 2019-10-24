@@ -6,15 +6,15 @@ let commands = null;
 
 if (process.platform == 'linux') {
     commands = [
-        "sudo add-apt-repository -y ppa:beineri/opt-qt-5.12.3-xenial"
-        "sudo apt-get update -qq"
-        "sudo apt-get install libgl1-mesa-dev qt512-meta-minimal qt512x11extras qt512tools qt512translations qt512svg qt512multimedia"
-        "source /opt/qt512/bin/qt512-env.sh"
-        "git clone https://github.com/vicr123/the-libs.git"
-        "cd the-libs"
-        "git checkout blueprint"
-        "qmake"
-        "make"
+        "sudo add-apt-repository -y ppa:beineri/opt-qt-5.12.3-xenial",
+        "sudo apt-get update -qq",
+        "sudo apt-get install libgl1-mesa-dev qt512-meta-minimal qt512x11extras qt512tools qt512translations qt512svg qt512multimedia",
+        "source /opt/qt512/bin/qt512-env.sh",
+        "git clone https://github.com/vicr123/the-libs.git",
+        "cd the-libs",
+        "git checkout blueprint",
+        "qmake",
+        "make",
         "sudo make install INSTALL_ROOT=/"
     ];
     
