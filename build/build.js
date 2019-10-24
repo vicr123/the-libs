@@ -15,13 +15,13 @@ const fs = require('fs');
     let qmakeFile;
     let files = fs.readdirSync(process.cwd());
     for (let file of files) {
-        if (file.endsWith(".pro")) qmakeFile = file;
+        if (file.endsWith(".pro")) qmakeFile = `${process.cwd()}/file`;
     }
     
-    await exec.exec(`qmake ../${qmakeFile}`, options);
-    if (await exec.exec("make", options) !== 0) {
+    await exec.exec(`qmake ${qmakeFile}`, [], options);
+    if (await exec.exec("make", [], options) !== 0) {
         core.setFailed("make failed.");
         return;
     }
-    await exec.exec("make install INSTALL_ROOT=~/appdir", options);
+    await exec.exec("make install INSTALL_ROOT=~/appdir", [], options);
 })();
