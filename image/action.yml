@@ -1,0 +1,10 @@
+name: 'Image Project'
+description: "Create an image of a standard the* project"
+inputs:
+  extra-plugins-linux:
+    description: 'Extra plugins to deploy on Linux'
+    required: false
+    default: ''
+runs:
+  using: 'node12'
+  main: 'build.js'

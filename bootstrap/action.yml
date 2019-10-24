@@ -1,0 +1,14 @@
+name: 'Install the-libs'
+description: "Install the-libs"
+inputs:
+  extra-deps-linux:
+    description: 'Extra dependencies to install on Linux'
+    required: false
+    default: ''
+  extra-deps-mac:
+    description: 'Extra dependencies to install on macOS'
+    required: false
+    default: ''
+runs:
+  using: 'node12'
+  main: 'install.js'

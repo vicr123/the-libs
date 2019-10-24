@@ -1,0 +1,5 @@
+name: 'Build Project'
+description: "Build a standard the* project"
+runs:
+  using: 'node12'
+  main: 'build.js'
