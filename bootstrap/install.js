@@ -4,8 +4,6 @@ const core = require('@actions/core');
 const exec = require('@actions/exec');
 const process = require('process');
 
-let commands = null;
-
 (async () => {
     if (process.platform == 'linux') {
         await exec.exec("sudo add-apt-repository -y ppa:beineri/opt-qt-5.12.3-xenial");
