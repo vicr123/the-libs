@@ -21,7 +21,7 @@ const fs = require('fs');
         
         let applications = fs.readdirSync(`${process.env["HOME"]}/appdir/usr/share/applications/`);
         for (let application of applications) {
-            ldepqtArgs.push(application);
+            ldepqtArgs.push(`${process.env["HOME"]}/appdir/usr/share/applications/${application}`);
         }
         
         ldepqtArgs.push("-appimage");
@@ -34,7 +34,7 @@ const fs = require('fs');
         let appimages = fs.readdirSync(process.cwd());
         for (let appimage of appimages) {
             if (appimage.endsWith(".AppImage")) {
-                await io.cp(appimage, `${process.env["HOME"]}/${core.getInput("image-name-linux")}`);
+                await io.cp(`${process.cwd()}/${appimage}`, `${process.env["HOME"]}/${core.getInput("image-name-linux")}`);
             }
         }
         
