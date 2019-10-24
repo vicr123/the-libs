@@ -8,7 +8,7 @@ let commands = null;
 
 (async () => {
     if (process.platform == 'linux') {
-        await exec.exec("sudo add-apt-repository -y ppa:beineri/opt-qt-5.12.3-xenial);
+        await exec.exec("sudo add-apt-repository -y ppa:beineri/opt-qt-5.12.3-xenial");
         await exec.exec("sudo apt-get update -qq");
         await exec.exec(`sudo apt-get install libgl1-mesa-dev qt512-meta-minimal qt512x11extras qt512tools qt512translations qt512svg qt512multimedia ${core.getInput("extra-deps-linux")}`);
         
