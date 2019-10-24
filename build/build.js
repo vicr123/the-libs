@@ -18,7 +18,7 @@ const fs = require('fs');
         if (file.endsWith(".pro")) qmakeFile = file;
     }
     
-    await exec.exec(`qmake ../${file}`, options);
+    await exec.exec(`qmake ../${qmakeFile}`, options);
     if (await exec.exec("make", options) !== 0) {
         core.setFailed("make failed.");
         return;
