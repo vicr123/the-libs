@@ -9,6 +9,10 @@ inputs:
     description: 'Extra dependencies to install on macOS'
     required: false
     default: ''
+  the-libs-branch:
+    description: 'Branch of the-libs to install'
+    required: false
+    default: 'blueprint'
 runs:
   using: 'node12'
   main: 'install.js'

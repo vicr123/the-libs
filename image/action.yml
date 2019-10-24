@@ -13,4 +13,4 @@ outputs:
     description: 'Path of the final image'
 runs:
   using: 'node12'
-  main: 'build.js'
+  main: 'image.js'
