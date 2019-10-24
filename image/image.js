@@ -31,10 +31,14 @@ const fs = require('fs');
             return;
         }
         
-        await exec.exec(`${ldepqt} ~/appdir/usr/share/applications/*.desktop `);
-        await io.cp(`*.AppImage`, `~/${core.getInput("image-name-linux")}`);
+        let appimages = fs.readdirSync(process.cwd());
+        for (let appimage of appimages) {
+            if (appimage.endsWith(".AppImage")) {
+                await io.cp(appimage, `${process.env["HOME"]}/${core.getInput("image-name-linux")}`);
+            }
+        }
         
-        core.setOutput("image-path", `~/${core.getInput("image-name-linux")}`);
+        core.setOutput("image-path", `${process.env["HOME"]}/${core.getInput("image-name-linux")}`);
     } else if (process.platform === 'darwin') {
         //TODO: we need to figure out what to do with install_name_tool etc.
         core.setFailed("Not running on a supported platform.");
