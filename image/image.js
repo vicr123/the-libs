@@ -39,6 +39,9 @@ const fs = require('fs');
         }
         
         core.setOutput("image-path", `${process.env["HOME"]}/${core.getInput("image-name-linux")}`);
+        core.setOutput("asset-path", core.getInput("image-name-linux"));
+        core.setOutput("asset-name", core.getInput("image-name-linux"));
+        core.setOutput("asset-type", "application/x-appimage");
     } else if (process.platform === 'darwin') {
         //TODO: we need to figure out what to do with install_name_tool etc.
         core.setFailed("Not running on a supported platform.");
