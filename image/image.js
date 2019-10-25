@@ -51,7 +51,7 @@ const fs = require('fs');
         }
         
         bundlePath = `${process.cwd()}/build/${bundlePath}`;
-        await exec.exec("macdeployqt", [bundlePath]);
+        const executableName = bundlePath.substr(bundlePath.lastIndexOf("/")).remove(".app");
         
         //Embed libraries
         let embedLibs = core.getInput("embed-libraries-mac").split(" ");
@@ -63,10 +63,11 @@ const fs = require('fs');
         for (let lib of embedLibs) {
             if (lib == "") continue;
             
-            await io.cp(`/usr/local/lib/lib${lib}.dylib`, libDir);
+            await io.cp(`/usr/local/lib/lib${lib}.1.dylib`, libDir);
+            await exec.exec("install_name_tool", ["-change", `lib${lib}.1.dylib`, `@executable_path/../Libraries/lib${lib}.1.dylib`, `${bundlePath}/Contents/MacOS/${executableName}`])
         }
         
-        
+        await exec.exec("macdeployqt", [bundlePath]);
     } else if (process.platform === 'win32') {
         //TODO
         core.setFailed("Not running on a supported platform.");
