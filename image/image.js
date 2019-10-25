@@ -57,6 +57,7 @@ const fs = require('fs');
         embedLibs.push("the-libs");
         
         let libDir = `${bundlePath}/Contents/Libraries`;
+        await io.rmRF(libDir);
         await io.mkdirP(libDir);
         
         for (let lib of embedLibs) {
