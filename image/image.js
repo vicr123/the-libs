@@ -49,7 +49,7 @@ const fs = require('fs');
         }
         
         bundlePath = `${process.cwd()}/build/${bundlePath}`;
-        let executableName = bundlePath.remove(".app");
+        let executableName = bundlePath.replace(".app", "");
         if (executableName.includes("/")) executableName = executableName.substr(executableName.lastIndexOf("/"));
         
         //Embed libraries
