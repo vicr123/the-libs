@@ -41,9 +41,7 @@ const fs = require('fs');
         core.setOutput("image-path", `${process.env["HOME"]}/${core.getInput("image-name-linux")}`);
         core.setOutput("asset-name", core.getInput("image-name-linux"));
         core.setOutput("asset-content-type", "application/x-appimage");
-    } else if (process.platform === 'darwin') {
-        //TODO: we need to figure out what to do with install_name_tool etc.
-        
+    } else if (process.platform === 'darwin') {        
         let bundlePath = core.getInput("app-bundle-mac");
         if (bundlePath === "") {
             core.setFailed("Not running on a supported platform.");
@@ -51,7 +49,8 @@ const fs = require('fs');
         }
         
         bundlePath = `${process.cwd()}/build/${bundlePath}`;
-        const executableName = bundlePath.substr(bundlePath.lastIndexOf("/")).remove(".app");
+        let executableName = bundlePath.remove(".app");
+        if (executableName.includes("/")) executableName = executableName.substr(executableName.lastIndexOf("/"));
         
         //Embed libraries
         let embedLibs = core.getInput("embed-libraries-mac").split(" ");
@@ -77,6 +76,7 @@ const fs = require('fs');
         core.setFailed("Not running on a supported platform.");
         return;
     }
-})().catch(function() {
+})().catch(function(error) {
+    console.log(error);
     core.setFailed("Catastrophic Failure");
 });
