@@ -19,8 +19,6 @@ inputs:
 outputs:
   image-path:
     description: 'Path of the final image'
-  asset-path:
-    description: 'Asset path for uploading to GitHub Releases'
   asset-name:
     description: 'File name of the final image'
   asset-content-type:
