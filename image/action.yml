@@ -8,6 +8,14 @@ inputs:
     description: 'Extra plugins to deploy on Linux'
     required: false
     default: ''
+  app-bundle-mac:
+    description: 'Relative path to the application bundle'
+    required: false
+    default: ''
+  embed-libraries-mac:
+    description: 'Libraries (in /usr/local/lib) to embed in the application bundle'
+    required: false
+    default: ''
 outputs:
   image-path:
     description: 'Path of the final image'

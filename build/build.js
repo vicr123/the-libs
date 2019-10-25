@@ -23,5 +23,7 @@ const fs = require('fs');
         core.setFailed("make failed.");
         return;
     }
-    await exec.exec("make install INSTALL_ROOT=~/appdir", [], options);
+    
+    //On Linux, make the appdir
+    if (process.platform == 'linux') await exec.exec("make install INSTALL_ROOT=~/appdir", [], options);
 })();

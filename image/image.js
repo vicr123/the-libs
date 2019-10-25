@@ -44,8 +44,30 @@ const fs = require('fs');
         core.setOutput("asset-type", "application/x-appimage");
     } else if (process.platform === 'darwin') {
         //TODO: we need to figure out what to do with install_name_tool etc.
-        core.setFailed("Not running on a supported platform.");
-        return;
+        
+        let bundlePath = core.getInput("app-bundle-mac");
+        if (bundlePath === "") {
+            core.setFailed("Not running on a supported platform.");
+            return;
+        }
+        
+        bundlePath = `${process.cwd()}/build/${bundlePath}`;
+        await exec.exec("macdeployqt", [bundlePath]);
+        
+        //Embed libraries
+        let embedLibs = core.getInput("embed-libraries-mac").split(" ");
+        embedLibs.push("the-libs");
+        
+        let libDir = `${bundlePath}/Contents/Libraries`;
+        await io.mkdirP(libDir);
+        
+        for (let lib of embedLibs) {
+            if (lib == "") continue;
+            
+            await io.cp(`/usr/local/lib/lib${lib}.dylib`, libDir);
+        }
+        
+        
     } else if (process.platform === 'win32') {
         //TODO
         core.setFailed("Not running on a supported platform.");
