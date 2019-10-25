@@ -63,8 +63,8 @@ const fs = require('fs');
         for (let lib of embedLibs) {
             if (lib == "") continue;
             
-            await io.cp(`/usr/local/lib/lib${lib}.1.dylib`, libDir);
-            await exec.exec("install_name_tool", ["-change", `lib${lib}.1.dylib`, `@executable_path/../Libraries/lib${lib}.1.dylib`, `${bundlePath}/Contents/MacOS/${executableName}`])
+            await io.cp(`/usr/local/lib/lib${lib}.dylib`, `${libDir}/lib${lib}.dylib`);
+            await exec.exec("install_name_tool", ["-change", `lib${lib}.1.dylib`, `@executable_path/../Libraries/lib${lib}.dylib`, `${bundlePath}/Contents/MacOS/${executableName}`])
         }
         
         await exec.exec("macdeployqt", [bundlePath]);
