@@ -6,6 +6,7 @@ const io = require('@actions/io');
 const tc = require('@actions/tool-cache');
 const process = require('process');
 const fs = require('fs');
+const appdmg = require('appdmg');
 
 (async () => {
     if (process.platform === 'linux') {
@@ -63,11 +64,51 @@ const fs = require('fs');
         for (let lib of embedLibs) {
             if (lib == "") continue;
             
-            await exec.exec('cp', [`/usr/local/lib/lib${lib}.dylib`, `${libDir}/lib${lib}.dylib`]);
+            await exec.exec('cp', [`/usr/local/lib/lib${lib}.dylib`, `${libDir}/lib${lib}.1.dylib`]);
             await exec.exec("install_name_tool", ["-change", `lib${lib}.1.dylib`, `@executable_path/../Libraries/lib${lib}.dylib`, `${bundlePath}/Contents/MacOS/${executableName}`])
         }
         
         await exec.exec("macdeployqt", [bundlePath]);
+        
+        await new Promise(function(res, rej) {
+            let dmg = appdmg({
+                target: `${process.env["HOME"]}/${executableName}.dmg`,
+                basepath: `${process.cwd()}/build`,
+                specification: {
+                    title: executableName,
+                    icon: "dmgicon.icns",
+                    background: "app-dmg-background.png",
+                    "icon-size": 48,
+                    window: {
+                        size: {
+                            width: 600,
+                            height: 420
+                        }
+                    },
+                    contents: [
+                        {
+                            x: 125,
+                            y: 225,
+                            type: "file",
+                            path: bundlePath
+                        },
+                        {
+                            x: 470,
+                            y: 225,
+                            type: "link",
+                            path: "/Applications"
+                        }
+                    ]
+                }
+            });
+            
+            dmg.on('finish', res);
+            dmg.on('error', rej);
+        });
+        
+        core.setOutput("image-path", `${process.env["HOME"]}/${executableName}.dmg`);
+        core.setOutput("asset-name", `${process.env["GITHUB_REPOSITORY"].substr(process.env["GITHUB_REPOSITORY"].lastIndexOf("/"))}-macOS.dmg`);
+        core.setOutput("asset-content-type", "application/x-apple-diskimage");
     } else if (process.platform === 'win32') {
         //TODO
         core.setFailed("Not running on a supported platform.");
