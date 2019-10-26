@@ -6,7 +6,6 @@ const io = require('@actions/io');
 const tc = require('@actions/tool-cache');
 const process = require('process');
 const fs = require('fs');
-const appdmg = require('appdmg');
 
 (async () => {
     if (process.platform === 'linux') {
@@ -43,6 +42,8 @@ const appdmg = require('appdmg');
         core.setOutput("asset-name", core.getInput("image-name-linux"));
         core.setOutput("asset-content-type", "application/x-appimage");
     } else if (process.platform === 'darwin') {        
+        const appdmg = require('appdmg');
+        
         let bundlePath = core.getInput("app-bundle-mac");
         if (bundlePath === "") {
             core.setFailed("Not running on a supported platform.");
