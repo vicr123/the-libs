@@ -63,7 +63,7 @@ const fs = require('fs');
         for (let lib of embedLibs) {
             if (lib == "") continue;
             
-            await exex.exec('cp', [`/usr/local/lib/lib${lib}.dylib`, `${libDir}/lib${lib}.dylib`]);
+            await exec.exec('cp', [`/usr/local/lib/lib${lib}.dylib`, `${libDir}/lib${lib}.dylib`]);
             await exec.exec("install_name_tool", ["-change", `lib${lib}.1.dylib`, `@executable_path/../Libraries/lib${lib}.dylib`, `${bundlePath}/Contents/MacOS/${executableName}`])
         }
         
