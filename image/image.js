@@ -52,11 +52,13 @@ const fs = require('fs');
         
         bundlePath = `${process.cwd()}/build/${bundlePath}`;
         let executableName = bundlePath.replace(".app", "");
-        if (executableName.includes("/")) executableName = executableName.substr(executableName.lastIndexOf("/"));
+        if (executableName.includes("/")) executableName = executableName.substr(executableName.lastIndexOf("/") + 1);
         
         //Embed libraries
         let embedLibs = core.getInput("embed-libraries-mac").split(" ");
         embedLibs.push("the-libs");
+        
+        let macDeployQtArgs = [bundlePath];
         
         let libDir = `${bundlePath}/Contents/Libraries`;
         await io.rmRF(libDir);
@@ -66,10 +68,14 @@ const fs = require('fs');
             if (lib == "") continue;
             
             await exec.exec('cp', [`/usr/local/lib/lib${lib}.dylib`, `${libDir}/lib${lib}.1.dylib`]);
-            await exec.exec("install_name_tool", ["-change", `lib${lib}.1.dylib`, `@executable_path/../Libraries/lib${lib}.dylib`, `${bundlePath}/Contents/MacOS/${executableName}`])
+            await exec.exec("install_name_tool", ["-change", `lib${lib}.1.dylib`, `@executable_path/../Libraries/lib${lib}.1.dylib`, `${bundlePath}/Contents/MacOS/${executableName}`])
+            if (lib != "the-libs") {
+                await exec.exec("install_name_tool", ["-change", `libthe-libs.1.dylib`, `@executable_path/../Libraries/libthe-libs.1.dylib`, `${libDir}/lib${lib}.1.dylib`])
+            }
+//             macDeployQtArgs.push(`-executable=${libDir}/lib${lib}.1.dylib`);
         }
         
-        await exec.exec("macdeployqt", [bundlePath]);
+        await exec.exec("macdeployqt", macDeployQtArgs);
         
         await new Promise(function(res, rej) {
             let dmg = appdmg({
