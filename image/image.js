@@ -77,6 +77,10 @@ const fs = require('fs');
         
         await exec.exec("macdeployqt", macDeployQtArgs);
         
+        if (fs.existsSync(`${bundlePath}/Contents/PlugIns/styles/libContemporary.dylib`)) {
+                await exec.exec("install_name_tool", ["-change", `libthe-libs.1.dylib`, `@executable_path/../Libraries/libthe-libs.1.dylib`, `${bundlePath}/Contents/PlugIns/styles/libContemporary.dylib`])
+        }
+        
         await new Promise(function(res, rej) {
             let dmg = appdmg({
                 target: `${process.env["HOME"]}/${executableName}.dmg`,
