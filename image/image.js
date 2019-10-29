@@ -118,7 +118,7 @@ const fs = require('fs');
         });
         
         core.setOutput("image-path", `${process.env["HOME"]}/${executableName}.dmg`);
-        core.setOutput("asset-name", `${process.env["GITHUB_REPOSITORY"].substr(process.env["GITHUB_REPOSITORY"].lastIndexOf("/"))}-macOS.dmg`);
+        core.setOutput("asset-name", `${process.env["GITHUB_REPOSITORY"].substr(process.env["GITHUB_REPOSITORY"].lastIndexOf("/") + 1)}-macOS.dmg`);
         core.setOutput("asset-content-type", "application/x-apple-diskimage");
     } else if (process.platform === 'win32') {
         //TODO
