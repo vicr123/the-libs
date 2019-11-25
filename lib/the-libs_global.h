@@ -11,7 +11,7 @@
 #include <QStyleFactory>
 #endif
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(Q_OS_ANDROID)
 #define T_OS_UNIX_NOT_MAC
 #endif
 

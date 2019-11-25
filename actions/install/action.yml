@@ -1,5 +1,0 @@
-name: 'Install the-libs'
-description: "Install the-libs"
-runs:
-  using: 'node12'
-  main: 'install.js'

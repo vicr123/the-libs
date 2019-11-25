@@ -10,31 +10,33 @@ CONFIG   += c++14
 TARGET = the-libs
 TEMPLATE = lib
 
-system("pkg-config --version") {
-    CONFIG += link_pkgconfig
-    packagesExist(libunwind) {
-        message("Building with libunwind support");
-        PKGCONFIG += libunwind
-        DEFINES += HAVE_LIBUNWIND
-    } else {
-        message("libunwind not found on this system.");
-    }
+!android {
+    system("pkg-config --version") {
+        CONFIG += link_pkgconfig
+        packagesExist(libunwind) {
+            message("Building with libunwind support");
+            PKGCONFIG += libunwind
+            DEFINES += HAVE_LIBUNWIND
+        } else {
+            message("libunwind not found on this system.");
+        }
 
-    packagesExist(x11) {
-        message("Building with X11 support");
-        PKGCONFIG += x11
-        DEFINES += HAVE_X11
-        QT += x11extras
-    } else {
-        message("X11 not found on this system.");
-    }
+        !android:packagesExist(x11) {
+            message("Building with X11 support");
+            PKGCONFIG += x11
+            DEFINES += HAVE_X11
+            QT += x11extras
+        } else {
+            message("X11 not found on this system.");
+        }
 
-    packagesExist(gsettings-qt) {
-        message("Building with GSettings support");
-        PKGCONFIG += gsettings-qt
-        DEFINES += HAVE_GSETTINGS
-    } else {
-        message("GSettings not found on this system.");
+        packagesExist(gsettings-qt) {
+            message("Building with GSettings support");
+            PKGCONFIG += gsettings-qt
+            DEFINES += HAVE_GSETTINGS
+        } else {
+            message("GSettings not found on this system.");
+        }
     }
 }
 
@@ -123,7 +125,7 @@ unix {
     module.files = qt_thelib.pri
 }
 
-unix:!macx {
+unix:!macx:!android {
     QT += dbus
 
     target.path = /usr/lib
@@ -155,6 +157,16 @@ win32 {
     prifiles.path = "C:/Program Files/thelibs/pri"
 
     SOURCES += tnotification/tnotification-win.cpp
+}
+
+android {
+    target.path = /libs/armeabi-v7a
+    header.path = /include/the-libs
+    module.files = qt_thelib.pri
+    module.path = /mkspecs/modules
+    prifiles.path = /share/the-libs/pri
+
+    SOURCES += tnotification/tnotification-android.cpp
 }
 
 INSTALLS += target module header prifiles
