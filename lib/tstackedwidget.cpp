@@ -225,6 +225,7 @@ void tStackedWidget::doSetCurrentIndex(int index) {
                         QStackedWidget::setCurrentIndex(index);
                         d->doingNewAnimation = false;
                         group->deleteLater();
+                        effect->deleteLater();
                         d->currentAnimation = nullptr;
                     });
                     group->start();
