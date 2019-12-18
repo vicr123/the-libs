@@ -72,6 +72,7 @@ SOURCES += tvariantanimation.cpp \
     tdatetimepicker/datetimepart.cpp \
     tdatetimepicker/datetimepartbutton.cpp \
     terrorflash.cpp \
+    tpromise.cpp \
     tpropertyanimation.cpp \
     thelibsglobal.cpp \
     ttoast.cpp \

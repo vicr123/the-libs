@@ -21,6 +21,17 @@ template<> struct tPromiseResults<void> {
     QString error = "";
 };
 
+template<typename T> struct tPromiseFunctions
+{
+    using SuccessFunction = std::function<void(T)>;
+    using FailureFunction = std::function<void(QString)>;
+};
+
+template<> struct tPromiseFunctions<void>
+{
+    using SuccessFunction = std::function<void()>;
+    using FailureFunction = std::function<void(QString)>;
+};
 
 template <typename T> struct tPromisePrivate {
     enum State {
@@ -29,11 +40,8 @@ template <typename T> struct tPromisePrivate {
         Errored
     };
 
-    using SuccessFunction = std::function<void(T)>;
-    using FailureFunction = std::function<void(QString)>;
-
     using RunFunction = std::function<T(QString&)>;
-    using RunAsyncFunction = std::function<void(SuccessFunction, FailureFunction)>;
+    using RunAsyncFunction = std::function<void(typename tPromiseFunctions<T>::SuccessFunction, typename tPromiseFunctions<T>::FailureFunction)>;
 
     State state = Pending;
     bool functionSetToRunAfterSuccess = false;
@@ -42,8 +50,8 @@ template <typename T> struct tPromisePrivate {
     tPromiseResults<T> resolvedValue;
     QFuture<void> runFuture;
 
-    SuccessFunction fnAfterSuccess;
-    FailureFunction fnAfterFailure;
+    typename tPromiseFunctions<T>::SuccessFunction fnAfterSuccess;
+    typename tPromiseFunctions<T>::FailureFunction fnAfterFailure;
 
     void callSuccessFunction() {
         fnAfterSuccess(resolvedValue.result);
@@ -61,11 +69,8 @@ template<> struct tPromisePrivate<void> {
         Errored
     };
 
-    using SuccessFunction = std::function<void()>;
-    using FailureFunction = std::function<void(QString)>;
-
     using RunFunction = std::function<void(QString&)>;
-    using RunAsyncFunction = std::function<void(SuccessFunction, FailureFunction)>;
+    using RunAsyncFunction = std::function<void(tPromiseFunctions<void>::SuccessFunction, tPromiseFunctions<void>::FailureFunction)>;
 
     State state = Pending;
     bool functionSetToRunAfterSuccess = false;
@@ -74,8 +79,8 @@ template<> struct tPromisePrivate<void> {
     tPromiseResults<void> resolvedValue;
     QFuture<void> runFuture;
 
-    SuccessFunction fnAfterSuccess;
-    FailureFunction fnAfterFailure;
+    tPromiseFunctions<void>::SuccessFunction fnAfterSuccess;
+    tPromiseFunctions<void>::FailureFunction fnAfterFailure;
 
     void callSuccessFunction() {
         fnAfterSuccess();
@@ -93,8 +98,11 @@ template<typename T> class tPromise
         explicit tPromise(typename tPromisePrivate<T>::RunAsyncFunction functionToRun);
         ~tPromise();
 
-        tPromise<T>* then(typename tPromisePrivate<T>::SuccessFunction functionToRunAfterSuccess);
-        tPromise<T>* error(typename tPromisePrivate<T>::FailureFunction functionToRunOnFailure);
+        static tPromise<T>* runOnNewThread(typename tPromisePrivate<T>::RunAsyncFunction functionToRun);
+        static tPromise<T>* runOnSameThread(typename tPromisePrivate<T>::RunAsyncFunction functionToRun);
+
+        tPromise<T>* then(typename tPromiseFunctions<T>::SuccessFunction functionToRunAfterSuccess);
+        tPromise<T>* error(typename tPromiseFunctions<T>::FailureFunction functionToRunOnFailure);
         tPromiseResults<T> await();
 
         bool isResolved() {
@@ -120,10 +128,32 @@ template<typename T> class tPromise
         }
 
     private:
+        explicit tPromise();
         tPromisePrivate<T>* d;
 
+        void callNextFunction();
         void watch();
 };
+
+template<typename T> void tPromise<T>::callNextFunction()
+{
+    if (d->resolvedValue.error != "") {
+        d->state = tPromisePrivate<T>::Errored;
+        if (d->functionSetToRunAfterFailure) {
+            d->fnAfterFailure(d->resolvedValue.error);
+        }
+    } else {
+        d->state = tPromisePrivate<T>::Resolved;
+        if (d->functionSetToRunAfterSuccess) {
+            d->fnAfterSuccess(d->resolvedValue.result);
+        }
+    }
+
+    if (d->deleteAfter) this->deleteLater();
+}
+
+template<> void tPromise<void>::callNextFunction();
+
 
 template<typename T> inline void tPromise<T>::watch()
 {
@@ -131,43 +161,7 @@ template<typename T> inline void tPromise<T>::watch()
     runFutureWatcher->setFuture(d->runFuture);
     QObject::connect(runFutureWatcher, &QFutureWatcher<T>::finished, [=] {
         runFutureWatcher->deleteLater();
-
-        if (d->resolvedValue.error != "") {
-            d->state = tPromisePrivate<T>::Errored;
-            if (d->functionSetToRunAfterFailure) {
-                d->fnAfterFailure(d->resolvedValue.error);
-            }
-        } else {
-            d->state = tPromisePrivate<T>::Resolved;
-            if (d->functionSetToRunAfterSuccess) {
-                d->fnAfterSuccess(d->resolvedValue.result);
-            }
-        }
-
-        if (d->deleteAfter) this->deleteLater();
-    });
-}
-
-template<> inline void tPromise<void>::watch()
-{
-    QFutureWatcher<void>* runFutureWatcher = new QFutureWatcher<void>();
-    runFutureWatcher->setFuture(d->runFuture);
-    QObject::connect(runFutureWatcher, &QFutureWatcher<void>::finished, [=] {
-        runFutureWatcher->deleteLater();
-
-        if (d->resolvedValue.error != "") {
-            d->state = tPromisePrivate<void>::Errored;
-            if (d->functionSetToRunAfterFailure) {
-                d->fnAfterFailure(d->resolvedValue.error);
-            }
-        } else {
-            d->state = tPromisePrivate<void>::Resolved;
-            if (d->functionSetToRunAfterSuccess) {
-                d->fnAfterSuccess();
-            }
-        }
-
-        if (d->deleteAfter) this->deleteLater();
+        callNextFunction();
     });
 }
 
@@ -199,12 +193,12 @@ template<typename T> inline tPromise<T>::tPromise(typename tPromisePrivate<T>::R
     d->runFuture = QtConcurrent::run([=]() -> void {
         QEventLoop* loop = new QEventLoop;
 
-        typename tPromisePrivate<T>::SuccessFunction successFunction = [=](T retVal) {
+        typename tPromiseFunctions<T>::SuccessFunction successFunction = [=](T retVal) {
             d->resolvedValue.result = retVal;
             d->resolvedValue.error = "";
             QTimer::singleShot(0, loop, &QEventLoop::quit);
         };
-        typename tPromisePrivate<T>::FailureFunction failureFunction = [=](QString error) {
+        typename tPromiseFunctions<T>::FailureFunction failureFunction = [=](QString error) {
             d->resolvedValue.error.swap(error);
             QTimer::singleShot(0, loop, &QEventLoop::quit);
         };
@@ -224,11 +218,11 @@ template<> inline tPromise<void>::tPromise(typename tPromisePrivate<void>::RunAs
     d->runFuture = QtConcurrent::run([=]() -> void {
         QEventLoop* loop = new QEventLoop;
 
-        typename tPromisePrivate<void>::SuccessFunction successFunction = [=]() {
+        typename tPromiseFunctions<void>::SuccessFunction successFunction = [=]() {
             d->resolvedValue.error = "";
             QTimer::singleShot(0, loop, &QEventLoop::quit);
         };
-        typename tPromisePrivate<void>::FailureFunction failureFunction = [=](QString error) {
+        typename tPromiseFunctions<void>::FailureFunction failureFunction = [=](QString error) {
             d->resolvedValue.error.swap(error);
             QTimer::singleShot(0, loop, &QEventLoop::quit);
         };
@@ -247,7 +241,39 @@ template<typename T> inline tPromise<T>::~tPromise()
     delete d;
 }
 
-template<typename T> inline tPromise<T>* tPromise<T>::then(typename tPromisePrivate<T>::SuccessFunction functionToRunAfterSuccess) {
+template<typename T> tPromise<T>*tPromise<T>::runOnNewThread(typename tPromisePrivate<T>::RunAsyncFunction functionToRun)
+{
+    return new tPromise<T>(functionToRun);
+}
+
+template<typename T> tPromise<T>*tPromise<T>::runOnSameThread(typename tPromisePrivate<T>::RunAsyncFunction functionToRun)
+{
+    tPromise<T>* promise = new tPromise<T>;
+
+    typename tPromiseFunctions<T>::SuccessFunction successFunction = [=](T retVal) {
+        promise->d->resolvedValue.result = retVal;
+        promise->d->resolvedValue.error = "";
+        QTimer::singleShot(0, [=] {
+            promise->callNextFunction();
+        });
+    };
+    typename tPromiseFunctions<T>::FailureFunction failureFunction = [=](QString error) {
+        promise->d->resolvedValue.error.swap(error);
+        QTimer::singleShot(0, [=] {
+            promise->callNextFunction();
+        });
+
+    };
+    functionToRun(successFunction, failureFunction);
+
+    //Don't watch because this runs synchronously
+
+    return promise;
+}
+
+template<> tPromise<void>* tPromise<void>::runOnSameThread(typename tPromisePrivate<void>::RunAsyncFunction functionToRun);
+
+template<typename T> inline tPromise<T>* tPromise<T>::then(typename tPromiseFunctions<T>::SuccessFunction functionToRunAfterSuccess) {
     Q_ASSERT(!d->functionSetToRunAfterSuccess);
     if (d->functionSetToRunAfterSuccess) return this;
 
@@ -261,7 +287,7 @@ template<typename T> inline tPromise<T>* tPromise<T>::then(typename tPromisePriv
     return this;
 }
 
-template<typename T> inline tPromise<T>* tPromise<T>::error(typename tPromisePrivate<T>::FailureFunction functionToRunOnFailure) {
+template<typename T> inline tPromise<T>* tPromise<T>::error(typename tPromiseFunctions<T>::FailureFunction functionToRunOnFailure) {
     Q_ASSERT(!d->functionSetToRunAfterFailure);
     if (d->functionSetToRunAfterFailure) return this;
 
@@ -290,5 +316,9 @@ template<typename T> inline tPromiseResults<T> tPromise<T>::await() {
     return retval;
 }
 
+template<typename T> tPromise<T>::tPromise()
+{
+    d = new tPromisePrivate<T>;
+}
 
 #endif // TPROMISE_H
