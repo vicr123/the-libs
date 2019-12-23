@@ -5,17 +5,18 @@ tPropertyAnimation::tPropertyAnimation(QObject *target, const QByteArray &proper
     targetObject = target;
     targetName = propertyName;
 
-    connect(this, SIGNAL(valueChanged(QVariant)), this, SLOT(propertyChanged(QVariant)));
-    connect(targetObject, SIGNAL(destroyed(QObject*)), this, SLOT(deleteLater()));
-    connect(this, &QVariantAnimation::stateChanged, targetObject, [=](State newState, State oldState) {
+    connect(this, &tPropertyAnimation::valueChanged, this, &tPropertyAnimation::propertyChanged);
+    connect(targetObject, &tPropertyAnimation::destroyed, this, &tPropertyAnimation::stop);
+    connect(targetObject, &tPropertyAnimation::destroyed, this, &tPropertyAnimation::deleteLater);
+    connect(this, &tPropertyAnimation::stateChanged, targetObject, [=](State newState, State oldState) {
        if (newState == Running) {
            targetObject->setProperty("t-anim:" + targetName, QVariant::fromValue(this));
        } else {
-           targetObject->setProperty("t-anim:" + targetName, QVariant::fromValue((tPropertyAnimation*) NULL));
+           targetObject->setProperty("t-anim:" + targetName, QVariant::fromValue(static_cast<tPropertyAnimation*>(nullptr)));
        }
     });
-    connect(this, &QVariantAnimation::finished, targetObject, [=]() {
-        targetObject->setProperty("t-anim:" + targetName, QVariant::fromValue((tPropertyAnimation*) NULL));
+    connect(this, &tPropertyAnimation::finished, targetObject, [=]() {
+        targetObject->setProperty("t-anim:" + targetName, QVariant::fromValue(static_cast<tPropertyAnimation*>(nullptr)));
     });
 }
 
@@ -30,7 +31,7 @@ tPropertyAnimation::~tPropertyAnimation() {
 }
 
 void tPropertyAnimation::start(QAbstractAnimation::DeletionPolicy policy) {
-    if (targetObject->property("t-anim:" + targetName).value<tPropertyAnimation*>() == NULL) {
+    if (targetObject->property("t-anim:" + targetName).value<tPropertyAnimation*>() == nullptr) {
         targetObject->setProperty("t-anim:" + targetName, QVariant::fromValue(this));
         tVariantAnimation::start(policy);
     } else {

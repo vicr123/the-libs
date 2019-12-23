@@ -42,7 +42,6 @@ template<> tPromise<void>* tPromise<void>::runOnSameThread(typename tPromisePriv
     tPromise<void>* promise = new tPromise<void>;
 
     typename tPromiseFunctions<void>::SuccessFunction successFunction = [=]() {
-        promise->d->resolvedValue.error = "";
         QTimer::singleShot(0, [=] {
             promise->callNextFunction();
         });
