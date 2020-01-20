@@ -18,9 +18,10 @@
  *
  * *************************************/
 
+#include "the-libs_global.h"
 #include "tpromise.h"
 
-template<> void tPromise<void>::callNextFunction()
+template<> THELIBSSHARED_EXPORT void tPromise<void>::callNextFunction()
 {
     if (d->resolvedValue.error != "") {
         d->state = tPromisePrivate<void>::Errored;
@@ -37,7 +38,7 @@ template<> void tPromise<void>::callNextFunction()
     if (d->deleteAfter) this->deleteLater();
 }
 
-template<> tPromise<void>* tPromise<void>::runOnSameThread(typename tPromisePrivate<void>::RunAsyncFunction functionToRun)
+template<> THELIBSSHARED_EXPORT tPromise<void>* tPromise<void>::runOnSameThread(typename tPromisePrivate<void>::RunAsyncFunction functionToRun)
 {
     tPromise<void>* promise = new tPromise<void>;
 

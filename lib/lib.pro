@@ -45,7 +45,7 @@ macx {
 }
 
 win32 {
-    LIBS += -lUser32 -lKernel32
+    LIBS += -lUser32 -lKernel32 -lDbgHelp
     DEFINES += _WIN32_WINNT=0x0601 # Windows 7 or up
 }
 

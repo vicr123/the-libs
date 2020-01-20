@@ -4,9 +4,10 @@
 #include <QSysInfo>
 #include <QPainter>
 #include <QSvgRenderer>
+#include <QProcess>
+#include <QDir>
 
 #ifdef T_OS_UNIX_NOT_MAC
-#include <QProcess>
 #include <signal.h>
 #endif
 
@@ -14,6 +15,10 @@
 #include <CoreFoundation/CFBundle.h>
 #endif
 
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#include <DbgHelp.h>
+#endif
 
 #ifdef HAVE_LIBUNWIND
 #define UNW_LOCAL_ONLY
@@ -39,6 +44,15 @@ struct tApplicationPrivate {
     QStringList copyrightLines;
     tApplication::KnownLicenses license = tApplication::Other;
     QString copyrightHolder, copyrightYear;
+
+#ifdef T_OS_UNIX_NOT_MAC
+    static void crashTrapHandler(int sig);
+#elif defined(Q_OS_WIN)
+    static LONG WINAPI crashTrapHandler(PEXCEPTION_POINTERS exceptionInfo);
+    PCONTEXT crashCtx = nullptr;
+#else
+    static void crashTrapHandler();
+#endif
 };
 
 tApplicationPrivate* tApplication::d = nullptr;
@@ -105,12 +119,117 @@ bool tApplication::event(QEvent *event) {
     return QApplication::event(event);
 }
 
+QStringList tApplication::exportBacktrace(void* data)
+{
+    QStringList backtrace;
+    #ifdef HAVE_LIBUNWIND
+        unw_cursor_t cur;
+        unw_context_t ctx;
+
+        unw_getcontext(&ctx);
+        unw_init_local(&cur, &ctx);
+
+        //Start unwinding
+        while (unw_step(&cur) > 0) {
+            unw_word_t offset;
+            unw_word_t pc;
+            unw_get_reg(&cur, UNW_REG_IP, &pc);
+            if (pc == 0) break;
+
+            char sym[256];
+            if (unw_get_proc_name(&cur, sym, sizeof(sym), &offset) == 0) {
+                //Demangle the name depending on the current compiler
+                QString functionName;
+                #if defined(__GNUG__)
+                    //We're using a gcc compiler
+                    int status;
+                    char* demangled = abi::__cxa_demangle(sym, nullptr, nullptr, &status);
+                    if (status == 0) functionName = QString::fromLocal8Bit(demangled);
+                    std::free(demangled);
+                #elif defined(_MSC_VER)
+                    //We're using msvc
+                #endif
+
+                if (functionName == "") {
+                    functionName = QString::fromLocal8Bit(sym);
+                }
+
+                backtrace.append(QString("0x" + QString::number(pc, 16) + ": " + functionName));
+            } else {
+                backtrace.append(QString("0x" + QString::number(pc, 16) + ": ??\n").toUtf8());
+            }
+        }
+    #endif
+
+    #ifdef Q_OS_WIN
+        const int maxNameLen = 255;
+        HANDLE proc = GetCurrentProcess();
+        HANDLE thread = GetCurrentThread();
+        DWORD64 displacement;
+
+        CONTEXT ctx;
+        if (data == nullptr) {
+            ctx.ContextFlags = CONTEXT_FULL;
+            RtlCaptureContext(&ctx);
+        } else {
+            ctx = *reinterpret_cast<PCONTEXT>(data);
+        }
+
+        SymInitialize(proc, NULL, TRUE);
+        SymSetOptions(SYMOPT_LOAD_LINES);
+
+        STACKFRAME64 frame;
+        frame.AddrPC.Offset = ctx.Rip;
+        frame.AddrPC.Mode = AddrModeFlat;
+        frame.AddrFrame.Offset = ctx.Rbp;
+        frame.AddrFrame.Mode = AddrModeFlat;
+        frame.AddrStack.Offset = ctx.Rsp;
+        frame.AddrStack.Mode = AddrModeFlat;
+
+        //Start walking
+        while (StackWalk(IMAGE_FILE_MACHINE_AMD64, proc, thread, &frame, &ctx, NULL, SymFunctionTableAccess, SymGetModuleBase, NULL)) {
+            char buffer[sizeof(SYMBOL_INFO) + maxNameLen * sizeof(TCHAR)];
+            PSYMBOL_INFO symbol = reinterpret_cast<PSYMBOL_INFO>(buffer);
+            symbol->SizeOfStruct = sizeof(SYMBOL_INFO);
+            symbol->MaxNameLen = maxNameLen;
+            SymFromAddr(proc, frame.AddrPC.Offset, &displacement, symbol);
+
+            //Unmangle the name
+            char name[maxNameLen];
+            if (!UnDecorateSymbolName(symbol->Name, reinterpret_cast<PSTR>(name), maxNameLen, UNDNAME_COMPLETE)) {
+                memcpy(name, symbol->Name, maxNameLen);
+            }
+
+            backtrace.append(QString("0x" + QString::number(frame.AddrPC.Offset, 16) + ": " + QString::fromLatin1(name)));
+        }
+
+        SymCleanup(proc);
+    #endif
+    return backtrace;
+}
+
 tApplication::~tApplication() {
 
 }
 
+void writeCrashSysInfo(QStringList& bt) {
+    bt.append("Application name:\t" + tApplication::applicationName());
+    bt.append("Application PID:\t" + QString::number(tApplication::applicationPid()));
+    bt.append("Application Command:\t" + tApplication::applicationFilePath());
+
+    bt.append(" ");
+
+    bt.append("System Name:\t" + QSysInfo::prettyProductName());
+    bt.append("System Architecture:\t" + QSysInfo::currentCpuArchitecture());
+    bt.append("System Kernel:\t" + QSysInfo::kernelType());
+    bt.append("System Type:\t" + QSysInfo::productType());
+    bt.append("System Version:\t" + QSysInfo::productVersion());
+
+    bt.append(" ");
+}
+
 #ifdef T_OS_UNIX_NOT_MAC
-void crashTrapHandler(int sig) {
+void tApplicationPrivate::crashTrapHandler(int sig) {
     signal(sig, SIG_DFL);
     //Attempt to start Bonkers to tell the user that the app has crashed
     QStringList args = {
@@ -125,19 +244,7 @@ void crashTrapHandler(int sig) {
 
     //Write out crash information
     QStringList bt;
-    bt.append("Application name:\t" + tApplication::applicationName());
-    bt.append("Application PID:\t" + QString::number(tApplication::applicationPid()));
-    bt.append("Application Command:\t" + tApplication::applicationFilePath());
-
-    bt.append(" ");
-
-    bt.append("System Name:\t" + QSysInfo::prettyProductName());
-    bt.append("System Architecture:\t" + QSysInfo::currentCpuArchitecture());
-    bt.append("System Kernel:\t" + QSysInfo::kernelType());
-    bt.append("System Type:\t" + QSysInfo::productType());
-    bt.append("System Version:\t" + QSysInfo::productVersion());
-
-    bt.append(" ");
+    writeCrashSysInfo(bt);
 
     QString signalName;
     switch (sig) {
@@ -180,6 +287,41 @@ void crashTrapHandler(int sig) {
 }
 #endif
 
+#ifdef Q_OS_WIN
+LONG WINAPI tApplicationPrivate::crashTrapHandler(PEXCEPTION_POINTERS exceptionInfo) {
+
+    //Attempt to start Bonkers to tell the user that the app has crashed
+    QStringList args = {
+        "--appname", "\"" + tApplication::applicationName() + "\"",
+        "--apppath", "\"" + tApplication::applicationFilePath() + "\"",
+        "--bt"
+    };
+
+    QProcess* process = new QProcess();
+    process->setEnvironment(QProcess::systemEnvironment());
+    process->start(QDir(tApplication::applicationDirPath()).absoluteFilePath("bonkers.exe") + " " + args.join(" "), QProcess::Unbuffered | QProcess::WriteOnly);
+
+    //Write out crash information
+    QStringList bt;
+    writeCrashSysInfo(bt);
+
+    bt.append("Windows Exception " + QString("0x" + QString::number(exceptionInfo->ExceptionRecord->ExceptionCode, 16)));
+
+    bt.append(" ");
+    bt.append("Backtrace:");
+
+    //Get a backtrace
+    bt.append(tApplication::exportBacktrace(exceptionInfo->ContextRecord));
+    process->write(bt.join("\n").toUtf8());
+    process->closeWriteChannel();
+    process->waitForBytesWritten();
+
+    //Reset the signal and re-raise it
+
+    return EXCEPTION_EXECUTE_HANDLER;
+}
+#endif
+
 void tApplication::registerCrashTrap() {
     //macOS has its own crash trap handler so we don't do anything for macOS
 
@@ -189,56 +331,27 @@ void tApplication::registerCrashTrap() {
         //Enable the crash trap
         d->crashHandlingEnabled = true;
 
-        signal(SIGSEGV, crashTrapHandler);
-        signal(SIGBUS, crashTrapHandler);
-        signal(SIGFPE, crashTrapHandler);
-        signal(SIGILL, crashTrapHandler);
-        signal(SIGABRT, crashTrapHandler);
+        signal(SIGSEGV, tApplicationPrivate::crashTrapHandler);
+        signal(SIGBUS, tApplicationPrivate::crashTrapHandler);
+        signal(SIGFPE, tApplicationPrivate::crashTrapHandler);
+        signal(SIGILL, tApplicationPrivate::crashTrapHandler);
+        signal(SIGABRT, tApplicationPrivate::crashTrapHandler);
+    }
+#endif
+
+#ifdef Q_OS_WIN
+    //Check that the crash handler exists
+    if (QFile(QDir(this->applicationDirPath()).absoluteFilePath("bonkers.exe")).exists()) {
+        //Enable the crash trap
+        d->crashHandlingEnabled = true;
+
+        SetUnhandledExceptionFilter(tApplicationPrivate::crashTrapHandler);
     }
 #endif
 }
 
 QStringList tApplication::exportBacktrace() {
-    QStringList backtrace;
-    #ifdef HAVE_LIBUNWIND
-        unw_cursor_t cur;
-        unw_context_t ctx;
-
-        unw_getcontext(&ctx);
-        unw_init_local(&cur, &ctx);
-
-        //Start unwinding
-        while (unw_step(&cur) > 0) {
-            unw_word_t offset;
-            unw_word_t pc;
-            unw_get_reg(&cur, UNW_REG_IP, &pc);
-            if (pc == 0) break;
-
-            char sym[256];
-            if (unw_get_proc_name(&cur, sym, sizeof(sym), &offset) == 0) {
-                //Demangle the name depending on the current compiler
-                QString functionName;
-                #if defined(__GNUG__)
-                    //We're using a gcc compiler
-                    int status;
-                    char* demangled = abi::__cxa_demangle(sym, nullptr, nullptr, &status);
-                    if (status == 0) functionName = QString::fromLocal8Bit(demangled);
-                    std::free(demangled);
-                #elif defined(_MSC_VER)
-                    //We're using msvc
-                #endif
-
-                if (functionName == "") {
-                    functionName = QString::fromLocal8Bit(sym);
-                }
-
-                backtrace.append(QString("0x" + QString::number(pc, 16) + ": " + functionName));
-            } else {
-                backtrace.append(QString("0x" + QString::number(pc, 16) + ": ??\n").toUtf8());
-            }
-        }
-    #endif
-    return backtrace;
+    return tApplication::exportBacktrace(nullptr);
 }
 
 QIcon tApplication::applicationIcon() {
