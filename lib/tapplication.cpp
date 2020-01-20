@@ -114,12 +114,13 @@ void crashTrapHandler(int sig) {
     signal(sig, SIG_DFL);
     //Attempt to start Bonkers to tell the user that the app has crashed
     QStringList args = {
-        "--appname", tApplication::applicationName(),
-        "--apppath", tApplication::applicationFilePath(),
+        "--appname", "\"" + tApplication::applicationName() + "\"",
+        "--apppath", "\"" + tApplication::applicationFilePath() + "\"",
         "--bt"
     };
 
     QProcess* process = new QProcess();
+    process->setEnvironment(QProcess::systemEnvironment());
     process->start("/usr/lib/bonkers " + args.join(" "), QProcess::Unbuffered | QProcess::WriteOnly);
 
     //Write out crash information
@@ -180,6 +181,8 @@ void crashTrapHandler(int sig) {
 #endif
 
 void tApplication::registerCrashTrap() {
+    //macOS has its own crash trap handler so we don't do anything for macOS
+
 #ifdef T_OS_UNIX_NOT_MAC
     //Check that the crash handler exists
     if (QFile("/usr/lib/bonkers").exists()) {
