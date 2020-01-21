@@ -44,52 +44,52 @@
     <message>
         <location filename="../tapplication.cpp" line="77"/>
         <source>Displays version information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Laat informatie over deze versie zien.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="78"/>
         <source>Displays this help.</source>
-        <translation type="unfinished"></translation>
+        <translation>Laat deze hulp zien.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="79"/>
         <source>Unknown option &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Onbekende optie &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="80"/>
         <source>Unknown options: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Onbekende opties: %1.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="81"/>
         <source>Missing value after &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ontbrekende waarde na &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="82"/>
         <source>Unexpected value after &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Onverwachte waarde na &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="83"/>
         <source>[options]</source>
-        <translation type="unfinished"></translation>
+        <translation>[opties]</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="84"/>
         <source>Usage: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Gebruik: %1</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="85"/>
         <source>Options:</source>
-        <translation type="unfinished"></translation>
+        <translation>Opties:</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="86"/>
         <source>Arguments:</source>
-        <translation type="unfinished"></translation>
+        <translation>Argumenten:</translation>
     </message>
 </context>
 <context>
