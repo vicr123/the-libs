@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US">
+<TS version="2.1" sourcelanguage="en_US" language="ja_JP">
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
         <location filename="../tapplication.cpp" line="68"/>
         <source>Services</source>
-        <translation type="unfinished"></translation>
+        <translation>サービス</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="69"/>
         <source>Hide %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1を隠す</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="70"/>
         <source>Hide Others</source>
-        <translation type="unfinished"></translation>
+        <translation>他を隠す</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="71"/>
         <source>Show All</source>
-        <translation type="unfinished"></translation>
+        <translation>全てを表示する</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="72"/>
         <source>Preferences...</source>
-        <translation type="unfinished"></translation>
+        <translation>パフォーマンス...</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="73"/>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1について</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="74"/>
         <source>Quit %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1を終了する</translation>
     </message>
 </context>
 <context>
@@ -44,22 +44,22 @@
     <message>
         <location filename="../tapplication.cpp" line="77"/>
         <source>Displays version information.</source>
-        <translation type="unfinished"></translation>
+        <translation>バージョン情報を表示する。</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="78"/>
         <source>Displays this help.</source>
-        <translation type="unfinished"></translation>
+        <translation>ヘルプを表示します。</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="79"/>
         <source>Unknown option &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1というオプションは不明です。</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="80"/>
         <source>Unknown options: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>不明なオプション: %1</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="81"/>
