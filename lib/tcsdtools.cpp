@@ -118,8 +118,11 @@ tCsdGlobal::WindowControlSide tCsdGlobal::windowControlsEdge() {
             Atom actualType;
             int actualFormat;
             unsigned long items, bytesRemain;
-            unsigned char* data;
+            unsigned char* data = nullptr;
+
             XGetWindowProperty(QX11Info::display(), QX11Info::appRootWindow(), XInternAtom(QX11Info::display(), "_NET_SUPPORTING_WM_CHECK", False), 0, 32, False, XA_WINDOW, &actualType, &actualFormat, &items, &bytesRemain, &data);
+            if (data == nullptr) return Right;
+
             quint32 supportingWindow = reinterpret_cast<quint32*>(data)[0];
             XFree(data);
 

@@ -75,6 +75,7 @@ SOURCES += tvariantanimation.cpp \
     tpromise.cpp \
     tpropertyanimation.cpp \
     thelibsglobal.cpp \
+    ttitlelabel.cpp \
     ttoast.cpp \
     tvirtualkeyboard.cpp \
     tcircularspinner.cpp \
@@ -99,6 +100,7 @@ HEADERS += tvariantanimation.h\
     terrorflash.h \
     the-libs_global.h \
     tpropertyanimation.h \
+    ttitlelabel.h \
     ttoast.h \
     tnotification.h \
     tvirtualkeyboard.h \
