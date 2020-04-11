@@ -58,6 +58,10 @@ class THELIBSSHARED_EXPORT tApplication : public QApplication
         void installTranslators();
         static QString macOSBundlePath();
 
+    protected:
+        friend tApplicationPrivate;
+        static QStringList exportBacktrace(void* data);
+
     private:
         bool event(QEvent * event);
 
