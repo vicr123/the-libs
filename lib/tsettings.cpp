@@ -67,7 +67,10 @@ bool tSettings::contains(QString key) {
 
 void tSettings::setValue(QString key, QVariant value) {
     d->allSettings.at(0)->setValue(key, value);
-    emit settingChanged(key, value);
+
+    for (tSettings* settingsObjects : d->availableSettingsObjects) {
+        emit settingsObjects->settingChanged(key, value);
+    }
 }
 
 QVariant tSettings::value(QString key) {

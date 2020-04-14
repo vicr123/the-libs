@@ -64,6 +64,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += tvariantanimation.cpp \
     taboutdialog.cpp \
+    tconditionalwidget.cpp \
     tcsdtools.cpp \
     tcsdtools/csdbuttonbox.cpp \
     tcsdtools/csdsizegrip.cpp \
@@ -91,6 +92,7 @@ SOURCES += tvariantanimation.cpp \
 
 HEADERS += tvariantanimation.h\
     taboutdialog.h \
+    tconditionalwidget.h \
     tcsdtools.h \
     tcsdtools/csdbuttonbox.h \
     tcsdtools/csdsizegrip.h \
