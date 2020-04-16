@@ -82,6 +82,14 @@ QVariant tSettings::value(QString key) {
     return QVariant();
 }
 
+void tSettings::setDelimitedList(QString key, QStringList value) {
+    this->setValue(key, value.join(":"));
+}
+
+QStringList tSettings::delimitedList(QString key) {
+    return this->value(key).toString().split(":");
+}
+
 QStringList tSettings::childGroups() {
     QSet<QString> groups;
     for (QSharedPointer<QSettings> settings : d->allSettings) {
@@ -96,4 +104,12 @@ QStringList tSettings::childKeys() {
         groups.unite(QSet<QString>(settings->childKeys().begin(), settings->childKeys().end()));
     }
     return groups.values();
+}
+
+void tSettings::clear() {
+    d->allSettings.first()->clear();
+}
+
+void tSettings::sync() {
+    d->allSettings.first()->sync();
 }

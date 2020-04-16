@@ -73,6 +73,7 @@ SOURCES += tvariantanimation.cpp \
     tdatetimepicker/datetimepart.cpp \
     tdatetimepicker/datetimepartbutton.cpp \
     terrorflash.cpp \
+    tlocale.cpp \
     tpromise.cpp \
     tpropertyanimation.cpp \
     thelibsglobal.cpp \
@@ -102,6 +103,7 @@ HEADERS += tvariantanimation.h\
     tdatetimepicker/datetimepartbutton.h \
     terrorflash.h \
     the-libs_global.h \
+    tlocale.h \
     tpropertyanimation.h \
     tsettings.h \
     ttitlelabel.h \

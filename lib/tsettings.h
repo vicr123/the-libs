@@ -37,8 +37,14 @@ class THELIBSSHARED_EXPORT tSettings : public QObject {
         void setValue(QString key, QVariant value);
         QVariant value(QString key);
 
+        void setDelimitedList(QString key, QStringList value);
+        QStringList delimitedList(QString key);
+
         QStringList childGroups();
         QStringList childKeys();
+
+        void clear();
+        void sync();
 
     signals:
         void settingChanged(QString key, QVariant value);
