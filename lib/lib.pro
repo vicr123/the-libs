@@ -78,6 +78,7 @@ SOURCES += tvariantanimation.cpp \
     tpropertyanimation.cpp \
     thelibsglobal.cpp \
     tsettings.cpp \
+    tstatusframe.cpp \
     ttitlelabel.cpp \
     ttoast.cpp \
     tvirtualkeyboard.cpp \
@@ -106,6 +107,7 @@ HEADERS += tvariantanimation.h\
     tlocale.h \
     tpropertyanimation.h \
     tsettings.h \
+    tstatusframe.h \
     ttitlelabel.h \
     ttoast.h \
     tnotification.h \
@@ -191,7 +193,8 @@ DISTFILES += \
 FORMS += \
     taboutdialog.ui \
     tcsdtools/csdbuttonbox.ui \
-    tshortcuthud.ui
+    tshortcuthud.ui \
+    tstatusframe.ui
 
 RESOURCES += \
     thelibs_icons.qrc \

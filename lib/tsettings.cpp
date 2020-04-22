@@ -93,7 +93,11 @@ QStringList tSettings::delimitedList(QString key) {
 QStringList tSettings::childGroups() {
     QSet<QString> groups;
     for (QSharedPointer<QSettings> settings : d->allSettings) {
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+        groups.unite(settings->childGroups().toSet());
+#else
         groups.unite(QSet<QString>(settings->childGroups().begin(), settings->childGroups().end()));
+#endif
     }
     return groups.values();
 }
@@ -101,7 +105,11 @@ QStringList tSettings::childGroups() {
 QStringList tSettings::childKeys() {
     QSet<QString> groups;
     for (QSharedPointer<QSettings> settings : d->allSettings) {
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+        groups.unite(settings->childKeys().toSet());
+#else
         groups.unite(QSet<QString>(settings->childKeys().begin(), settings->childKeys().end()));
+#endif
     }
     return groups.values();
 }
