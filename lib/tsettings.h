@@ -24,14 +24,21 @@
 #include "the-libs_global.h"
 
 struct tSettingsPrivate;
+struct tSettingsGlobals;
 class THELIBSSHARED_EXPORT tSettings : public QObject {
         Q_OBJECT
     public:
         explicit tSettings(QObject* parent = nullptr);
+        explicit tSettings(QString applicationName, QObject* parent = nullptr);
+        explicit tSettings(QString organisationName, QString applicationName, QObject* parent = nullptr);
         ~tSettings();
 
         static void registerDefaults(QString filename);
+        static void registerDefaults(QString applicationName, QString filename);
+        static void registerDefaults(QString organisationName, QString applicationName, QString filename);
         static void deregisterDefaults(QString filename);
+        static void deregisterDefaults(QString applicationName, QString filename);
+        static void deregisterDefaults(QString organisationName, QString applicationName, QString filename);
 
         bool contains(QString key);
         void setValue(QString key, QVariant value);
@@ -43,14 +50,20 @@ class THELIBSSHARED_EXPORT tSettings : public QObject {
         QStringList childGroups();
         QStringList childKeys();
 
+        QStringList keysInGroup(QString group);
+        QStringList allKeys();
+
         void clear();
         void sync();
+
+        QSettings::Status status();
 
     signals:
         void settingChanged(QString key, QVariant value);
 
     private:
-        static tSettingsPrivate* d;
+        tSettingsPrivate* d;
+        static tSettingsGlobals* g;
 };
 
 #endif // TSETTINGS_H
