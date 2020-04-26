@@ -20,10 +20,11 @@
 #ifndef TTITLELABEL_H
 #define TTITLELABEL_H
 
+#include "the-libs_global.h"
 #include <QLabel>
 
 struct tTitleLabelPrivate;
-class tTitleLabel : public QLabel {
+class THELIBSSHARED_EXPORT tTitleLabel : public QLabel {
         Q_OBJECT
         Q_PROPERTY(bool backButtonShown READ backButtonShown WRITE setBackButtonShown NOTIFY backButtonShownChanged)
         Q_PROPERTY(bool backButtonIsMenu READ backButtonIsMenu WRITE setBackButtonIsMenu NOTIFY backButtonIsMenuChanged)
@@ -46,6 +47,8 @@ class tTitleLabel : public QLabel {
 
     private:
         tTitleLabelPrivate* d;
+
+        void updateFont();
 
         void paintEvent(QPaintEvent* event);
         void resizeEvent(QResizeEvent* event);

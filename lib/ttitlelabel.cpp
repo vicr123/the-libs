@@ -21,6 +21,7 @@
 
 #include <QPainter>
 #include <QToolButton>
+#include <QApplication>
 
 struct tTitleLabelPrivate {
     QToolButton* backButton;
@@ -40,9 +41,8 @@ tTitleLabel::tTitleLabel(QWidget* parent) : QLabel(parent) {
     d->backButton->setVisible(false);
     connect(d->backButton, &QToolButton::clicked, this, &tTitleLabel::backButtonClicked);
 
-    QFont font = this->font();
-    font.setPointSize(15);
-    this->setFont(font);
+    connect(qApp, &QApplication::fontChanged, this, &tTitleLabel::updateFont);
+    updateFont();
 
     this->setMargin(9);
 }
@@ -72,13 +72,11 @@ void tTitleLabel::setBackButtonShown(bool backButtonShown) {
     emit backButtonShownChanged(backButtonShown);
 }
 
-bool tTitleLabel::backButtonIsMenu()
-{
+bool tTitleLabel::backButtonIsMenu() {
     return d->backButtonIsMenu;
 }
 
-void tTitleLabel::setBackButtonIsMenu(bool backButtonIsMenu)
-{
+void tTitleLabel::setBackButtonIsMenu(bool backButtonIsMenu) {
     d->backButtonIsMenu = backButtonIsMenu;
     if (backButtonIsMenu) {
         d->backButton->setIcon(QIcon::fromTheme("application-menu"));
@@ -89,10 +87,16 @@ void tTitleLabel::setBackButtonIsMenu(bool backButtonIsMenu)
     emit backButtonIsMenuChanged(backButtonIsMenu);
 }
 
+void tTitleLabel::updateFont() {
+    QFont font = qApp->font(this);
+    font.setPointSizeF(font.pointSizeF() * 1.5);
+    this->setFont(font);
+}
+
 void tTitleLabel::paintEvent(QPaintEvent* event) {
     QLabel::paintEvent(event);
     QPainter painter(this);
-    painter.setPen(this->palette().color(QPalette::WindowText));
+    painter.setPen(theLibsGlobal::lineColor(this->palette().color(QPalette::WindowText)));
     painter.drawLine(0, this->height() - 1, this->width(), this->height() - 1);
 }
 
