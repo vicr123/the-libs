@@ -21,7 +21,7 @@ TEMPLATE = lib
             message("libunwind not found on this system.");
         }
 
-        !android:packagesExist(x11) {
+        !macx:packagesExist(x11) {
             message("Building with X11 support");
             PKGCONFIG += x11
             DEFINES += HAVE_X11

@@ -33,7 +33,6 @@ struct theLibsGlobalPrivate {
 
 theLibsGlobal::theLibsGlobal() : QObject(nullptr) {
     d = new theLibsGlobalPrivate();
-    d->contemporarySettings = new tSettings("theSuite", "contemporary_widget", this);
 
     //Install the native event filter
     d->filter = new theLibsPrivate::NativeEventFilter(this);
@@ -41,6 +40,8 @@ theLibsGlobal::theLibsGlobal() : QObject(nullptr) {
     connect(d->filter, &theLibsPrivate::NativeEventFilter::powerStretchChanged, this, &theLibsGlobal::powerStretchChangedPrivate);
 
 #ifdef T_OS_UNIX_NOT_MAC
+    d->contemporarySettings = new tSettings("theSuite", "contemporary_widget", this);
+
     QDBusMessage message = QDBusMessage::createMethodCall("org.thesuite.theshell", "/org/thesuite/Power", "org.thesuite.Power", "powerStretch");
     QDBusReply<bool> reply = QDBusConnection::sessionBus().call(message);
     if (reply.isValid()) {
@@ -115,9 +116,11 @@ QStringList theLibsGlobal::searchInPath(QString executable) {
 }
 
 QColor theLibsGlobal::lineColor(QColor textColor) {
+#ifdef T_OS_UNIX_NOT_MAC
     if (instance()->d->contemporarySettings->value("Lines/reduceIntensity").toBool()) {
         textColor.setAlpha(127);
     }
+#endif
     return textColor;
 }
 
