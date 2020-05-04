@@ -131,14 +131,18 @@ include($$PWD/prifiles/gentranslations.pri)
 header.files = *.h
 module.path = $$[QMAKE_MKSPECS]/modules
 prifiles.files = prifiles/*
-module.files = qt_thelib.pri
 
-target.path = $$[QT_INSTALL_LIBS]
-header.path = $$[QT_INSTALL_HEADERS]/the-libs
-prifiles.path = $$[QT_INSTALL_DATA]/the-libs
+unix {
+    module.files = qt_thelib.pri
+}
 
 unix:!macx:!android {
     QT += dbus
+
+    target.path = /usr/lib
+    header.path = /usr/include/the-libs
+    module.files = qt_thelib.pri
+    prifiles.path = /usr/share/the-libs/pri
 
     HEADERS += tnotification/tnotification-linux.h
     SOURCES += tnotification/tnotification-linux.cpp
@@ -147,31 +151,36 @@ unix:!macx:!android {
 macx {
     CONFIG(debug, debug|release): TARGET = the-libs_debug
 
+    target.path = /usr/local/lib
+    header.path = /usr/local/include/the-libs
+    prifiles.path = /usr/local/share/the-libs/pri
+    module.files = qt_thelib_mac.pri
+
     SOURCES += tnotification/tnotification-mac.mm
-
-    CONFIG += lib_bundle
-
-    FRAMEWORK_HEADERS.version = 1.0
-    FRAMEWORK_HEADERS.files = $$HEADERS
-    FRAMEWORK_HEADERS.path = Headers
-    QMAKE_BUNDLE_DATA += FRAMEWORK_HEADERS
 }
 
 win32 {
     CONFIG(debug, debug|release): TARGET = the-libsd
 
+    module.files = qt_thelib.pri
+    header.path = "C:/Program Files/thelibs/include"
+    target.path = "C:/Program Files/thelibs/lib"
+    prifiles.path = "C:/Program Files/thelibs/pri"
+
     SOURCES += tnotification/tnotification-win.cpp
 }
 
 android {
+    target.path = /libs/armeabi-v7a
+    header.path = /include/the-libs
+    module.files = qt_thelib.pri
+    module.path = /mkspecs/modules
+    prifiles.path = /share/the-libs/pri
+
     SOURCES += tnotification/tnotification-android.cpp
 }
 
-INSTALLS += target module prifiles
-
-!macx {
-    INSTALLS += header
-}
+INSTALLS += target module header prifiles
 
 DISTFILES += \
     prifiles/buildmaster.pri \

@@ -94,11 +94,7 @@ bool theLibsGlobal::allowSystemAnimations() {
 #ifdef QT_WIDGETS_LIB
 double theLibsGlobal::getDPIScaling() {
     double currentDPI = QApplication::desktop()->logicalDpiX();
-    if (qEnvironmentVariableIsSet("QT_FONT_DPI")) {
-        return currentDPI / static_cast<double>(qEnvironmentVariableIntValue("QT_FONT_DPI"));
-    } else {
-        return currentDPI / DPI_100_PERCENT;
-    }
+    return currentDPI / DPI_100_PERCENT;
 }
 #endif
 
