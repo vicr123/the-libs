@@ -53,18 +53,10 @@ const fs = require('fs');
         bundlePath = `${process.cwd()}/build/${bundlePath}`;
         let executableName = bundlePath.replace(".app", "");
         if (executableName.includes("/")) executableName = executableName.substr(executableName.lastIndexOf("/") + 1);
-
-        let installDir = "";
-        await exec.exec("qmake", ["-query", "QT_INSTALL_LIBS"], {
-            listeners: {
-                stdout: (data) => {
-                    installDir += data.toString()
-                }
-            }
-        });
         
         //Embed libraries
         let embedLibs = core.getInput("embed-libraries-mac").split(" ");
+        embedLibs.push("the-libs");
         
         let macDeployQtArgs = [bundlePath];
         
@@ -78,30 +70,7 @@ const fs = require('fs');
             await exec.exec('cp', [`/usr/local/lib/lib${lib}.dylib`, `${libDir}/lib${lib}.1.dylib`]);
             await exec.exec("install_name_tool", ["-change", `lib${lib}.1.dylib`, `@executable_path/../Libraries/lib${lib}.1.dylib`, `${bundlePath}/Contents/MacOS/${executableName}`])
             if (lib != "the-libs") {
-                await exec.exec("install_name_tool", ["-change", `the-libs.framework/Versions/1/the-libs`, `@executable_path/../Frameworks/the-libs.framework/Versions/Current/the-libs`, `${libDir}/lib${lib}.1.dylib`])
-            }
-//             macDeployQtArgs.push(`-executable=${libDir}/lib${lib}.1.dylib`);
-        }
-        
-//         the-libs.framework/Versions/1/the-libs
-        
-        //Embed frameworks
-        let embedFrameworks = core.getInput("embed-frameworks-mac").split(" ");
-        embedFrameworks.push("the-libs");
-        
-        let fwDir = `${bundlePath}/Contents/Frameworks`;
-        await io.rmRF(libDir);
-        await io.mkdirP(libDir);
-        
-        let qtFwPath = exec
-        
-        for (let framework of embedFrameworks) {
-            if (framework == "") continue;
-            
-            await exec.exec('cp', [`${installDir}/${framework}.framework`, `${fwDir}/${framework}.framework`]);
-            await exec.exec("install_name_tool", ["-change", `${framework}.framework/Versions/1/${framework}`, `@executable_path/../Frameworks/${lib}.framework/Versions/Current/${framework}`, `${bundlePath}/Contents/MacOS/${executableName}`])
-            if (lib != "the-libs") {
-                await exec.exec("install_name_tool", ["-change", `the-libs.framework/Versions/1/the-libs`, `@executable_path/../Frameworks/the-libs.framework/Versions/Current/the-libs`, `${fwDir}/${framework}.framework/Versions/Current/${framework}`])
+                await exec.exec("install_name_tool", ["-change", `libthe-libs.1.dylib`, `@executable_path/../Libraries/libthe-libs.1.dylib`, `${libDir}/lib${lib}.1.dylib`])
             }
 //             macDeployQtArgs.push(`-executable=${libDir}/lib${lib}.1.dylib`);
         }
@@ -109,7 +78,7 @@ const fs = require('fs');
         await exec.exec("macdeployqt", macDeployQtArgs);
         
         if (fs.existsSync(`${bundlePath}/Contents/PlugIns/styles/libContemporary.dylib`)) {
-                    await exec.exec("install_name_tool", ["-change", `the-libs.framework/Versions/1/the-libs`, `@executable_path/../Frameworks/the-libs.framework/Versions/Current/the-libs`, `${bundlePath}/Contents/PlugIns/styles/libContemporary.dylib`]);
+                await exec.exec("install_name_tool", ["-change", `libthe-libs.1.dylib`, `@executable_path/../Libraries/libthe-libs.1.dylib`, `${bundlePath}/Contents/PlugIns/styles/libContemporary.dylib`])
         }
         
         await new Promise(function(res, rej) {
