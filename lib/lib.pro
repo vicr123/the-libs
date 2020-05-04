@@ -139,8 +139,8 @@ unix {
 unix:!macx:!android {
     QT += dbus
 
-    target.path = /usr/lib
-    header.path = /usr/include/the-libs
+    target.path = $$[QT_INSTALL_LIBS]
+    header.path = $$[QT_INSTALL_HEADERS]/the-libs
     module.files = qt_thelib.pri
     prifiles.path = /usr/share/the-libs/pri
 
