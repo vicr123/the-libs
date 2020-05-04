@@ -103,6 +103,8 @@ bool tApplication::event(QEvent *event) {
     if (event->type() == QEvent::FileOpen) {
         QFileOpenEvent *openEvent = (QFileOpenEvent*) event;
         emit openFile(openEvent->file());
+
+        return true;
     } else if (event->type() == QEvent::LocaleChange) {
         if (d->localTranslator != nullptr) {
             //Reinstall the-libs translator
