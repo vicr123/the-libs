@@ -517,3 +517,13 @@ QString tApplication::copyrightYear()
 {
     return d->copyrightYear;
 }
+
+void tApplication::restart()
+{
+#ifdef Q_OS_MAC
+    QProcess::startDetached("open", {macOSBundlePath(), "-n"});
+#else
+    QProcess::startDetached(this->applicationFilePath());
+#endif
+    tApplication::quit();
+}
