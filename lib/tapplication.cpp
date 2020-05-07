@@ -523,7 +523,7 @@ void tApplication::restart()
 #ifdef Q_OS_MAC
     QProcess::startDetached("open", {macOSBundlePath(), "-n"});
 #else
-    QProcess::startDetached(this->applicationFilePath());
+    QProcess::startDetached(tApplication::applicationFilePath());
 #endif
     tApplication::quit();
 }
