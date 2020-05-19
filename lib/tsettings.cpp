@@ -185,6 +185,7 @@ void tSettings::registerDefaults(QString organisationName, QString applicationNa
     if (!g->settingsPaths.values(identifier).contains(filename)) {
         g->settingsPaths.insert(identifier, filename);
         g->allSettings.insert(identifier, QSharedPointer<QSettings>(new QSettings(filename, QSettings::IniFormat)));
+        qDebug() << "tSettings: Registered defaults for" << identifier.first << identifier.second << filename;
     }
 }
 
@@ -229,6 +230,18 @@ QVariant tSettings::value(QString key) {
     QList<QSharedPointer<QSettings>> settings = g->allSettings.values(d->identifier);
     for (auto i = settings.rbegin(); i != settings.rend(); i++) {
         if (i->data()->contains(key)) return i->data()->value(key);
+        if (i->data()->status() != QSettings::NoError) {
+            switch (i->data()->status()) {
+                case QSettings::AccessError:
+                    qDebug() << "tSettings: Access error:" << i->data()->fileName();
+                    break;
+                case QSettings::FormatError:
+                    qDebug() << "tSettings: Format error:" << i->data()->fileName();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     qWarning() << "No setting value available for key:" << key;
@@ -236,11 +249,17 @@ QVariant tSettings::value(QString key) {
 }
 
 void tSettings::setDelimitedList(QString key, QStringList value) {
-    this->setValue(key, value.join(":"));
+    if (value.count() == 0) {
+        this->setValue(key, "/");
+    } else {
+        this->setValue(key, value.join(":"));
+    }
 }
 
 QStringList tSettings::delimitedList(QString key) {
-    return this->value(key).toString().split(":");
+    QString value = this->value(key).toString();
+    if (value == "/") return QStringList();
+    return value.split(":");
 }
 
 QStringList tSettings::childGroups() {
