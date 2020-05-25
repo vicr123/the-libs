@@ -33,28 +33,28 @@ struct tSettingsGlobals {
             allSettings.insert(identifier, settings);
             settingsPaths.insert(identifier, "");
 
-            #ifndef Q_OS_WIN
-                //Set up the watcher once the event loop has started
-                QTimer::singleShot(0, [ = ] {
-                    QFileSystemWatcher* watcher = new QFileSystemWatcher();
-                    watcher->moveToThread(qApp->thread());
-                    QObject::connect(watcher, &QFileSystemWatcher::fileChanged, [ = ] {
-                        if (!watcher->files().contains(settings->fileName())) {
-                            watcher->addPath(settings->fileName());
-                        }
-                        this->notifyChanges(identifier);
-                    });
-                    watcher->addPath(settings->fileName());
-                    watchers.insert(identifier, watcher);
-                    notifyChanges(identifier);
+#ifndef Q_OS_WIN
+            //Set up the watcher once the event loop has started
+            QTimer::singleShot(0, [ = ] {
+                QFileSystemWatcher* watcher = new QFileSystemWatcher();
+                watcher->moveToThread(qApp->thread());
+                QObject::connect(watcher, &QFileSystemWatcher::fileChanged, [ = ] {
+                    if (!watcher->files().contains(settings->fileName())) {
+                        watcher->addPath(settings->fileName());
+                    }
+                    this->notifyChanges(identifier);
                 });
-            #endif
+                watcher->addPath(settings->fileName());
+                watchers.insert(identifier, watcher);
+                notifyChanges(identifier);
+            });
+#endif
 
             //Register settings from environment variables
             QString defaults = qEnvironmentVariable("THELIBS_TSETTINGS_DEFAULT_FILES");
             if (!defaults.isEmpty()) {
                 for (QString defaultDefinition : defaults.split(":")) {
-                    QStringList definition = defaults.split(";");
+                    QStringList definition = defaultDefinition.split(";");
                     if (definition.count() != 3) {
                         qDebug() << "tSettings: THELIBS_TSETTINGS_DEFAULT_FILES: defaults definition invalid";
                         continue;
