@@ -27,8 +27,8 @@
     #define THELIBSSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
-#define THE_LIBS_API_VERSION 4
-#define THE_LIBS_VERSION "2.1"
+#define THE_LIBS_API_VERSION 5
+#define THE_LIBS_VERSION "2.2"
 
 #ifdef QT_WIDGETS_LIB
     #define SC_DPI(pixels) static_cast<int>(pixels * theLibsGlobal::getDPIScaling())

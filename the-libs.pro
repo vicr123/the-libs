@@ -7,6 +7,6 @@ unittest.depends = library
 
 SUBDIRS += library
 
-!android {
-    unittest
-}
+#!android {
+#    unittest
+#}
