@@ -16,7 +16,7 @@
     <message>
         <location filename="../tapplication.cpp" line="70"/>
         <source>Hide Others</source>
-        <translation>Cuddiwch eraill </translation>
+        <translation>Cuddiwch Eraill</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="71"/>
@@ -26,7 +26,7 @@
     <message>
         <location filename="../tapplication.cpp" line="72"/>
         <source>Preferences...</source>
-        <translation>Dewisiadau</translation>
+        <translation>Dewisiadau...</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="73"/>
@@ -44,7 +44,7 @@
     <message>
         <location filename="../tapplication.cpp" line="77"/>
         <source>Displays version information.</source>
-        <translation>Dangoswyd gwybodaeth fersiwn</translation>
+        <translation>Dangoswyd gwybodaeth fersiwn.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="78"/>
