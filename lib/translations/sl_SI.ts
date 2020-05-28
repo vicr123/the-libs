@@ -113,7 +113,7 @@
         <location filename="../taboutdialog.cpp" line="14"/>
         <location filename="../taboutdialog.cpp" line="15"/>
         <source>About %1</source>
-        <translation>O %1</translation>
+        <translation>O programu %1</translation>
     </message>
 </context>
 <context>
