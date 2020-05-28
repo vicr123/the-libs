@@ -6,37 +6,37 @@
     <message>
         <location filename="../tapplication.cpp" line="68"/>
         <source>Services</source>
-        <translation type="unfinished"></translation>
+        <translation>Storitve</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="69"/>
         <source>Hide %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriti</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="70"/>
         <source>Hide Others</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriti ostale</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="71"/>
         <source>Show All</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaži vse</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="72"/>
         <source>Preferences...</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavitve...</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="73"/>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>O%1</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="74"/>
         <source>Quit %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapreti%1</translation>
     </message>
 </context>
 <context>
@@ -44,52 +44,52 @@
     <message>
         <location filename="../tapplication.cpp" line="77"/>
         <source>Displays version information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaže informacijo o verziji.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="78"/>
         <source>Displays this help.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaže to pomoč.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="79"/>
         <source>Unknown option &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neznana možnost &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="80"/>
         <source>Unknown options: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neznane možnosti %1.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="81"/>
         <source>Missing value after &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Manjka vrednost po &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="82"/>
         <source>Unexpected value after &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepričakovana vrednost po &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="83"/>
         <source>[options]</source>
-        <translation type="unfinished"></translation>
+        <translation>[možnosti]</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="84"/>
         <source>Usage: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Uporaba: %1</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="85"/>
         <source>Options:</source>
-        <translation type="unfinished"></translation>
+        <translation>Možnosti:</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="86"/>
         <source>Arguments:</source>
-        <translation type="unfinished"></translation>
+        <translation>Argumenti:</translation>
     </message>
 </context>
 <context>
@@ -97,23 +97,23 @@
     <message>
         <location filename="../taboutdialog.ui" line="194"/>
         <source>SOFTWARE</source>
-        <translation type="unfinished"></translation>
+        <translation>PROGRAMSKA OPREMA</translation>
     </message>
     <message>
         <location filename="../taboutdialog.ui" line="239"/>
         <source>COPYRIGHT</source>
-        <translation type="unfinished"></translation>
+        <translation>AVTORSKE PRAVICE</translation>
     </message>
     <message>
         <location filename="../taboutdialog.ui" line="299"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>V redu</translation>
     </message>
     <message>
         <location filename="../taboutdialog.cpp" line="14"/>
         <location filename="../taboutdialog.cpp" line="15"/>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>O %1</translation>
     </message>
 </context>
 <context>
@@ -121,7 +121,7 @@
     <message>
         <location filename="../tapplication.cpp" line="500"/>
         <source>Copyright © %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Avtorske pravice © %1.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="473"/>
@@ -133,47 +133,47 @@
         <location filename="../tapplication.cpp" line="491"/>
         <location filename="../tapplication.cpp" line="494"/>
         <source>Licensed under the terms of the %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Licencirano pod pogoji %1.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="473"/>
         <source>GNU General Public License, version 3</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU Genaralna Javna Licenca, verzija 3</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="476"/>
         <source>GNU General Public License, version 3, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU Genaralna Javna Licenca, verzija 3, ali pozneje</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="479"/>
         <source>GNU General Public License, version 2</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU Genaralna Javna Licenca, verzija 2</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="482"/>
         <source>GNU General Public License, version 2, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU Genaralna Javna Licenca, verzija 2, ali pozneje</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="485"/>
         <source>GNU Lesser General Public License, version 3</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU Manj Generalna Javna Licenca, verzija 3</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="488"/>
         <source>GNU Lesser General Public License, version 3, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU Manj Generalna Javna Licenca, verzija 3, ali pozneje</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="491"/>
         <source>GNU Lesser General Public License, version 2.1</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU Manj Generalna Javna Licenca, verzija 2.1</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="494"/>
         <source>GNU Lesser General Public License, version 2.1, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU Manj Generalna Javna Licenca, verzija 2.1, ali pozneje</translation>
     </message>
 </context>
 </TS>
