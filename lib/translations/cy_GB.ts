@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US" language="cy_GB">
+<TS version="2.1" language="cy_GB" sourcelanguage="en_US">
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
