@@ -31,7 +31,7 @@
     <message>
         <location filename="../tapplication.cpp" line="73"/>
         <source>About %1</source>
-        <translation>O%1</translation>
+        <translation>O programu %1</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="74"/>
