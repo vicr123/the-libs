@@ -67,7 +67,11 @@ void tTitleLabel::setBackButtonShown(bool backButtonShown) {
     d->backButtonShown = backButtonShown;
 
     d->backButton->setVisible(backButtonShown);
-    this->setContentsMargins(backButtonShown ? d->backButton->width() : 0, 0, 0, 0);
+    if (this->layoutDirection() == Qt::RightToLeft) {
+        this->setContentsMargins(0, 0, backButtonShown ? d->backButton->width() : 0, 0);
+    } else {
+        this->setContentsMargins(backButtonShown ? d->backButton->width() : 0, 0, 0, 0);
+    }
 
     emit backButtonShownChanged(backButtonShown);
 }
@@ -102,4 +106,8 @@ void tTitleLabel::paintEvent(QPaintEvent* event) {
 
 void tTitleLabel::resizeEvent(QResizeEvent* event) {
     d->backButton->setFixedHeight(this->height() - 1);
+
+    if (this->layoutDirection() == Qt::RightToLeft) {
+        d->backButton->move(this->width() - d->backButton->width(), 0);
+    }
 }
