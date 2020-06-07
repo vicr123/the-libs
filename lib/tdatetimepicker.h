@@ -25,11 +25,11 @@
 #include "the-libs_global.h"
 
 struct tDateTimePickerPrivate;
-class THELIBSSHARED_EXPORT tDateTimePicker : public QWidget
-{
+class THELIBSSHARED_EXPORT tDateTimePicker : public QWidget {
         Q_OBJECT
     public:
-        explicit tDateTimePicker(QWidget *parent = nullptr);
+        explicit tDateTimePicker(QWidget* parent = nullptr);
+        explicit tDateTimePicker(QString format, QWidget* parent = nullptr);
         ~tDateTimePicker();
 
         enum PickOption {
@@ -49,6 +49,8 @@ class THELIBSSHARED_EXPORT tDateTimePicker : public QWidget
 
     private:
         tDateTimePickerPrivate* d;
+
+        void init(QString format);
 };
 
 #endif // TDATETIMEPICKER_H
