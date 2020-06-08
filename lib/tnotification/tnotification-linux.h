@@ -22,7 +22,7 @@
 
 #include <QObject>
 class tNotificationLinuxHelper : public QObject {
-    Q_OBJECT
+        Q_OBJECT
     public:
         tNotificationLinuxHelper(QObject* parent = nullptr);
         ~tNotificationLinuxHelper();
@@ -32,9 +32,11 @@ class tNotificationLinuxHelper : public QObject {
 
     Q_SIGNALS:
         void didClick(QString key);
+        void didDismiss();
 
     public Q_SLOTS:
         void actionClicked(uint id, QString key);
+        void dismissed(uint id);
 
     private:
         uint currentId = 0;

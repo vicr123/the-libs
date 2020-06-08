@@ -10,6 +10,8 @@
 struct tNotificationPrivateByOS {
     tNotificationLinuxHelper* h;
     uint replace = 0;
+
+    bool deleteWhenDone = false;
 };
 
 void tNotification::post(bool deleteWhenDone) {
@@ -50,18 +52,18 @@ void tNotification::post(bool deleteWhenDone) {
     args.append(time);
     message.setArguments(args);
 
+    dd->deleteWhenDone = deleteWhenDone;
+
     QDBusPendingCall pendingCall = QDBusConnection::sessionBus().asyncCall(message);
     QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(pendingCall);
-    connect(watcher, &QDBusPendingCallWatcher::finished, [=](QDBusPendingCallWatcher* watcher) {
-        if (deleteWhenDone) {
-            this->deleteLater();
-        } else {
-            QDBusPendingReply<uint> reply = *watcher;
-            if (!reply.isError()) {
-                dd->replace = reply.argumentAt<0>();
-                dd->h->setListeningId(dd->replace);
-            }
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, [ = ](QDBusPendingCallWatcher * watcher) {
+        QDBusPendingReply<uint> reply = *watcher;
+        if (!reply.isError()) {
+            dd->replace = reply.argumentAt<0>();
+            dd->h->setListeningId(dd->replace);
         }
+
+        watcher->deleteLater();
     });
 }
 
@@ -73,12 +75,21 @@ void tNotification::initialize() {
     dd = new tNotificationPrivateByOS();
     dd->h = new tNotificationLinuxHelper();
 
-    QDBusConnection::sessionBus().connect("org.freedesktop.Notifications", "/org/freedesktop/Notifications", "org.freedesktop.Notifications", "ActionInvoked", dd->h, SLOT(actionClicked(uint,QString)));
+    QDBusConnection::sessionBus().connect("org.freedesktop.Notifications", "/org/freedesktop/Notifications", "org.freedesktop.Notifications", "NotificationClosed", dd->h, SLOT(dismissed(uint)));
+    QDBusConnection::sessionBus().connect("org.freedesktop.Notifications", "/org/freedesktop/Notifications", "org.freedesktop.Notifications", "ActionInvoked", dd->h, SLOT(actionClicked(uint, QString)));
     connect(dd->h, &tNotificationLinuxHelper::didClick, this, &tNotification::actionClicked);
+    connect(dd->h, &tNotificationLinuxHelper::didDismiss, this, [ = ] {
+        emit dismissed();
+
+        if (dd->deleteWhenDone) {
+            this->deleteLater();
+        }
+    });
 }
 
 void tNotification::destroy() {
-    QDBusConnection::sessionBus().disconnect("org.freedesktop.Notifications", "/org/freedesktop/Notifications", "org.freedesktop.Notifications", "ActionInvoked", dd->h, SLOT(actionClicked(uint,QString)));
+    QDBusConnection::sessionBus().disconnect("org.freedesktop.Notifications", "/org/freedesktop/Notifications", "org.freedesktop.Notifications", "NotificationClosed", dd->h, SLOT(dismissed(uint)));
+    QDBusConnection::sessionBus().disconnect("org.freedesktop.Notifications", "/org/freedesktop/Notifications", "org.freedesktop.Notifications", "ActionInvoked", dd->h, SLOT(actionClicked(uint, QString)));
 
     dd->h->deleteLater();
     delete dd;
@@ -95,6 +106,12 @@ tNotificationLinuxHelper::~tNotificationLinuxHelper() {
 void tNotificationLinuxHelper::actionClicked(uint id, QString key) {
     if (this->currentId == id) {
         emit didClick(key);
+    }
+}
+
+void tNotificationLinuxHelper::dismissed(uint id) {
+    if (this->currentId == id) {
+        emit didDismiss();
     }
 }
 
