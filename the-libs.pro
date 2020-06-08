@@ -5,4 +5,8 @@ library.subdir = lib
 unittest.subdir = test
 unittest.depends = library
 
-SUBDIRS += library unittest
+SUBDIRS += library
+
+#!android {
+#    unittest
+#}

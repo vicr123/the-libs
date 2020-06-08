@@ -50,10 +50,44 @@ struct tDateTimePickerPrivate {
     }
 };
 
-tDateTimePicker::tDateTimePicker(QWidget *parent) : QWidget(parent)
-{
+tDateTimePicker::tDateTimePicker(QWidget* parent) : QWidget(parent) {
     d = new tDateTimePickerPrivate();
+    QString foundChars;
+    QString dateFormat = d->locale.dateFormat(QLocale::ShortFormat);
+    for (QChar c : dateFormat) {
+        if (!foundChars.contains(c) && QStringLiteral("dMy").contains(c)) {
+            foundChars.append(c);
+        }
+    }
+    foundChars.append("h:m:s a");
 
+    init(foundChars);
+}
+
+tDateTimePicker::tDateTimePicker(QString format, QWidget* parent) : QWidget(parent) {
+    d = new tDateTimePickerPrivate();
+    init(format);
+}
+
+tDateTimePicker::~tDateTimePicker() {
+    delete d;
+}
+
+void tDateTimePicker::setDateTime(QDateTime dateTime) {
+    d->dateTime = dateTime;
+    emit dateTimeChanged(d->dateTime);
+}
+
+QDateTime tDateTimePicker::currentDateTime() {
+    return d->dateTime;
+}
+
+void tDateTimePicker::setPickOptions(PickOptions options) {
+    d->datePart->setVisible(options & PickDate);
+    d->timePart->setVisible(options & PickTime);
+}
+
+void tDateTimePicker::init(QString format) {
     d->datePart = new QWidget(this);
     d->timePart = new QWidget(this);
 
@@ -64,18 +98,10 @@ tDateTimePicker::tDateTimePicker(QWidget *parent) : QWidget(parent)
     layout->addStretch(0);
     this->setLayout(layout);
 
-    QString dateFormat = d->locale.dateFormat(QLocale::ShortFormat);
-    QString foundChars;
-    for (QChar c : dateFormat) {
-        if (!foundChars.contains(c) && QStringLiteral("dMy").contains(c)) {
-            foundChars.append(c);
-        }
-    }
-    foundChars.append("h:m:s a");
 
     QBoxLayout* dateLayout = new QBoxLayout(QBoxLayout::LeftToRight, d->datePart);
     QBoxLayout* timeLayout = new QBoxLayout(QBoxLayout::LeftToRight, d->timePart);
-    for (QChar c : foundChars) {
+    for (QChar c : format) {
         QLayout* layout;
 
         if (QStringLiteral("dMy").contains(c)) {
@@ -88,7 +114,7 @@ tDateTimePicker::tDateTimePicker(QWidget *parent) : QWidget(parent)
         if (QStringLiteral("dMyhHmsa").contains(c)) {
             DateTimePart* part = new DateTimePart(this);
             part->setValueType(c);
-            connect(this, &tDateTimePicker::dateTimeChanged, part, [=](QDateTime dateTime) {
+            connect(this, &tDateTimePicker::dateTimeChanged, part, [ = ](QDateTime dateTime) {
                 part->blockSignals(true);
                 part->setValue(d->valueForPart(c));
                 part->blockSignals(false);
@@ -97,7 +123,7 @@ tDateTimePicker::tDateTimePicker(QWidget *parent) : QWidget(parent)
                     part->setMaxValue(dateTime.date().daysInMonth());
                 }
             });
-            connect(part, &DateTimePart::valueChanged, this, [=](int value) {
+            connect(part, &DateTimePart::valueChanged, this, [ = ](int value) {
                 QDate newDate = d->dateTime.date();
                 QTime newTime = d->dateTime.time();
                 switch (c.unicode()) {
@@ -153,7 +179,7 @@ tDateTimePicker::tDateTimePicker(QWidget *parent) : QWidget(parent)
             d->dateTimeParts.append(part);
             widgetToAdd = part;
         } else {
-            QLabel* label = new QLabel(parent);
+            QLabel* label = new QLabel(this->parentWidget());
             label->setText(c);
             widgetToAdd = label;
         }
@@ -164,22 +190,4 @@ tDateTimePicker::tDateTimePicker(QWidget *parent) : QWidget(parent)
     d->timePart->setLayout(timeLayout);
 
     this->setDateTime(QDateTime::currentDateTime());
-}
-
-tDateTimePicker::~tDateTimePicker() {
-    delete d;
-}
-
-void tDateTimePicker::setDateTime(QDateTime dateTime) {
-    d->dateTime = dateTime;
-    emit dateTimeChanged(d->dateTime);
-}
-
-QDateTime tDateTimePicker::currentDateTime() {
-    return d->dateTime;
-}
-
-void tDateTimePicker::setPickOptions(PickOptions options) {
-    d->datePart->setVisible(options & PickDate);
-    d->timePart->setVisible(options & PickTime);
 }

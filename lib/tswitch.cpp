@@ -24,14 +24,11 @@
 #include <QPainter>
 #include <QStaticText>
 
-tSwitch::tSwitch(QWidget *parent) : QPushButton(parent)
-{
+tSwitch::tSwitch(QWidget* parent) : QPushButton(parent) {
     this->setCheckable(true);
     this->setFixedSize(this->sizeHint());
 
     innerRect = QRect(0, 0, this->height(), this->width());
-
-    connect(this, SIGNAL(toggled(bool)), this, SLOT(checkChanging(bool)));
 }
 
 QPalette::ColorGroup tSwitch::IsActiveColorRole() {
@@ -42,7 +39,7 @@ QPalette::ColorGroup tSwitch::IsActiveColorRole() {
     }
 }
 
-void tSwitch::paintEvent(QPaintEvent *event) {
+void tSwitch::paintEvent(QPaintEvent* event) {
     QPainter painter(this);
 
     painter.setFont(this->font());
@@ -58,7 +55,7 @@ void tSwitch::paintEvent(QPaintEvent *event) {
     if (iText == "") {
         painter.drawPixmap(innerRect.left() - 10 - this->height() / 2, (this->height() / 2 - 16 / 2), 16, 16, this->iIcon.pixmap(16, 16));
     } else {
-        painter.drawStaticText(innerRect.left() - metrics.width(iText) - this->height() / 2, (this->height() / 2 - metrics.height() / 2), QStaticText(iText));
+        painter.drawStaticText(innerRect.left() - metrics.horizontalAdvance(iText) - this->height() / 2, (this->height() / 2 - metrics.height() / 2), QStaticText(iText));
     }
     painter.setBrush(this->palette().brush(IsActiveColorRole(), QPalette::WindowText));
     painter.drawStaticText(innerRect.right() + this->height() / 2, (this->height() / 2 - metrics.height() / 2), QStaticText(oText));
@@ -66,16 +63,14 @@ void tSwitch::paintEvent(QPaintEvent *event) {
     painter.setPen(this->palette().color(IsActiveColorRole(), QPalette::WindowText));
     painter.setBrush(QBrush(Qt::transparent));
     painter.drawRect(0, 0, this->width() - 1, this->height() - 1);
-
-    event->accept();
 }
 
-void tSwitch::mousePressEvent(QMouseEvent *event) {
+void tSwitch::mousePressEvent(QMouseEvent* event) {
     mouseClickPoint = event->localPos().toPoint().x();
     initialPoint = mouseClickPoint;
 }
 
-void tSwitch::mouseMoveEvent(QMouseEvent *event) {
+void tSwitch::mouseMoveEvent(QMouseEvent* event) {
     if (event->localPos().toPoint().x() < mouseClickPoint) {
         mouseMovedLeft = true;
     } else {
@@ -93,27 +88,23 @@ void tSwitch::mouseMoveEvent(QMouseEvent *event) {
     this->repaint();
 }
 
-void tSwitch::mouseReleaseEvent(QMouseEvent *event) {
+void tSwitch::mouseReleaseEvent(QMouseEvent* event) {
     if (initialPoint - 2 < mouseClickPoint && initialPoint + 2 > mouseClickPoint) {
         bool checked = !this->isChecked();
         this->setChecked(checked);
-        this->checkChanging(checked);
     } else {
         if (mouseMovedLeft) {
             this->setChecked(false);
-            this->checkChanging(false);
         } else {
             this->setChecked(true);
-            this->checkChanging(true);
         }
     }
 }
 
 void tSwitch::checkChanging(bool checked) {
-    tVariantAnimation* animation = new tVariantAnimation();
+    tVariantAnimation* animation = new tVariantAnimation(this);
     animation->setStartValue(innerRect);
     animation->setDuration(250);
-    //animation->setForceAnimation(true);
 
     if (checked) {
         animation->setEndValue(QRect(this->width() - this->height(), 0, this->height(), this->height()));
@@ -122,29 +113,29 @@ void tSwitch::checkChanging(bool checked) {
     }
 
     animation->setEasingCurve(QEasingCurve::OutCubic);
-    connect(animation, &tVariantAnimation::valueChanged, this, [=](QVariant value) {
+    connect(animation, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
         innerRect = value.toRect();
-        this->repaint();
+        this->update();
     });
-    connect(animation, &tVariantAnimation::finished, this, [=] {
+    connect(animation, &tVariantAnimation::finished, this, [ = ] {
         innerRect = animation->endValue().toRect();
-        this->repaint();
+        this->update();
     });
-    connect(animation, SIGNAL(finished()), animation, SLOT(deleteLater()));
+    connect(animation, &tVariantAnimation::finished, animation, &QObject::deleteLater);
     animation->start();
 }
 
 QSize tSwitch::sizeHint() const {
     QFontMetrics metrics(this->font());
-    int width = 33 * theLibsGlobal::getDPIScaling();
+    int width = SC_DPI(33);
     if (iText == "") {
-        width += 8 * theLibsGlobal::getDPIScaling();
+        width += SC_DPI(8);
     } else {
-        width += metrics.width(iText);
+        width += metrics.horizontalAdvance(iText);
     }
 
-    width += metrics.width(oText);
-    return QSize(width, 22 * theLibsGlobal::getDPIScaling());
+    width += metrics.horizontalAdvance(oText);
+    return QSize(width, SC_DPI(22));
 }
 
 QString tSwitch::OnText() {
@@ -159,22 +150,27 @@ void tSwitch::setOnText(QString text) {
     iText = text;
     this->iIcon = QIcon();
     this->setFixedSize(this->sizeHint());
-    this->repaint();
+    this->update();
 }
 
 void tSwitch::setOffText(QString text) {
     oText = text;
     this->setFixedSize(this->sizeHint());
-    this->repaint();
+    this->update();
 }
 
 void tSwitch::setOnIcon(QIcon icon) {
     this->iIcon = icon;
     iText = "";
     this->setFixedSize(this->sizeHint());
-    this->repaint();
+    this->update();
 }
 
 QIcon tSwitch::OnIcon() {
     return this->iIcon;
+}
+
+void tSwitch::setChecked(bool checked) {
+    QPushButton::setChecked(checked);
+    this->checkChanging(this->isChecked());
 }

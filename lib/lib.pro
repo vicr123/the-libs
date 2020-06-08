@@ -10,31 +10,33 @@ CONFIG   += c++14
 TARGET = the-libs
 TEMPLATE = lib
 
-system("pkg-config --version") {
-    CONFIG += link_pkgconfig
-    packagesExist(libunwind) {
-        message("Building with libunwind support");
-        PKGCONFIG += libunwind
-        DEFINES += HAVE_LIBUNWIND
-    } else {
-        message("libunwind not found on this system.");
-    }
+!android {
+    system("pkg-config --version") {
+        CONFIG += link_pkgconfig
+        packagesExist(libunwind) {
+            message("Building with libunwind support");
+            PKGCONFIG += libunwind
+            DEFINES += HAVE_LIBUNWIND
+        } else {
+            message("libunwind not found on this system.");
+        }
 
-    packagesExist(x11) {
-        message("Building with X11 support");
-        PKGCONFIG += x11
-        DEFINES += HAVE_X11
-        QT += x11extras
-    } else {
-        message("X11 not found on this system.");
-    }
+        !macx:packagesExist(x11) {
+            message("Building with X11 support");
+            PKGCONFIG += x11
+            DEFINES += HAVE_X11
+            QT += x11extras
+        } else {
+            message("X11 not found on this system.");
+        }
 
-    packagesExist(gsettings-qt) {
-        message("Building with GSettings support");
-        PKGCONFIG += gsettings-qt
-        DEFINES += HAVE_GSETTINGS
-    } else {
-        message("GSettings not found on this system.");
+        packagesExist(gsettings-qt) {
+            message("Building with GSettings support");
+            PKGCONFIG += gsettings-qt
+            DEFINES += HAVE_GSETTINGS
+        } else {
+            message("GSettings not found on this system.");
+        }
     }
 }
 
@@ -43,7 +45,7 @@ macx {
 }
 
 win32 {
-    LIBS += -lUser32 -lKernel32
+    LIBS += -lUser32 -lKernel32 -lDbgHelp
     DEFINES += _WIN32_WINNT=0x0601 # Windows 7 or up
 }
 
@@ -62,6 +64,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += tvariantanimation.cpp \
     taboutdialog.cpp \
+    tconditionalwidget.cpp \
     tcsdtools.cpp \
     tcsdtools/csdbuttonbox.cpp \
     tcsdtools/csdsizegrip.cpp \
@@ -70,8 +73,13 @@ SOURCES += tvariantanimation.cpp \
     tdatetimepicker/datetimepart.cpp \
     tdatetimepicker/datetimepartbutton.cpp \
     terrorflash.cpp \
+    tlocale.cpp \
+    tpromise.cpp \
     tpropertyanimation.cpp \
     thelibsglobal.cpp \
+    tsettings.cpp \
+    tstatusframe.cpp \
+    ttitlelabel.cpp \
     ttoast.cpp \
     tvirtualkeyboard.cpp \
     tcircularspinner.cpp \
@@ -86,6 +94,7 @@ SOURCES += tvariantanimation.cpp \
 
 HEADERS += tvariantanimation.h\
     taboutdialog.h \
+    tconditionalwidget.h \
     tcsdtools.h \
     tcsdtools/csdbuttonbox.h \
     tcsdtools/csdsizegrip.h \
@@ -95,7 +104,11 @@ HEADERS += tvariantanimation.h\
     tdatetimepicker/datetimepartbutton.h \
     terrorflash.h \
     the-libs_global.h \
+    tlocale.h \
     tpropertyanimation.h \
+    tsettings.h \
+    tstatusframe.h \
+    ttitlelabel.h \
     ttoast.h \
     tnotification.h \
     tvirtualkeyboard.h \
@@ -123,11 +136,11 @@ unix {
     module.files = qt_thelib.pri
 }
 
-unix:!macx {
+unix:!macx:!android {
     QT += dbus
 
-    target.path = /usr/lib
-    header.path = /usr/include/the-libs
+    target.path = $$[QT_INSTALL_LIBS]
+    header.path = $$[QT_INSTALL_HEADERS]/the-libs
     module.files = qt_thelib.pri
     prifiles.path = /usr/share/the-libs/pri
 
@@ -157,6 +170,16 @@ win32 {
     SOURCES += tnotification/tnotification-win.cpp
 }
 
+android {
+    target.path = /libs/armeabi-v7a
+    header.path = /include/the-libs
+    module.files = qt_thelib.pri
+    module.path = /mkspecs/modules
+    prifiles.path = /share/the-libs/pri
+
+    SOURCES += tnotification/tnotification-android.cpp
+}
+
 INSTALLS += target module header prifiles
 
 DISTFILES += \
@@ -170,7 +193,8 @@ DISTFILES += \
 FORMS += \
     taboutdialog.ui \
     tcsdtools/csdbuttonbox.ui \
-    tshortcuthud.ui
+    tshortcuthud.ui \
+    tstatusframe.ui
 
 RESOURCES += \
     thelibs_icons.qrc \

@@ -23,46 +23,49 @@
 #include <the-libs_global.h>
 #include <QPushButton>
 
-class THELIBSSHARED_EXPORT tSwitch : public QPushButton
-{
-    Q_OBJECT
+class THELIBSSHARED_EXPORT tSwitch : public QPushButton {
+        Q_OBJECT
 
-    Q_PROPERTY(QString OnText READ OnText WRITE setOnText NOTIFY OnTextChanged)
-    Q_PROPERTY(QString OffText READ OffText WRITE setOffText NOTIFY OffTextChanged)
-    Q_PROPERTY(QIcon OnIcon READ OnIcon WRITE setOnIcon NOTIFY OnIconChanged)
-public:
-    explicit tSwitch(QWidget *parent = nullptr);
+        Q_PROPERTY(QString OnText READ OnText WRITE setOnText NOTIFY OnTextChanged)
+        Q_PROPERTY(QString OffText READ OffText WRITE setOffText NOTIFY OffTextChanged)
+        Q_PROPERTY(QIcon OnIcon READ OnIcon WRITE setOnIcon NOTIFY OnIconChanged)
+    public:
+        explicit tSwitch(QWidget* parent = nullptr);
 
-    QString OnText();
-    QString OffText();
-    QIcon OnIcon();
-signals:
-    void OnTextChanged(QString OnText);
-    void OffTextChanged(QString OffText);
-    void OnIconChanged(QString OffText);
+        QString OnText();
+        QString OffText();
+        QIcon OnIcon();
 
-public slots:
-    void setOnText(QString text);
-    void setOffText(QString text);
-    void setOnIcon(QIcon icon);
-private slots:
-    void checkChanging(bool checked);
+        void setChecked(bool checked);
 
-private:
-    void paintEvent(QPaintEvent *event);
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-    QPalette::ColorGroup IsActiveColorRole();
-    QSize sizeHint() const;
+    signals:
+        void OnTextChanged(QString OnText);
+        void OffTextChanged(QString OffText);
+        void OnIconChanged(QString OffText);
 
-    QRect innerRect;
-    int mouseClickPoint;
-    int initialPoint;
-    bool mouseMovedLeft = false;
+    public slots:
+        void setOnText(QString text);
+        void setOffText(QString text);
+        void setOnIcon(QIcon icon);
+    private slots:
+        void checkChanging(bool checked);
 
-    QString iText = "I";
-    QString oText = "O";
-    QIcon iIcon;
+    private:
+        void paintEvent(QPaintEvent* event);
+        void mousePressEvent(QMouseEvent* event);
+        void mouseMoveEvent(QMouseEvent* event);
+        void mouseReleaseEvent(QMouseEvent* event);
+
+        QPalette::ColorGroup IsActiveColorRole();
+        QSize sizeHint() const;
+
+        QRect innerRect;
+        int mouseClickPoint;
+        int initialPoint;
+        bool mouseMovedLeft = false;
+
+        QString iText = "I";
+        QString oText = "O";
+        QIcon iIcon;
 };
 #endif // TSWITCH_H

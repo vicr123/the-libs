@@ -24,11 +24,10 @@
 #include <the-libs_global.h>
 
 struct tPopoverPrivate;
-class THELIBSSHARED_EXPORT tPopover : public QObject
-{
+class THELIBSSHARED_EXPORT tPopover : public QObject {
         Q_OBJECT
     public:
-        explicit tPopover(QWidget* popoverWidget, QObject *parent = nullptr);
+        explicit tPopover(QWidget* popoverWidget, QObject* parent = nullptr);
         ~tPopover();
 
         enum PopoverSide {
@@ -43,6 +42,7 @@ class THELIBSSHARED_EXPORT tPopover : public QObject
         void setDismissable(bool dismissable);
 
         static tPopover* popoverForWidget(QWidget* popoverWidget);
+        static tPopover* popoverForPopoverWidget(QWidget* popoverWidget);
 
     signals:
         void dismissed();
@@ -56,6 +56,7 @@ class THELIBSSHARED_EXPORT tPopover : public QObject
 
         bool eventFilter(QObject* watched, QEvent* event);
         bool isOpeningOnRight();
+        void updateGeometry();
 };
 
 #endif // TPOPOVER_H
