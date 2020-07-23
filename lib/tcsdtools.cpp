@@ -37,6 +37,10 @@
 
 #endif
 
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
+
 struct tCsdGlobalPrivate {
     tCsdGlobal* instance = nullptr;
     bool enableCSDs;
@@ -281,6 +285,13 @@ bool tCsdTools::eventFilter(QObject *watched, QEvent *event) {
                 XSendEvent(QX11Info::display(), QX11Info::appRootWindow(), False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
                 return true;
             }
+            #endif
+
+            #ifdef Q_OS_WIN
+            //Use Windows APIs to move the window
+            ReleaseCapture();
+            SendMessage(reinterpret_cast<HWND>(widget->window()->winId()), WM_NCLBUTTONDOWN, HTCAPTION, 0);
+            return true;
             #endif
 
             //Move window using Qt methods
