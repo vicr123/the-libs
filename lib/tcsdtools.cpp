@@ -23,6 +23,7 @@
 #include <QMouseEvent>
 #include <QDebug>
 #include <QDir>
+#include <QMainWindow>
 #include <tcsdtools/csdsizegrip.h>
 #include <tcsdtools/csdbuttonbox.h>
 
@@ -63,9 +64,12 @@ struct ResizeWidget {
 struct tCsdToolsPrivate {
     QList<QWidget*> moveWidgets;
     QList<ResizeWidget*> resizeWidgets;
+
+    static QList<QWidget*> csdWidgets;
 };
 
 tCsdGlobalPrivate* tCsdGlobal::d = new tCsdGlobalPrivate();
+QList<QWidget*> tCsdToolsPrivate::csdWidgets = QList<QWidget*>();
 
 tCsdGlobal::tCsdGlobal() : QObject(nullptr) {
     d->enableCSDs = recommendCsdForPlatform();
@@ -181,6 +185,7 @@ void tCsdTools::removeMoveAction(QObject* widget) {
 }
 
 void tCsdTools::installResizeAction(QWidget* widget) {
+    d->csdWidgets.append(widget);
     connect(widget, &QWidget::destroyed, this, QOverload<QObject*>::of(&tCsdTools::removeResizeAction));
     widget->installEventFilter(this);
 
@@ -216,6 +221,8 @@ void tCsdTools::removeResizeAction(QWidget* widget) {
 
     d->resizeWidgets.removeOne(rw);
     delete rw;
+
+    d->csdWidgets.removeOne(widget);
 }
 
 void tCsdTools::removeResizeAction(QObject* widget) {
@@ -254,6 +261,15 @@ void tCsdTools::csdsEnabledChanged(bool enabled) {
         //rw->widget->setWindowState(states);
         if (showing) rw->widget->show();
     }
+}
+
+QWidget *tCsdTools::widgetForPopover(QWidget *selected) {
+    if (tCsdToolsPrivate::csdWidgets.contains(selected)) {
+        if (QMainWindow* mw = qobject_cast<QMainWindow*>(selected)) {
+            return mw->centralWidget();
+        }
+    }
+    return selected;
 }
 
 bool tCsdTools::eventFilter(QObject *watched, QEvent *event) {

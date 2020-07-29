@@ -22,6 +22,7 @@
 #include <QFrame>
 #include <QGraphicsOpacityEffect>
 #include "tpropertyanimation.h"
+#include "tcsdtools.h"
 
 #ifdef Q_OS_MAC
     #include <QDialog>
@@ -158,6 +159,7 @@ void tPopover::setDismissable(bool dismissable) {
 }
 
 void tPopover::show(QWidget* parent) {
+    parent = tCsdTools::widgetForPopover(parent);
     if (d->showing) return;
     tPopoverPrivate::activePopovers.insert(d->popoverWidget, this);
 

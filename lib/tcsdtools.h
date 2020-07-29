@@ -23,6 +23,7 @@
 #include <QObject>
 #include "the-libs_global.h"
 
+class tPopover;
 struct tCsdGlobalPrivate;
 class THELIBSSHARED_EXPORT tCsdGlobal : public QObject
 {
@@ -74,6 +75,10 @@ class THELIBSSHARED_EXPORT tCsdTools : public QObject
         void removeMoveAction(QObject* widget);
         void removeResizeAction(QObject* widget);
         void csdsEnabledChanged(bool enabled);
+
+    protected:
+        friend tPopover;
+        static QWidget* widgetForPopover(QWidget* selected);
 
     private:
         tCsdToolsPrivate* d;
