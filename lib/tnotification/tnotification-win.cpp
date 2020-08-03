@@ -18,8 +18,6 @@
 
 #include <Sdkddkver.h>
 
-#pragma comment(lib, "windowsapp")
-
 #undef NTDDI_VERSION
 #define NTDDI_VERSION NTDDI_WIN10
 
@@ -84,7 +82,7 @@ void tNotification::post(bool deleteWhenDone) {
             toastXml.LoadXml(xmlContents.toStdWString());
 
             ToastNotification toast(toastXml);
-            toast.Dismissed([=](const ToastNotification& sender, const ToastDismissedEventArgs& args) {
+            toast.Dismissed([=](ToastNotification sender, ToastDismissedEventArgs args) {
                 if (isTransient && args.Reason() != ToastDismissalReason::ApplicationHidden) {
                     ToastNotificationManager::CreateToastNotifier(amuid.toStdWString()).Hide(sender);
 
