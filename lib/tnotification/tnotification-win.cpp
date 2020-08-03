@@ -18,6 +18,8 @@
 
 #include <Sdkddkver.h>
 
+#pragma comment(lib, "windowsapp")
+
 #undef NTDDI_VERSION
 #define NTDDI_VERSION NTDDI_WIN10
 
