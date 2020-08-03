@@ -13,6 +13,7 @@
 #include <unknwn.h>
 #include <combaseapi.h>
 #include <winrt/base.h>
+#include <winrt/Windows.Foundation.h>
 #include <winrt/windows.data.xml.dom.h>
 #include <winrt/windows.ui.notifications.h>
 
@@ -82,17 +83,17 @@ void tNotification::post(bool deleteWhenDone) {
             toastXml.LoadXml(xmlContents.toStdWString());
 
             ToastNotification toast(toastXml);
-//            toast.Dismissed([=](ToastNotification sender, ToastDismissedEventArgs args) {
-//                if (isTransient && args.Reason() != ToastDismissalReason::ApplicationHidden) {
-//                    ToastNotificationManager::CreateToastNotifier(amuid.toStdWString()).Hide(sender);
+            toast.Dismissed([=](ToastNotification sender, ToastDismissedEventArgs args) {
+                if (isTransient && args.Reason() != ToastDismissalReason::ApplicationHidden) {
+                    ToastNotificationManager::CreateToastNotifier(amuid.toStdWString()).Hide(sender);
 
-//                    emit dismissed();
+                    emit dismissed();
 
-//                    if (deleteWhenDone) {
-//                        this->deleteLater();
-//                    }
-//                }
-//            });
+                    if (deleteWhenDone) {
+                        this->deleteLater();
+                    }
+                }
+            });
             ToastNotificationManager::CreateToastNotifier(amuid.toStdWString()).Show(toast);
         }
     } else {
