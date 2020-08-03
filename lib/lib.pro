@@ -5,12 +5,12 @@
 #-------------------------------------------------
 
 QT       += widgets multimedia svg
-CONFIG   += c++14
 
 TARGET = the-libs
 TEMPLATE = lib
 
-!android {
+unix:!android {
+    CONFIG   += c++14
     system("pkg-config --version") {
         CONFIG += link_pkgconfig
         packagesExist(libunwind) {
@@ -41,11 +41,13 @@ TEMPLATE = lib
 }
 
 macx {
+    CONFIG   += c++14
     LIBS += -framework CoreFoundation -framework Cocoa
 }
 
 win32 {
-    LIBS += -lUser32 -lKernel32 -lDbgHelp
+    CONFIG   += c++17
+    LIBS += -lUser32 -lKernel32 -lDbgHelp -lwindowsapp
     DEFINES += _WIN32_WINNT=0x0601 # Windows 7 or up
 }
 
@@ -168,6 +170,7 @@ win32 {
     prifiles.path = "C:/Program Files/thelibs/pri"
 
     SOURCES += tnotification/tnotification-win.cpp
+    HEADERS += tnotification/tnotification-win.h
 }
 
 android {

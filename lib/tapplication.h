@@ -53,6 +53,10 @@ class THELIBSSHARED_EXPORT tApplication : public QApplication
         static void setCopyrightYear(QString copyrightYear);
         static void setApplicationLicense(KnownLicenses license);
 
+#ifdef Q_OS_WIN
+        static void setWinApplicationClassId(QString classId);
+#endif
+
         static QPixmap aboutDialogSplashGraphicFromSvg(QString svgFile);
 
         void installTranslators();

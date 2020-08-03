@@ -18,6 +18,7 @@
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #include <DbgHelp.h>
+#include "tnotification/tnotification-win.h"
 #endif
 
 #ifdef HAVE_LIBUNWIND
@@ -50,6 +51,8 @@ struct tApplicationPrivate {
 #elif defined(Q_OS_WIN)
     static LONG WINAPI crashTrapHandler(PEXCEPTION_POINTERS exceptionInfo);
     PCONTEXT crashCtx = nullptr;
+
+    QString winClassId;
 #else
     static void crashTrapHandler();
 #endif
@@ -93,6 +96,9 @@ tApplication::tApplication(int& argc, char** argv) : QApplication(argc, argv)
 
 #ifdef Q_OS_MAC
     this->setAttribute(Qt::AA_DontShowIconsInMenus, true);
+#endif
+
+#ifdef Q_OS_WIN
 #endif
 
     d->versions.append({"the-libs", QStringLiteral("%1 (API %2)").arg(THE_LIBS_VERSION).arg(THE_LIBS_API_VERSION)});
@@ -437,6 +443,14 @@ void tApplication::setApplicationLicense(tApplication::KnownLicenses license)
 {
     d->license = license;
 }
+
+#ifdef Q_OS_WIN
+void tApplication::setWinApplicationClassId(QString classId)
+{
+    d->winClassId = classId;
+    tNotificationWindows::initialise(classId);
+}
+#endif
 
 QPixmap tApplication::aboutDialogSplashGraphicFromSvg(QString svgFile)
 {
