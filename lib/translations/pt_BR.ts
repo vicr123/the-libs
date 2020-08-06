@@ -2,6 +2,19 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="br_FR" sourcelanguage="en_US">
 <context>
+    <name>JobsPopover</name>
+    <message>
+        <location filename="../jobs/jobspopover.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/jobspopover.ui" line="35"/>
+        <source>Jobs</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
         <location filename="../tapplication.cpp" line="71"/>

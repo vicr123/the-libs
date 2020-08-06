@@ -65,6 +65,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += tvariantanimation.cpp \
+    jobs/jobbutton.cpp \
+    jobs/jobspopover.cpp \
     taboutdialog.cpp \
     tconditionalwidget.cpp \
     tcsdtools.cpp \
@@ -75,6 +77,8 @@ SOURCES += tvariantanimation.cpp \
     tdatetimepicker/datetimepart.cpp \
     tdatetimepicker/datetimepartbutton.cpp \
     terrorflash.cpp \
+    tjob.cpp \
+    tjobmanager.cpp \
     tlocale.cpp \
     tpromise.cpp \
     tpropertyanimation.cpp \
@@ -95,6 +99,8 @@ SOURCES += tvariantanimation.cpp \
     tsystemsound.cpp
 
 HEADERS += tvariantanimation.h\
+    jobs/jobbutton.h \
+    jobs/jobspopover.h \
     taboutdialog.h \
     tconditionalwidget.h \
     tcsdtools.h \
@@ -106,6 +112,8 @@ HEADERS += tvariantanimation.h\
     tdatetimepicker/datetimepartbutton.h \
     terrorflash.h \
     the-libs_global.h \
+    tjob.h \
+    tjobmanager.h \
     tlocale.h \
     tpropertyanimation.h \
     tsettings.h \
@@ -194,6 +202,7 @@ DISTFILES += \
     qt_thelib_mac.pri
 
 FORMS += \
+    jobs/jobspopover.ui \
     taboutdialog.ui \
     tcsdtools/csdbuttonbox.ui \
     tshortcuthud.ui \
