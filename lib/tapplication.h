@@ -6,11 +6,10 @@
 
 struct tApplicationPrivate;
 
-class THELIBSSHARED_EXPORT tApplication : public QApplication
-{
-    Q_OBJECT
+class THELIBSSHARED_EXPORT tApplication : public QApplication {
+        Q_OBJECT
     public:
-        explicit tApplication(int &argc, char **argv);
+        explicit tApplication(int& argc, char** argv);
         ~tApplication();
 
         enum KnownLicenses {
@@ -60,6 +59,8 @@ class THELIBSSHARED_EXPORT tApplication : public QApplication
         static QPixmap aboutDialogSplashGraphicFromSvg(QString svgFile);
 
         void installTranslators();
+        static void addPluginTranslator(QString pluginName);
+        static void removePluginTranslator(QString pluginName);
         static QString macOSBundlePath();
 
         static void restart();
@@ -69,7 +70,7 @@ class THELIBSSHARED_EXPORT tApplication : public QApplication
         static QStringList exportBacktrace(void* data);
 
     private:
-        bool event(QEvent * event);
+        bool event(QEvent* event);
 
         static tApplicationPrivate* d;
 };

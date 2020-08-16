@@ -132,59 +132,59 @@
 <context>
     <name>tApplication</name>
     <message>
-        <location filename="../tapplication.cpp" line="514"/>
+        <location filename="../tapplication.cpp" line="526"/>
         <source>Copyright © %1.</source>
         <translation>Hawlfraint © %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="487"/>
-        <location filename="../tapplication.cpp" line="490"/>
-        <location filename="../tapplication.cpp" line="493"/>
-        <location filename="../tapplication.cpp" line="496"/>
-        <location filename="../tapplication.cpp" line="499"/>
-        <location filename="../tapplication.cpp" line="502"/>
-        <location filename="../tapplication.cpp" line="505"/>
-        <location filename="../tapplication.cpp" line="508"/>
+        <location filename="../tapplication.cpp" line="498"/>
+        <location filename="../tapplication.cpp" line="501"/>
+        <location filename="../tapplication.cpp" line="504"/>
+        <location filename="../tapplication.cpp" line="507"/>
+        <location filename="../tapplication.cpp" line="510"/>
+        <location filename="../tapplication.cpp" line="513"/>
+        <location filename="../tapplication.cpp" line="516"/>
+        <location filename="../tapplication.cpp" line="519"/>
         <source>Licensed under the terms of the %1.</source>
         <translation>Trwyddedig o dan delerau&apos;r %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="487"/>
+        <location filename="../tapplication.cpp" line="498"/>
         <source>GNU General Public License, version 3</source>
         <translation>Trwydded Gyhoeddus Gyffredinol GNU, fersiwn 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="490"/>
+        <location filename="../tapplication.cpp" line="501"/>
         <source>GNU General Public License, version 3, or later</source>
         <translation>Trwydded Gyhoeddus Gyffredinol GNU, fersiwn 3, neu&apos;n hwyrach</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="493"/>
+        <location filename="../tapplication.cpp" line="504"/>
         <source>GNU General Public License, version 2</source>
         <translation>Trwydded Gyhoeddus Gyffredinol GNU, fersiwn 2</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="496"/>
+        <location filename="../tapplication.cpp" line="507"/>
         <source>GNU General Public License, version 2, or later</source>
         <translation>Trwydded Gyhoeddus Gyffredinol GNU, fersiwn 2, neu&apos;n hwyrach</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="499"/>
+        <location filename="../tapplication.cpp" line="510"/>
         <source>GNU Lesser General Public License, version 3</source>
         <translation>Trwydded Gyhoeddus Gyffredinol Llai GNU, fersiwn 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="502"/>
+        <location filename="../tapplication.cpp" line="513"/>
         <source>GNU Lesser General Public License, version 3, or later</source>
         <translation>Trwydded Gyhoeddus Gyffredinol Llai GNU, fersiwn 3, neu&apos;n hwyrach</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="505"/>
+        <location filename="../tapplication.cpp" line="516"/>
         <source>GNU Lesser General Public License, version 2.1</source>
         <translation>Trwydded Gyhoeddus Gyffredinol Llai GNU, fersiwn 2.1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="508"/>
+        <location filename="../tapplication.cpp" line="519"/>
         <source>GNU Lesser General Public License, version 2.1, or later</source>
         <translation>Trwydded Gyhoeddus Gyffredinol Llai GNU, fersiwn 2.1, neu&apos;n hwyrach</translation>
     </message>
