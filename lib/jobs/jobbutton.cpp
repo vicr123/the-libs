@@ -24,14 +24,26 @@
 #include "jobspopover.h"
 #include "tpopover.h"
 #include <QPainter>
+#include <tvariantanimation.h>
 
 struct JobButtonPrivate {
     QList<tJob*> trackedJobs;
     qreal totalPercentage = 0;
+
+    tVariantAnimation* emblemPulse;
 };
 
 JobButton::JobButton(QWidget* parent) : QToolButton(parent) {
     d = new JobButtonPrivate();
+
+    d->emblemPulse = new tVariantAnimation();
+    d->emblemPulse->setStartValue(0.0);
+    d->emblemPulse->setEndValue(1.0);
+    d->emblemPulse->setEasingCurve(QEasingCurve::OutCubic);
+    d->emblemPulse->setDuration(2000);
+    connect(d->emblemPulse, &tVariantAnimation::valueChanged, this, [ = ] {
+        this->update();
+    });
 
     this->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
@@ -44,6 +56,22 @@ JobButton::JobButton(QWidget* parent) : QToolButton(parent) {
         connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
         connect(popover, &tPopover::dismissed, jp, &JobsPopover::deleteLater);
         popover->show(this->window());
+
+        QList<tJob*> finishedJobs;
+        for (tJob* job : d->trackedJobs) {
+            //If the job is finished remove it from the tracking
+            if (job->state() == tJob::Finished || job->state() == tJob::Failed) {
+                finishedJobs.append(job);
+            }
+        }
+        for (tJob* job : finishedJobs) {
+            d->trackedJobs.removeOne(job);
+        }
+
+        if (d->trackedJobs.count() == 0) {
+            d->emblemPulse->start();
+            this->setVisible(false);
+        }
     });
 
     this->setVisible(false);
@@ -68,7 +96,12 @@ void JobButton::updateJobs() {
         sum += job->progress();
         sumTotal += job->totalProgress();
     }
-    d->totalPercentage = static_cast<qreal>(sum) / sumTotal;
+
+    if (sumTotal == 0) {
+        d->totalPercentage = -1;
+    } else {
+        d->totalPercentage = static_cast<qreal>(sum) / sumTotal;
+    }
 
     this->update();
 }
@@ -94,4 +127,35 @@ void JobButton::paintEvent(QPaintEvent* event) {
     painter.setPen(Qt::transparent);
     painter.setBrush(this->palette().color(QPalette::WindowText));
     painter.drawPie(circleRect, 1440, d->totalPercentage * -5760);
+
+    //Draw an emblem
+    int emblemType = 0;
+    for (tJob* job : d->trackedJobs) {
+        if (job->state() == tJob::Finished && emblemType < 1) emblemType = 1;
+        if (job->state() == tJob::Failed && emblemType < 2) emblemType = 2;
+    }
+
+    QColor emblemCol = Qt::transparent;
+    if (emblemType == 1) { //Draw the success emblem
+        emblemCol = QColor(0, 255, 0);
+    } else if (emblemType == 2) {
+        emblemCol = QColor(255, 150, 0);
+    }
+
+    if (emblemType != 0) {
+        if (d->emblemPulse->state() != tVariantAnimation::Running) {
+            d->emblemPulse->start();
+        }
+
+        QRect emblemRect(0, 0, 8, 8);
+        painter.setPen(Qt::transparent);
+        painter.setBrush(emblemCol);
+        painter.drawEllipse(emblemRect.center(), 4, 4);
+
+        qreal pulseRadius = 4 + d->emblemPulse->currentValue().toReal() * 4;
+        painter.setPen(emblemCol);
+        painter.setBrush(Qt::transparent);
+        painter.setOpacity(1.0 - d->emblemPulse->currentValue().toReal());
+        painter.drawEllipse(QPointF(emblemRect.center()), pulseRadius, pulseRadius);
+    }
 }
