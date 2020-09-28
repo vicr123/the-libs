@@ -19,7 +19,10 @@
  * *************************************/
 #include "tjob.h"
 
-tJob::tJob(QObject *parent) : QObject(parent)
-{
+tJob::tJob(QObject* parent) : QObject(parent) {
 
+}
+
+bool tJob::isTransient() {
+    return false;
 }

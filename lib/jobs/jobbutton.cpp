@@ -90,6 +90,23 @@ void JobButton::trackJob(tJob* job) {
 }
 
 void JobButton::updateJobs() {
+    //Remove any transient completed jobs
+    for (tJob* job : d->trackedJobs) {
+        QList<tJob*> finishedJobs;
+        if (job->isTransient() && job->state() == tJob::Finished) {
+            finishedJobs.append(job);
+        }
+
+        for (tJob* job : finishedJobs) {
+            d->trackedJobs.removeOne(job);
+        }
+
+        if (d->trackedJobs.count() == 0) {
+            d->emblemPulse->start();
+            this->setVisible(false);
+        }
+    }
+
     quint64 sum = 0;
     quint64 sumTotal = 0;
     for (tJob* job : d->trackedJobs) {

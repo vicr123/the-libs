@@ -38,6 +38,7 @@ class THELIBSSHARED_EXPORT tJob : public QObject {
         virtual quint64 totalProgress() = 0;
         virtual State state() = 0;
         virtual QWidget* makeProgressWidget() = 0;
+        virtual bool isTransient();
 
     signals:
         void progressChanged(quint64 progress);
