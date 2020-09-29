@@ -17,37 +17,37 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../tapplication.cpp" line="71"/>
+        <location filename="../tapplication.cpp" line="79"/>
         <source>Services</source>
         <translation>Storitve</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="72"/>
+        <location filename="../tapplication.cpp" line="80"/>
         <source>Hide %1</source>
         <translation>Skriti</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="73"/>
+        <location filename="../tapplication.cpp" line="81"/>
         <source>Hide Others</source>
         <translation>Skriti ostale</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="74"/>
+        <location filename="../tapplication.cpp" line="82"/>
         <source>Show All</source>
         <translation>Pokaži vse</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="75"/>
+        <location filename="../tapplication.cpp" line="83"/>
         <source>Preferences...</source>
         <translation>Nastavitve...</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="76"/>
+        <location filename="../tapplication.cpp" line="84"/>
         <source>About %1</source>
         <translation>O programu %1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="77"/>
+        <location filename="../tapplication.cpp" line="85"/>
         <source>Quit %1</source>
         <translation>Zapreti%1</translation>
     </message>
@@ -55,52 +55,52 @@
 <context>
     <name>QCommandLineParser</name>
     <message>
-        <location filename="../tapplication.cpp" line="80"/>
+        <location filename="../tapplication.cpp" line="88"/>
         <source>Displays version information.</source>
         <translation>Pokaže informacijo o verziji.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="81"/>
+        <location filename="../tapplication.cpp" line="89"/>
         <source>Displays this help.</source>
         <translation>Pokaže to pomoč.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="82"/>
+        <location filename="../tapplication.cpp" line="90"/>
         <source>Unknown option &apos;%1&apos;.</source>
         <translation>Neznana možnost &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="83"/>
+        <location filename="../tapplication.cpp" line="91"/>
         <source>Unknown options: %1.</source>
         <translation>Neznane možnosti %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="84"/>
+        <location filename="../tapplication.cpp" line="92"/>
         <source>Missing value after &apos;%1&apos;.</source>
         <translation>Manjka vrednost po &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="85"/>
+        <location filename="../tapplication.cpp" line="93"/>
         <source>Unexpected value after &apos;%1&apos;.</source>
         <translation>Nepričakovana vrednost po &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="86"/>
+        <location filename="../tapplication.cpp" line="94"/>
         <source>[options]</source>
         <translation>[možnosti]</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="87"/>
+        <location filename="../tapplication.cpp" line="95"/>
         <source>Usage: %1</source>
         <translation>Uporaba: %1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="88"/>
+        <location filename="../tapplication.cpp" line="96"/>
         <source>Options:</source>
         <translation>Možnosti:</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="89"/>
+        <location filename="../tapplication.cpp" line="97"/>
         <source>Arguments:</source>
         <translation>Argumenti:</translation>
     </message>
@@ -132,59 +132,59 @@
 <context>
     <name>tApplication</name>
     <message>
-        <location filename="../tapplication.cpp" line="526"/>
+        <location filename="../tapplication.cpp" line="535"/>
         <source>Copyright © %1.</source>
         <translation>Avtorske pravice © %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="498"/>
-        <location filename="../tapplication.cpp" line="501"/>
-        <location filename="../tapplication.cpp" line="504"/>
         <location filename="../tapplication.cpp" line="507"/>
         <location filename="../tapplication.cpp" line="510"/>
         <location filename="../tapplication.cpp" line="513"/>
         <location filename="../tapplication.cpp" line="516"/>
         <location filename="../tapplication.cpp" line="519"/>
+        <location filename="../tapplication.cpp" line="522"/>
+        <location filename="../tapplication.cpp" line="525"/>
+        <location filename="../tapplication.cpp" line="528"/>
         <source>Licensed under the terms of the %1.</source>
         <translation>Licencirano pod pogoji %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="498"/>
+        <location filename="../tapplication.cpp" line="507"/>
         <source>GNU General Public License, version 3</source>
         <translation>GNU Genaralna Javna Licenca, verzija 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="501"/>
+        <location filename="../tapplication.cpp" line="510"/>
         <source>GNU General Public License, version 3, or later</source>
         <translation>GNU Genaralna Javna Licenca, verzija 3, ali pozneje</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="504"/>
+        <location filename="../tapplication.cpp" line="513"/>
         <source>GNU General Public License, version 2</source>
         <translation>GNU Genaralna Javna Licenca, verzija 2</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="507"/>
+        <location filename="../tapplication.cpp" line="516"/>
         <source>GNU General Public License, version 2, or later</source>
         <translation>GNU Genaralna Javna Licenca, verzija 2, ali pozneje</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="510"/>
+        <location filename="../tapplication.cpp" line="519"/>
         <source>GNU Lesser General Public License, version 3</source>
         <translation>GNU Manj Generalna Javna Licenca, verzija 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="513"/>
+        <location filename="../tapplication.cpp" line="522"/>
         <source>GNU Lesser General Public License, version 3, or later</source>
         <translation>GNU Manj Generalna Javna Licenca, verzija 3, ali pozneje</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="516"/>
+        <location filename="../tapplication.cpp" line="525"/>
         <source>GNU Lesser General Public License, version 2.1</source>
         <translation>GNU Manj Generalna Javna Licenca, verzija 2.1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="519"/>
+        <location filename="../tapplication.cpp" line="528"/>
         <source>GNU Lesser General Public License, version 2.1, or later</source>
         <translation>GNU Manj Generalna Javna Licenca, verzija 2.1, ali pozneje</translation>
     </message>

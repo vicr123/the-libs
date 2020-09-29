@@ -3,6 +3,7 @@
 
 #include "the-libs_global.h"
 #include <QApplication>
+#include <QJsonObject>
 
 struct tApplicationPrivate;
 
@@ -33,9 +34,11 @@ class THELIBSSHARED_EXPORT tApplication : public QApplication {
         static QString copyrightHolder();
         static QString copyrightYear();
         static KnownLicenses applicationLicense();
+        static void ensureSingleInstance(QJsonObject launchData);
 
     Q_SIGNALS:
         void openFile(QString file);
+        void singleInstanceMessage(QJsonObject launchData);
         void updateTranslators();
 
     public Q_SLOTS:

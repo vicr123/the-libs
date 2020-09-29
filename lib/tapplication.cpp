@@ -6,6 +6,11 @@
 #include <QSvgRenderer>
 #include <QProcess>
 #include <QDir>
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QSharedMemory>
+#include <QLocalServer>
+#include <QLocalSocket>
 
 #ifdef T_OS_UNIX_NOT_MAC
     #include <signal.h>
@@ -46,6 +51,9 @@ struct tApplicationPrivate {
     QStringList copyrightLines;
     tApplication::KnownLicenses license = tApplication::Other;
     QString copyrightHolder, copyrightYear;
+
+    QSharedMemory* singleInstanceMemory = nullptr;
+    QLocalServer* singleInstanceServer = nullptr;
 
 #ifdef T_OS_UNIX_NOT_MAC
     static void crashTrapHandler(int sig);
@@ -96,9 +104,6 @@ tApplication::tApplication(int& argc, char** argv) : QApplication(argc, argv) {
 
 #ifdef Q_OS_MAC
     this->setAttribute(Qt::AA_DontShowIconsInMenus, true);
-#endif
-
-#ifdef Q_OS_WIN
 #endif
 
     d->versions.append({"the-libs", QStringLiteral("%1 (API %2)").arg(THE_LIBS_VERSION).arg(THE_LIBS_API_VERSION)});
@@ -212,7 +217,11 @@ QStringList tApplication::exportBacktrace(void* data) {
 }
 
 tApplication::~tApplication() {
-
+    if (d->singleInstanceMemory) {
+        d->singleInstanceMemory->detach();
+        delete d->singleInstanceMemory;
+    }
+    if (d->singleInstanceServer) d->singleInstanceServer->close();
 }
 
 void writeCrashSysInfo(QStringList& bt) {
@@ -531,6 +540,46 @@ QStringList tApplication::copyrightLines() {
 
 tApplication::KnownLicenses tApplication::applicationLicense() {
     return d->license;
+}
+
+void tApplication::ensureSingleInstance(QJsonObject launchData) {
+    QString sharedMemoryName = QStringList({"the-libs-single-instance", organizationName(), applicationName()}).join("_");
+
+#ifdef Q_OS_UNIX
+    //Mitigate crashes by discarding the memory if it is not being used
+    d->singleInstanceMemory = new QSharedMemory(sharedMemoryName);
+    d->singleInstanceMemory->attach();
+    delete d->singleInstanceMemory;
+    d->singleInstanceMemory = nullptr;
+#endif
+
+    d->singleInstanceMemory = new QSharedMemory(sharedMemoryName);
+    if (d->singleInstanceMemory->create(sharedMemoryName.length())) {
+        QLocalServer::removeServer(sharedMemoryName);
+        d->singleInstanceServer = new QLocalServer();
+        connect(d->singleInstanceServer, &QLocalServer::newConnection, [ = ] {
+            QLocalSocket* socket = d->singleInstanceServer->nextPendingConnection();
+            connect(socket, &QLocalSocket::readyRead, [ = ] {
+                QJsonObject obj = QJsonDocument::fromJson(socket->readAll()).object();
+                emit static_cast<tApplication*>(tApplication::instance())->singleInstanceMessage(obj);
+            });
+            connect(socket, &QLocalSocket::disconnected, [ = ] {
+                socket->deleteLater();
+            });
+        });
+        d->singleInstanceServer->listen(sharedMemoryName);
+    } else {
+        if (!d->singleInstanceMemory->attach()) std::exit(0); //Can't attach to the memory
+
+        QLocalSocket* socket = new QLocalSocket();
+        socket->connectToServer(sharedMemoryName);
+        socket->waitForConnected();
+        socket->write(QJsonDocument(launchData).toJson());
+        socket->waitForBytesWritten();
+        socket->close();
+
+        std::exit(0);
+    }
 }
 
 QString tApplication::copyrightHolder() {
