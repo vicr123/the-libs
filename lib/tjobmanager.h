@@ -37,6 +37,7 @@ class THELIBSSHARED_EXPORT tJobManager : public QObject {
         static QList<tJob*> jobs();
 
         static QWidget* makeJobButton();
+        static void showJobsPopover(QWidget* parent);
 
     signals:
         void jobAdded(tJob* job);

@@ -49,13 +49,7 @@ JobButton::JobButton(QWidget* parent) : QToolButton(parent) {
 
     connect(tJobManager::instance(), &tJobManager::jobAdded, this, &JobButton::trackJob);
     connect(this, &JobButton::clicked, this, [ = ] {
-        JobsPopover* jp = new JobsPopover();
-        tPopover* popover = new tPopover(jp);
-        popover->setPopoverWidth(SC_DPI(300));
-        connect(jp, &JobsPopover::done, popover, &tPopover::dismiss);
-        connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
-        connect(popover, &tPopover::dismissed, jp, &JobsPopover::deleteLater);
-        popover->show(this->window());
+        tJobManager::showJobsPopover(this);
 
         QList<tJob*> finishedJobs;
         for (tJob* job : d->trackedJobs) {

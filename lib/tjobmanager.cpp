@@ -20,6 +20,8 @@
 #include "tjobmanager.h"
 
 #include "jobs/jobbutton.h"
+#include "jobs/jobspopover.h"
+#include "tpopover.h"
 
 struct tJobManagerPrivate {
     QList<tJob*> jobs;
@@ -49,4 +51,14 @@ QList<tJob*> tJobManager::jobs() {
 
 QWidget* tJobManager::makeJobButton() {
     return new JobButton();
+}
+
+void tJobManager::showJobsPopover(QWidget* parent) {
+    JobsPopover* jp = new JobsPopover();
+    tPopover* popover = new tPopover(jp);
+    popover->setPopoverWidth(SC_DPI(300));
+    connect(jp, &JobsPopover::done, popover, &tPopover::dismiss);
+    connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
+    connect(popover, &tPopover::dismissed, jp, &JobsPopover::deleteLater);
+    popover->show(parent->window());
 }
