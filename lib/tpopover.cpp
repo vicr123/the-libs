@@ -21,6 +21,8 @@
 
 #include <QFrame>
 #include <QGraphicsOpacityEffect>
+#include <QGraphicsBlurEffect>
+#include <QPainter>
 #include "tpropertyanimation.h"
 #include "tcsdtools.h"
 
@@ -39,7 +41,8 @@ struct tPopoverPrivate {
 #endif
 
     QWidget* blanker;
-    QGraphicsOpacityEffect* blankerEffect;
+//    QGraphicsOpacityEffect* blankerEffect;
+    QGraphicsBlurEffect* blurEffect;
 
     tPopover::PopoverSide side = tPopover::Trailing;
 
@@ -47,6 +50,8 @@ struct tPopoverPrivate {
     bool showing = false;
     bool performBlanking = true;
     bool dismissable = true;
+
+    const int blankerOverscan = 100;
 
     static QMap<QWidget*, tPopover*> activePopovers;
 };
@@ -61,15 +66,20 @@ tPopover::tPopover(QWidget* popoverWidget, QObject* parent) : QObject(parent) {
     d->blanker->setAutoFillBackground(true);
     d->blanker->installEventFilter(this);
 
-    d->blankerEffect = new QGraphicsOpacityEffect();
-    d->blankerEffect->setOpacity(0);
-    d->blanker->setGraphicsEffect(d->blankerEffect);
+//    d->blankerEffect = new QGraphicsOpacityEffect();
+//    d->blankerEffect->setOpacity(0);
+//    d->blanker->setGraphicsEffect(d->blankerEffect);
+
+    d->blurEffect = new QGraphicsBlurEffect();
+    d->blurEffect->setBlurHints(QGraphicsBlurEffect::AnimationHint);
+    d->blanker->setGraphicsEffect(d->blurEffect);
 
     d->verticalSeperator = new QFrame();
 }
 
 tPopover::~tPopover() {
     tPopoverPrivate::activePopovers.remove(d->popoverWidget);
+    if (d->blanker) d->blanker->deleteLater();
     delete d;
 }
 
@@ -79,7 +89,7 @@ bool tPopover::isOpeningOnRight() {
 }
 
 void tPopover::updateGeometry() {
-    d->blanker->setGeometry(0, 0, d->parentWidget->width(), d->parentWidget->height());
+    d->blanker->setGeometry(-d->blankerOverscan, -d->blankerOverscan, d->parentWidget->width() + d->blankerOverscan * 2, d->parentWidget->height() + d->blankerOverscan * 2);
 
     if (d->width == -1) {
         d->popoverWidget->resize(d->parentWidget->width(), d->parentWidget->height());
@@ -154,6 +164,10 @@ void tPopover::setPerformBlanking(bool performBlanking) {
     d->performBlanking = performBlanking;
 }
 
+void tPopover::setPerformBlur(bool performBlur) {
+    d->blurEffect->setEnabled(performBlur);
+}
+
 void tPopover::setDismissable(bool dismissable) {
     d->dismissable = dismissable;
 }
@@ -198,7 +212,7 @@ void tPopover::show(QWidget* parent) {
         d->verticalSeperator->setFrameShape(QFrame::VLine);
     }
 
-    d->blanker->setGeometry(0, 0, parent->width(), parent->height());
+    d->blanker->setGeometry(-d->blankerOverscan, -d->blankerOverscan, parent->width() + d->blankerOverscan * 2, parent->height() + d->blankerOverscan * 2);
     if (d->width == -1) {
         d->popoverWidget->resize(parent->width(), parent->height());
     } else {
@@ -218,12 +232,22 @@ void tPopover::show(QWidget* parent) {
     }
 
     if (d->performBlanking) {
-        tPropertyAnimation* blankerAnim = new tPropertyAnimation(d->blankerEffect, "opacity");
-        blankerAnim->setStartValue(d->blankerEffect->opacity());
-        blankerAnim->setEndValue((qreal) 0.75);
+        tVariantAnimation* blankerAnim = new tVariantAnimation();
+        blankerAnim->setStartValue(d->blurEffect->blurRadius());
+        blankerAnim->setEndValue((qreal) 50);
         blankerAnim->setDuration(250);
         blankerAnim->setEasingCurve(QEasingCurve::OutCubic);
-        connect(blankerAnim, &tVariantAnimation::finished, blankerAnim, &tVariantAnimation::deleteLater);
+        connect(blankerAnim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
+            d->blurEffect->setBlurRadius(value.toReal());
+
+            //Constantly change the size of the blanker because Qt doesn't seem to blur correctly otherwise
+            if (d->blanker->geometry().size().height() == parent->height() + d->blankerOverscan * 2) {
+                d->blanker->resize(d->blanker->width(), parent->height() + d->blankerOverscan * 2 + 1);
+            } else {
+                d->blanker->resize(d->blanker->width(), parent->height() + d->blankerOverscan * 2);
+            }
+        });
+        connect(blankerAnim, &tPropertyAnimation::finished, blankerAnim, &tPropertyAnimation::deleteLater);
         blankerAnim->start();
     }
 
@@ -254,6 +278,7 @@ void tPopover::show(QWidget* parent) {
     });
     connect(popoverAnim, &tVariantAnimation::finished, popoverAnim, &tVariantAnimation::deleteLater);
     popoverAnim->start();
+    popoverAnim->valueChanged(popoverAnim->startValue());
 
     d->blanker->show();
     d->verticalSeperator->show();
@@ -280,11 +305,22 @@ void tPopover::dismiss() {
     emit dismissed();
 #else
     if (d->performBlanking) {
-        tPropertyAnimation* blankerAnim = new tPropertyAnimation(d->blankerEffect, "opacity");
-        blankerAnim->setStartValue(d->blankerEffect->opacity());
+        tVariantAnimation* blankerAnim = new tVariantAnimation();
+        blankerAnim->setStartValue(d->blurEffect->blurRadius());
         blankerAnim->setEndValue((qreal) 0);
         blankerAnim->setDuration(250);
         blankerAnim->setEasingCurve(QEasingCurve::OutCubic);
+        connect(blankerAnim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
+            d->blurEffect->setBlurRadius(value.toReal());
+
+            //Constantly change the size of the blanker because Qt doesn't seem to blur correctly otherwise
+            if (d->blanker->geometry().size().height() == d->parentWidget->height() + d->blankerOverscan * 2) {
+                d->blanker->resize(d->blanker->width(), d->parentWidget->height() + d->blankerOverscan * 2 + 1);
+            } else {
+                d->blanker->resize(d->blanker->width(), d->parentWidget->height() + d->blankerOverscan * 2);
+            }
+        });
+        connect(blankerAnim, &tPropertyAnimation::finished, blankerAnim, &tPropertyAnimation::deleteLater);
         blankerAnim->start();
     }
 
@@ -343,6 +379,29 @@ bool tPopover::eventFilter(QObject* watched, QEvent* event) {
     } else if (watched == d->blanker) {
         if (event->type() == QEvent::MouseButtonPress && d->dismissable) {
             this->dismiss();
+        } else if (event->type() == QEvent::Paint) {
+            QPixmap image(d->parentWidget->width(), d->parentWidget->height());
+
+            QPainter imagePainter(&image);
+            for (QObject* child : d->parentWidget->children()) {
+                if (child == d->blanker || child == d->popoverWidget) continue;
+                if (QWidget* childWidget = qobject_cast<QWidget*>(child)) {
+                    childWidget->render(&imagePainter, childWidget->geometry().topLeft());
+                }
+            }
+            imagePainter.end();
+
+            QPainter p(d->blanker);
+//            p.setPen(Qt::transparent);
+//            p.setBrush(d->blanker->palette().color(QPalette::Window));
+//            p.drawRect(0, 0, d->blanker->width(), d->blanker->height());
+
+            p.drawPixmap(QRect(QPoint(d->blankerOverscan, d->blankerOverscan), image.size()), image);
+
+//            QColor col = d->blanker->palette().color(QPalette::Window);
+//            col.setAlpha(127);
+//            p.setBrush(col);
+//            p.drawRect(0, 0, d->blanker->width(), d->blanker->height());
         }
     }
     return false;
