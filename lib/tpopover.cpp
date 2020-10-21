@@ -23,6 +23,7 @@
 #include <QGraphicsOpacityEffect>
 #include <QGraphicsBlurEffect>
 #include <QPainter>
+#include <QTimer>
 #include "tpropertyanimation.h"
 #include "tcsdtools.h"
 
@@ -236,7 +237,7 @@ void tPopover::show(QWidget* parent) {
         tVariantAnimation* blankerAnim = new tVariantAnimation();
         blankerAnim->setStartValue(d->blurEffect->blurRadius());
         blankerAnim->setEndValue((qreal) 10);
-        blankerAnim->setDuration(250);
+        blankerAnim->setDuration(400);
         blankerAnim->setEasingCurve(QEasingCurve::OutCubic);
         connect(blankerAnim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
             d->blurEffect->setBlurRadius(value.toReal());

@@ -51,6 +51,7 @@ struct tApplicationPrivate {
     QStringList copyrightLines;
     tApplication::KnownLicenses license = tApplication::Other;
     QString copyrightHolder, copyrightYear;
+    QMap<tApplication::UrlType, QUrl> applicationUrls;
 
     QSharedMemory* singleInstanceMemory = nullptr;
     QLocalServer* singleInstanceServer = nullptr;
@@ -469,6 +470,10 @@ void tApplication::setApplicationLicense(tApplication::KnownLicenses license) {
     d->license = license;
 }
 
+void tApplication::setApplicationUrl(tApplication::UrlType type, QUrl url) {
+    d->applicationUrls.insert(type, url);
+}
+
 #ifdef Q_OS_WIN
 void tApplication::setWinApplicationClassId(QString classId) {
     d->winClassId = classId;
@@ -588,6 +593,14 @@ QString tApplication::copyrightHolder() {
 
 QString tApplication::copyrightYear() {
     return d->copyrightYear;
+}
+
+bool tApplication::haveApplicationUrl(tApplication::UrlType type) {
+    return d->applicationUrls.contains(type);
+}
+
+QUrl tApplication::applicationUrl(tApplication::UrlType type) {
+    return d->applicationUrls.value(type);
 }
 
 void tApplication::restart() {

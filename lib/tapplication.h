@@ -25,6 +25,12 @@ class THELIBSSHARED_EXPORT tApplication : public QApplication {
             Other
         };
 
+        enum UrlType {
+            HelpContents,
+            Sources,
+            FileBug
+        };
+
         static QIcon applicationIcon();
         static QString shareDir();
         static QString genericName();
@@ -33,6 +39,8 @@ class THELIBSSHARED_EXPORT tApplication : public QApplication {
         static QStringList copyrightLines();
         static QString copyrightHolder();
         static QString copyrightYear();
+        static bool haveApplicationUrl(UrlType type);
+        static QUrl applicationUrl(UrlType type);
         static KnownLicenses applicationLicense();
         static void ensureSingleInstance(QJsonObject launchData);
 
@@ -54,6 +62,7 @@ class THELIBSSHARED_EXPORT tApplication : public QApplication {
         static void setCopyrightHolder(QString copyrightHolder);
         static void setCopyrightYear(QString copyrightYear);
         static void setApplicationLicense(KnownLicenses license);
+        static void setApplicationUrl(UrlType type, QUrl url);
 
 #ifdef Q_OS_WIN
         static void setWinApplicationClassId(QString classId);

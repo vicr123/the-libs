@@ -77,6 +77,7 @@ SOURCES += tvariantanimation.cpp \
     tdatetimepicker/datetimepart.cpp \
     tdatetimepicker/datetimepartbutton.cpp \
     terrorflash.cpp \
+    thelpmenu.cpp \
     tjob.cpp \
     tjobmanager.cpp \
     tlocale.cpp \
@@ -112,6 +113,7 @@ HEADERS += tvariantanimation.h\
     tdatetimepicker/datetimepartbutton.h \
     terrorflash.h \
     the-libs_global.h \
+    thelpmenu.h \
     tjob.h \
     tjobmanager.h \
     tlocale.h \
