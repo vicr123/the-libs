@@ -6,17 +6,17 @@
     <message>
         <location filename="../private/debuglogwindow.cpp" line="267"/>
         <source>Timestamp</source>
-        <translation type="unfinished"></translation>
+        <translation>Dấu thời gian</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.cpp" line="269"/>
         <source>Context</source>
-        <translation type="unfinished"></translation>
+        <translation>Bối cảnh</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.cpp" line="271"/>
         <source>Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Lời báo</translation>
     </message>
 </context>
 <context>
@@ -24,38 +24,38 @@
     <message>
         <location filename="../private/debuglogpopover.ui" line="35"/>
         <source>Debug Log Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Mục nhật ký</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="35"/>
         <source>Timestamp</source>
-        <translation type="unfinished"></translation>
+        <translation>Dấu thời gian</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="36"/>
         <source>Context</source>
-        <translation type="unfinished"></translation>
+        <translation>Bối cảnh</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="37"/>
         <source>Severity</source>
-        <translation type="unfinished"></translation>
+        <translation>Độ nghiêm trọng</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="38"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Tệp</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="38"/>
         <location filename="../private/debuglogpopover.cpp" line="39"/>
         <source>[unavailable]</source>
-        <translation type="unfinished"></translation>
+        <translation>[không có sẵn]</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="39"/>
         <source>Function</source>
-        <translation type="unfinished"></translation>
+        <translation>Hàm</translation>
     </message>
 </context>
 <context>
@@ -63,28 +63,28 @@
     <message>
         <location filename="../private/debuglogwindow.ui" line="14"/>
         <source>Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Nhật ký gỡ lỗi</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.ui" line="80"/>
         <source>Search Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Tìm kiếm nhật ký</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.ui" line="156"/>
         <source>Clear Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Xóa nhật ký</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.ui" line="183"/>
         <source>Filter by Context</source>
-        <translation type="unfinished"></translation>
+        <translation>Lọc bằng bối cảnh</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.cpp" line="301"/>
         <source>context</source>
         <comment>Placeholder in search box</comment>
-        <translation type="unfinished"></translation>
+        <translation>bối cảnh</translation>
     </message>
 </context>
 <context>
@@ -92,7 +92,7 @@
     <message>
         <location filename="../jobs/jobspopover.ui" line="35"/>
         <source>Jobs</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoạt động</translation>
     </message>
 </context>
 <context>
@@ -276,27 +276,27 @@
     <message>
         <location filename="../thelpmenu.cpp" line="39"/>
         <source>%1 Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Trợ giúp về %1</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="42"/>
         <source>File Bug</source>
-        <translation type="unfinished"></translation>
+        <translation>Báo cáo lỗi</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="43"/>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Mã nguồn</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="44"/>
         <source>View Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Xem nhật ký gỡ lỗi</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="70"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Trợ giúp</translation>
     </message>
 </context>
 <context>
@@ -305,31 +305,31 @@
         <location filename="../tlogger.cpp" line="96"/>
         <source>Debug</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gỡ Lỗi</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="98"/>
         <source>Warning</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cảnh Báo</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="100"/>
         <source>Critical</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Quan Trọng</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="102"/>
         <source>Fatal</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gây Tử</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="104"/>
         <source>Info</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Thông Tin</translation>
     </message>
 </context>
 </TS>
