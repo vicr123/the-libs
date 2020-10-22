@@ -21,13 +21,14 @@
 
 #include <QSettings>
 #include <QFileSystemWatcher>
-#include <QDebug>
+#include "tlogger.h"
 #include <QTimer>
 
 typedef QPair<QString, QString> SettingIdentifier;
 
 struct tSettingsGlobals {
     void initialiseInitialSettings(SettingIdentifier identifier) {
+
         if (allSettings.count(identifier) == 0) {
             QSharedPointer<QSettings> settings(new QSettings(identifier.first, identifier.second));
             allSettings.insert(identifier, settings);
@@ -56,7 +57,7 @@ struct tSettingsGlobals {
                 for (QString defaultDefinition : defaults.split(":")) {
                     QStringList definition = defaultDefinition.split(";");
                     if (definition.count() != 3) {
-                        qDebug() << "tSettings: THELIBS_TSETTINGS_DEFAULT_FILES: defaults definition invalid";
+                        tDebug("tSettings") << "THELIBS_TSETTINGS_DEFAULT_FILES: defaults definition invalid";
                         continue;
                     }
 
@@ -66,7 +67,7 @@ struct tSettingsGlobals {
                 }
             }
 
-            qDebug() << "tSettings: Writing settings to" << settings->fileName();
+            tDebug("tSettings") << "Writing settings for " << identifier.second << "to" << settings->fileName();
         }
     }
 
@@ -185,7 +186,7 @@ void tSettings::registerDefaults(QString organisationName, QString applicationNa
     if (!g->settingsPaths.values(identifier).contains(filename)) {
         g->settingsPaths.insert(identifier, filename);
         g->allSettings.insert(identifier, QSharedPointer<QSettings>(new QSettings(filename, QSettings::IniFormat)));
-        qDebug() << "tSettings: Registered defaults for" << identifier.first << identifier.second << filename;
+        tDebug("tSettings") << "Registered defaults for" << identifier.first << identifier.second << filename;
     }
 }
 
@@ -233,10 +234,10 @@ QVariant tSettings::value(QString key) {
         if (i->data()->status() != QSettings::NoError) {
             switch (i->data()->status()) {
                 case QSettings::AccessError:
-                    qDebug() << "tSettings: Access error:" << i->data()->fileName();
+                    tWarn("tSettings") << "Access error:" << i->data()->fileName();
                     break;
                 case QSettings::FormatError:
-                    qDebug() << "tSettings: Format error:" << i->data()->fileName();
+                    tWarn("tSettings") << "Format error:" << i->data()->fileName();
                     break;
                 default:
                     break;
@@ -244,7 +245,7 @@ QVariant tSettings::value(QString key) {
         }
     }
 
-    qWarning() << "No setting value available for key:" << key;
+    tWarn("tSettings") << "No setting value available for key:" << key;
     return QVariant();
 }
 

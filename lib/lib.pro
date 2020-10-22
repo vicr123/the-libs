@@ -11,6 +11,9 @@ TEMPLATE = lib
 
 unix:!android {
     CONFIG += c++14
+
+    DEFINES += SYSTEM_LIBRARY_DIRECTORY=\\\"$$[QT_INSTALL_LIBS]\\\"
+
     system("pkg-config --version") {
         CONFIG += link_pkgconfig
         packagesExist(libunwind) {
@@ -67,6 +70,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += tvariantanimation.cpp \
     jobs/jobbutton.cpp \
     jobs/jobspopover.cpp \
+    private/debuglogwindow.cpp \
     taboutdialog.cpp \
     tconditionalwidget.cpp \
     tcsdtools.cpp \
@@ -81,6 +85,7 @@ SOURCES += tvariantanimation.cpp \
     tjob.cpp \
     tjobmanager.cpp \
     tlocale.cpp \
+    tlogger.cpp \
     tpromise.cpp \
     tpropertyanimation.cpp \
     thelibsglobal.cpp \
@@ -102,6 +107,7 @@ SOURCES += tvariantanimation.cpp \
 HEADERS += tvariantanimation.h\
     jobs/jobbutton.h \
     jobs/jobspopover.h \
+    private/debuglogwindow.h \
     taboutdialog.h \
     tconditionalwidget.h \
     tcsdtools.h \
@@ -117,6 +123,7 @@ HEADERS += tvariantanimation.h\
     tjob.h \
     tjobmanager.h \
     tlocale.h \
+    tlogger.h \
     tpropertyanimation.h \
     tsettings.h \
     tstatusframe.h \
@@ -205,6 +212,7 @@ DISTFILES += \
 
 FORMS += \
     jobs/jobspopover.ui \
+    private/debuglogwindow.ui \
     taboutdialog.ui \
     tcsdtools/csdbuttonbox.ui \
     tshortcuthud.ui \

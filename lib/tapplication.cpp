@@ -11,6 +11,7 @@
 #include <QSharedMemory>
 #include <QLocalServer>
 #include <QLocalSocket>
+#include "tlogger.h"
 
 #ifdef T_OS_UNIX_NOT_MAC
     #include <signal.h>
@@ -66,6 +67,9 @@ struct tApplicationPrivate {
 #else
     static void crashTrapHandler();
 #endif
+
+    static void qtMessageHandler(QtMsgType messageType, const QMessageLogContext& context, const QString& message);
+    QtMessageHandler oldMessageHandler;
 };
 
 tApplicationPrivate* tApplication::d = nullptr;
@@ -73,6 +77,8 @@ tApplicationPrivate* tApplication::d = nullptr;
 tApplication::tApplication(int& argc, char** argv) : QApplication(argc, argv) {
     d = new tApplicationPrivate();
     d->applicationInstance = this;
+
+    d->oldMessageHandler = qInstallMessageHandler(&tApplicationPrivate::qtMessageHandler);
 
     //Mark some strings for translation
     if (false) {
@@ -253,7 +259,7 @@ void tApplicationPrivate::crashTrapHandler(int sig) {
 
     QProcess* process = new QProcess();
     process->setEnvironment(QProcess::systemEnvironment());
-    process->start("/usr/lib/bonkers " + args.join(" "), QProcess::Unbuffered | QProcess::WriteOnly);
+    process->start(QStringLiteral(SYSTEM_LIBRARY_DIRECTORY).append("/bonkers"), args, QProcess::Unbuffered | QProcess::WriteOnly);
 
     //Write out crash information
     QStringList bt;
@@ -298,6 +304,11 @@ void tApplicationPrivate::crashTrapHandler(int sig) {
     //Reset the signal and re-raise it
     raise(sig);
 }
+
+void tApplicationPrivate::qtMessageHandler(QtMsgType messageType, const QMessageLogContext& context, const QString& message) {
+    tLogger::log(messageType, "QMessageLogger", message, context.file, context.line, context.function);
+    tApplication::d->oldMessageHandler(messageType, context, message);
+}
 #endif
 
 #ifdef Q_OS_WIN
@@ -340,7 +351,7 @@ void tApplication::registerCrashTrap() {
 
 #ifdef T_OS_UNIX_NOT_MAC
     //Check that the crash handler exists
-    if (QFile("/usr/lib/bonkers").exists()) {
+    if (QFile(QStringLiteral(SYSTEM_LIBRARY_DIRECTORY).append("/bonkers")).exists()) {
         //Enable the crash trap
         d->crashHandlingEnabled = true;
 

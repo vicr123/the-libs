@@ -21,12 +21,14 @@
 
 #include "tapplication.h"
 #include "taboutdialog.h"
+#include "tlogger.h"
 #include <QDesktopServices>
 
 struct tHelpMenuPrivate {
     QAction* helpContentsAction;
     QAction* fileBugAction;
     QAction* sourcesAction;
+    QAction* debugLogAction;
     QAction* aboutAction;
 
     QAction* userActionsSeperator;
@@ -39,6 +41,7 @@ tHelpMenu::tHelpMenu(QWidget* parent) : QMenu(parent) {
 
     d->fileBugAction = new QAction(QIcon::fromTheme("tools-report-bug"), tr("File Bug"), this);
     d->sourcesAction = new QAction(QIcon::fromTheme("commit"), tr("Sources"), this);
+    d->debugLogAction = new QAction(tr("View Debug Log"), this);
     d->aboutAction = new QAction(QIcon::fromTheme("help-about"), tApplication::translate("MAC_APPLICATION_MENU", "About %1").arg(tApplication::applicationDisplayName()), this);
 
     connect(d->helpContentsAction, &QAction::triggered, this, [ = ] {
@@ -50,6 +53,9 @@ tHelpMenu::tHelpMenu(QWidget* parent) : QMenu(parent) {
     connect(d->sourcesAction, &QAction::triggered, this, [ = ] {
         QDesktopServices::openUrl(tApplication::applicationUrl(tApplication::Sources));
     });
+    connect(d->debugLogAction, &QAction::triggered, this, [ = ] {
+        tLogger::openDebugLogWindow();
+    });
     connect(d->aboutAction, &QAction::triggered, this, [ = ] {
         tAboutDialog dialog(parent);
         dialog.exec();
@@ -59,6 +65,8 @@ tHelpMenu::tHelpMenu(QWidget* parent) : QMenu(parent) {
     d->fileBugAction->setVisible(tApplication::haveApplicationUrl(tApplication::FileBug));
     d->sourcesAction->setVisible(tApplication::haveApplicationUrl(tApplication::Sources));
 
+    qInfo() << "";
+
     this->setTitle(tr("Help"));
     this->setIcon(QIcon::fromTheme("help-contents"));
 
@@ -67,6 +75,7 @@ tHelpMenu::tHelpMenu(QWidget* parent) : QMenu(parent) {
     d->userActionsSeperator = this->addSeparator();
     this->QMenu::addAction(d->fileBugAction);
     this->QMenu::addAction(d->sourcesAction);
+    this->QMenu::addAction(d->debugLogAction);
     this->addSeparator();
     this->QMenu::addAction(d->aboutAction);
 }

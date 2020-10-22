@@ -2,6 +2,37 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ja_JP" sourcelanguage="en_US">
 <context>
+    <name>DebugLogModel</name>
+    <message>
+        <location filename="../private/debuglogwindow.cpp" line="223"/>
+        <source>Timestamp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../private/debuglogwindow.cpp" line="225"/>
+        <source>Context</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../private/debuglogwindow.cpp" line="227"/>
+        <source>Message</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DebugLogWindow</name>
+    <message>
+        <location filename="../private/debuglogwindow.ui" line="14"/>
+        <source>Debug Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../private/debuglogwindow.ui" line="82"/>
+        <source>Clear Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>JobsPopover</name>
     <message>
         <location filename="../jobs/jobspopover.ui" line="14"/>
@@ -17,38 +48,38 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../tapplication.cpp" line="80"/>
+        <location filename="../tapplication.cpp" line="86"/>
         <source>Services</source>
         <translation>サービス</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="81"/>
+        <location filename="../tapplication.cpp" line="87"/>
         <source>Hide %1</source>
         <translation>%1を隠す</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="82"/>
+        <location filename="../tapplication.cpp" line="88"/>
         <source>Hide Others</source>
         <translation>他を隠す</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="83"/>
+        <location filename="../tapplication.cpp" line="89"/>
         <source>Show All</source>
         <translation>全てを表示する</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="84"/>
+        <location filename="../tapplication.cpp" line="90"/>
         <source>Preferences...</source>
         <translation>パフォーマンス...</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="85"/>
-        <location filename="../thelpmenu.cpp" line="42"/>
+        <location filename="../tapplication.cpp" line="91"/>
+        <location filename="../thelpmenu.cpp" line="45"/>
         <source>About %1</source>
         <translation>%1について</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="86"/>
+        <location filename="../tapplication.cpp" line="92"/>
         <source>Quit %1</source>
         <translation>%1を終了する</translation>
     </message>
@@ -56,52 +87,52 @@
 <context>
     <name>QCommandLineParser</name>
     <message>
-        <location filename="../tapplication.cpp" line="89"/>
+        <location filename="../tapplication.cpp" line="95"/>
         <source>Displays version information.</source>
         <translation>バージョン情報を表示する。</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="90"/>
+        <location filename="../tapplication.cpp" line="96"/>
         <source>Displays this help.</source>
         <translation>ヘルプを表示します。</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="91"/>
+        <location filename="../tapplication.cpp" line="97"/>
         <source>Unknown option &apos;%1&apos;.</source>
         <translation>%1というオプションは不明です。</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="92"/>
+        <location filename="../tapplication.cpp" line="98"/>
         <source>Unknown options: %1.</source>
         <translation>不明なオプション: %1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="93"/>
+        <location filename="../tapplication.cpp" line="99"/>
         <source>Missing value after &apos;%1&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="94"/>
+        <location filename="../tapplication.cpp" line="100"/>
         <source>Unexpected value after &apos;%1&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="95"/>
+        <location filename="../tapplication.cpp" line="101"/>
         <source>[options]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="96"/>
+        <location filename="../tapplication.cpp" line="102"/>
         <source>Usage: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="97"/>
+        <location filename="../tapplication.cpp" line="103"/>
         <source>Options:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="98"/>
+        <location filename="../tapplication.cpp" line="104"/>
         <source>Arguments:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -133,59 +164,59 @@
 <context>
     <name>tApplication</name>
     <message>
-        <location filename="../tapplication.cpp" line="540"/>
+        <location filename="../tapplication.cpp" line="551"/>
         <source>Copyright © %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="512"/>
-        <location filename="../tapplication.cpp" line="515"/>
-        <location filename="../tapplication.cpp" line="518"/>
-        <location filename="../tapplication.cpp" line="521"/>
-        <location filename="../tapplication.cpp" line="524"/>
-        <location filename="../tapplication.cpp" line="527"/>
-        <location filename="../tapplication.cpp" line="530"/>
-        <location filename="../tapplication.cpp" line="533"/>
+        <location filename="../tapplication.cpp" line="523"/>
+        <location filename="../tapplication.cpp" line="526"/>
+        <location filename="../tapplication.cpp" line="529"/>
+        <location filename="../tapplication.cpp" line="532"/>
+        <location filename="../tapplication.cpp" line="535"/>
+        <location filename="../tapplication.cpp" line="538"/>
+        <location filename="../tapplication.cpp" line="541"/>
+        <location filename="../tapplication.cpp" line="544"/>
         <source>Licensed under the terms of the %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="512"/>
+        <location filename="../tapplication.cpp" line="523"/>
         <source>GNU General Public License, version 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="515"/>
+        <location filename="../tapplication.cpp" line="526"/>
         <source>GNU General Public License, version 3, or later</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="518"/>
+        <location filename="../tapplication.cpp" line="529"/>
         <source>GNU General Public License, version 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="521"/>
+        <location filename="../tapplication.cpp" line="532"/>
         <source>GNU General Public License, version 2, or later</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="524"/>
+        <location filename="../tapplication.cpp" line="535"/>
         <source>GNU Lesser General Public License, version 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="527"/>
+        <location filename="../tapplication.cpp" line="538"/>
         <source>GNU Lesser General Public License, version 3, or later</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="530"/>
+        <location filename="../tapplication.cpp" line="541"/>
         <source>GNU Lesser General Public License, version 2.1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="533"/>
+        <location filename="../tapplication.cpp" line="544"/>
         <source>GNU Lesser General Public License, version 2.1, or later</source>
         <translation type="unfinished"></translation>
     </message>
@@ -193,22 +224,27 @@
 <context>
     <name>tHelpMenu</name>
     <message>
-        <location filename="../thelpmenu.cpp" line="37"/>
+        <location filename="../thelpmenu.cpp" line="39"/>
         <source>%1 Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../thelpmenu.cpp" line="40"/>
+        <location filename="../thelpmenu.cpp" line="42"/>
         <source>File Bug</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../thelpmenu.cpp" line="41"/>
+        <location filename="../thelpmenu.cpp" line="43"/>
         <source>Sources</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../thelpmenu.cpp" line="62"/>
+        <location filename="../thelpmenu.cpp" line="44"/>
+        <source>View Debug Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../thelpmenu.cpp" line="70"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
