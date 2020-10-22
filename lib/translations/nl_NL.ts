@@ -6,12 +6,12 @@
     <message>
         <location filename="../jobs/jobspopover.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulier</translation>
     </message>
     <message>
         <location filename="../jobs/jobspopover.ui" line="35"/>
         <source>Jobs</source>
-        <translation type="unfinished"></translation>
+        <translation>Taken</translation>
     </message>
 </context>
 <context>
@@ -195,22 +195,22 @@
     <message>
         <location filename="../thelpmenu.cpp" line="37"/>
         <source>%1 Help</source>
-        <translation type="unfinished"></translation>
+        <translation>%1-hulp</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="40"/>
         <source>File Bug</source>
-        <translation type="unfinished"></translation>
+        <translation>Een bug rapporteren</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="41"/>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Bronnen</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="62"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Hulp</translation>
     </message>
 </context>
 </TS>
