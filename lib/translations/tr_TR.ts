@@ -6,17 +6,17 @@
     <message>
         <location filename="../private/debuglogwindow.cpp" line="267"/>
         <source>Timestamp</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaman damgası</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.cpp" line="269"/>
         <source>Context</source>
-        <translation type="unfinished"></translation>
+        <translation>Bağlam</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.cpp" line="271"/>
         <source>Message</source>
-        <translation type="unfinished"></translation>
+        <translation>İleti</translation>
     </message>
 </context>
 <context>
@@ -24,38 +24,38 @@
     <message>
         <location filename="../private/debuglogpopover.ui" line="35"/>
         <source>Debug Log Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata Ayıklama Günlük Öğesi</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="35"/>
         <source>Timestamp</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaman damgası</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="36"/>
         <source>Context</source>
-        <translation type="unfinished"></translation>
+        <translation>Bağlam</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="37"/>
         <source>Severity</source>
-        <translation type="unfinished"></translation>
+        <translation>Önem</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="38"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="38"/>
         <location filename="../private/debuglogpopover.cpp" line="39"/>
         <source>[unavailable]</source>
-        <translation type="unfinished"></translation>
+        <translation>[kullanım dışı]</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="39"/>
         <source>Function</source>
-        <translation type="unfinished"></translation>
+        <translation>Fonksiyon</translation>
     </message>
 </context>
 <context>
@@ -63,28 +63,28 @@
     <message>
         <location filename="../private/debuglogwindow.ui" line="14"/>
         <source>Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata ayıklama günlüğü</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.ui" line="80"/>
         <source>Search Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata Ayıklama Günlüğünde Ara</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.ui" line="156"/>
         <source>Clear Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Günlüğü Temizle</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.ui" line="183"/>
         <source>Filter by Context</source>
-        <translation type="unfinished"></translation>
+        <translation>Bağlama Göre Filtrele</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.cpp" line="301"/>
         <source>context</source>
         <comment>Placeholder in search box</comment>
-        <translation type="unfinished"></translation>
+        <translation>bağlam</translation>
     </message>
 </context>
 <context>
@@ -291,7 +291,7 @@
     <message>
         <location filename="../thelpmenu.cpp" line="44"/>
         <source>View Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata Ayıklama Günlüğünü Görüntüle</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="70"/>
@@ -305,31 +305,31 @@
         <location filename="../tlogger.cpp" line="96"/>
         <source>Debug</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hata ayıklama</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="98"/>
         <source>Warning</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Uyarı</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="100"/>
         <source>Critical</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kritik</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="102"/>
         <source>Fatal</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ölümcül</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="104"/>
         <source>Info</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bilgi</translation>
     </message>
 </context>
 </TS>
