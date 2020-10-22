@@ -62,7 +62,7 @@ class THELIBSSHARED_EXPORT tLogger : public QObject {
         tLoggerPrivate* d;
 };
 
-class tLogWriter {
+class THELIBSSHARED_EXPORT tLogWriter {
     public:
         tLogWriter(QString context, QtMsgType severity, QString file, int line, QString function);
         ~tLogWriter();
