@@ -69,6 +69,7 @@ class tLogWriter {
 
         tLogWriter& operator<<(const char* str);
         tLogWriter& operator<<(QString str);
+        tLogWriter& operator<<(QStringList str);
         tLogWriter& operator<<(int str);
         tLogWriter& operator<<(uint str);
         tLogWriter& operator<<(qint64 str);

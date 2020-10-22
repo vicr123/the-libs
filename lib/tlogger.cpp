@@ -132,6 +132,11 @@ tLogWriter& tLogWriter::operator<<(QString str) {
     return *this;
 }
 
+tLogWriter& tLogWriter::operator<<(QStringList str) {
+    d->bits.append("[" + str.join(",") + "]");
+    return *this;
+}
+
 tLogWriter& tLogWriter::operator<<(int str) {
     d->bits.append(QStringLiteral("%1").arg(str));
     return *this;
