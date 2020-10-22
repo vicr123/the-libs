@@ -24,7 +24,19 @@
 #include <QFontDatabase>
 #include <QHeaderView>
 #include <QPainter>
+#include <QSortFilterProxyModel>
+#include <QMenu>
+#include "tpopover.h"
+#include "debuglogpopover.h"
 #include "tlogger.h"
+
+struct DebugLogWindowPrivate {
+    QSortFilterProxyModel* severityModel;
+    QSortFilterProxyModel* contextModel;
+    QSortFilterProxyModel* searchModel;
+
+    bool keepScrolling = true;
+};
 
 struct DebugLogModelPrivate {
     struct DebugLogLogItem {
@@ -40,19 +52,49 @@ DebugLogWindow::DebugLogWindow(QWidget* parent) :
     ui(new Ui::DebugLogWindow) {
     ui->setupUi(this);
 
+    d = new DebugLogWindowPrivate();
+
     ui->logView->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
-    ui->logView->setModel(new DebugLogModel());
     ui->logView->setItemDelegate(new LogDelegate());
+
+    d->severityModel = new QSortFilterProxyModel(this);
+    d->severityModel->setSourceModel(new DebugLogModel());
+    d->severityModel->setFilterKeyColumn(0);
+
+    d->contextModel = new QSortFilterProxyModel(this);
+    d->contextModel->setSourceModel(d->severityModel);
+    d->contextModel->setFilterKeyColumn(1);
+
+    d->searchModel = new QSortFilterProxyModel(this);
+    d->searchModel->setSourceModel(d->contextModel);
+    d->searchModel->setFilterKeyColumn(2);
+
+    ui->logView->setModel(d->searchModel);
 
     ui->logView->verticalScrollBar()->setValue(ui->logView->verticalScrollBar()->maximum());
 
     ui->logView->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
     ui->logView->header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
-    ui->logView->header()->setSectionResizeMode(2, QHeaderView::Stretch);
+    ui->logView->header()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
+
+    ui->searchWidget->setFixedWidth(SC_DPI(600));
+
+    QMenu* searchOptionsMenu = new QMenu(this);
+    searchOptionsMenu->addAction(ui->actionFilterContext);
+    ui->searchOptions->setMenu(searchOptionsMenu);
+
+    connect(ui->logView->verticalScrollBar(), &QScrollBar::rangeChanged, this, [ = ](int min, int max) {
+        Q_UNUSED(min)
+        if (d->keepScrolling) ui->logView->verticalScrollBar()->setValue(max);
+    });
+    connect(ui->logView->verticalScrollBar(), &QScrollBar::valueChanged, this, [ = ](int value) {
+        d->keepScrolling = ui->logView->verticalScrollBar()->maximum() == value;
+    });
 }
 
 DebugLogWindow::~DebugLogWindow() {
     delete ui;
+    delete d;
 }
 
 void DebugLogWindow::on_clearButton_clicked() {
@@ -161,7 +203,7 @@ void DebugLogModel::addLogItem(tLogger::LogItem logItem) {
         }
     }
 
-    beginInsertRows(QModelIndex(), rowCount(), rowCount() + 1);
+    beginInsertRows(QModelIndex(), rowCount(), rowCount());
     DebugLogModelPrivate::DebugLogLogItem debugLogLogItem;
     debugLogLogItem.base = logItem;
     debugLogLogItem.repeat = 0;
@@ -186,6 +228,8 @@ QVariant DebugLogModel::data(const QModelIndex& index, int role) const {
     if (!index.isValid()) return QVariant();
 
     DebugLogModelPrivate::DebugLogLogItem log = d->logs.at(index.row());
+
+    if (role == Qt::UserRole + 1) return QVariant::fromValue(log.base);
 
     switch (index.column()) {
         case 0: //Timestamp
@@ -227,4 +271,46 @@ QVariant DebugLogModel::headerData(int section, Qt::Orientation orientation, int
             return tr("Message");
     }
     return QVariant();
+}
+
+void DebugLogWindow::on_searchField_textChanged(const QString& arg1) {
+    QString text = arg1;
+
+    //Try and find a context match
+    QRegularExpressionMatch contextMatch = QRegularExpression("(ctx|context):(\"(.+)\"|(\\w+)) ?").match(text);
+    if (contextMatch.hasMatch()) {
+        QString context;
+        if (contextMatch.captured(3).isEmpty()) {
+            context = contextMatch.captured(4);
+        } else {
+            context = contextMatch.captured(3);
+        }
+        d->contextModel->setFilterRegularExpression(QRegularExpression(QRegularExpression::anchoredPattern(QRegularExpression::escape(context))));
+
+        text.remove(contextMatch.capturedStart(), contextMatch.capturedLength());
+        ui->actionFilterContext->setEnabled(false);
+    } else {
+        d->contextModel->setFilterWildcard("");
+        ui->actionFilterContext->setEnabled(true);
+    }
+
+    d->searchModel->setFilterRegularExpression(text);
+}
+
+void DebugLogWindow::on_actionFilterContext_triggered() {
+    QString placeholderSelection = QStringLiteral("[%1]").arg(tr("context", "Placeholder in search box"));
+    QString currentSearch = ui->searchField->text();
+    currentSearch.prepend(QStringLiteral("ctx:%1 ").arg(placeholderSelection));
+    ui->searchField->setText(currentSearch);
+    ui->searchField->setSelection(4, placeholderSelection.length());
+}
+
+void DebugLogWindow::on_logView_activated(const QModelIndex& index) {
+    DebugLogPopover* logPopover = new DebugLogPopover(index.data(Qt::UserRole + 1).value<tLogger::LogItem>());
+    tPopover* popover = new tPopover(logPopover);
+    popover->setPopoverWidth(SC_DPI(500));
+    connect(logPopover, &DebugLogPopover::done, popover, &tPopover::dismiss);
+    connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
+    connect(popover, &tPopover::dismissed, logPopover, &DebugLogPopover::deleteLater);
+    popover->show(this);
 }

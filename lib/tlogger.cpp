@@ -34,7 +34,7 @@ struct tLogWriterPrivate {
 
 tLogger::tLogger(QObject* parent) : QObject(parent) {
     d = new tLoggerPrivate();
-    d->logs.reserve(1000);
+    d->logs.reserve(10000);
 }
 
 tLogger::~tLogger() {
@@ -63,6 +63,9 @@ void tLogger::log(tLogger::LogItem item) {
 
     instance()->d->logMutex.lock();
     instance()->d->logs.append(item);
+    while (instance()->d->logs.count() > 10000) {
+        instance()->d->logs.takeFirst();
+    }
     instance()->d->logMutex.unlock();
 
     emit instance()->newLogItem(item);
@@ -85,6 +88,22 @@ void tLogger::openDebugLogWindow() {
     DebugLogWindow* window = new DebugLogWindow();
     connect(window, &DebugLogWindow::finished, window, &QDialog::deleteLater);
     window->show();
+}
+
+QString tLogger::severityToString(QtMsgType severity) {
+    switch (severity) {
+        case QtDebugMsg:
+            return tr("Debug", "Severity Level");
+        case QtWarningMsg:
+            return tr("Warning", "Severity Level");
+        case QtCriticalMsg:
+            return tr("Critical", "Severity Level");
+        case QtFatalMsg:
+            return tr("Fatal", "Severity Level");
+        case QtInfoMsg:
+            return tr("Info", "Severity Level");
+    }
+    return "";
 }
 
 

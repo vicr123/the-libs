@@ -29,6 +29,7 @@ namespace Ui {
     class DebugLogWindow;
 }
 
+struct DebugLogWindowPrivate;
 class DebugLogWindow : public QDialog {
         Q_OBJECT
 
@@ -39,8 +40,15 @@ class DebugLogWindow : public QDialog {
     private slots:
         void on_clearButton_clicked();
 
+        void on_searchField_textChanged(const QString& arg1);
+
+        void on_actionFilterContext_triggered();
+
+        void on_logView_activated(const QModelIndex& index);
+
     private:
         Ui::DebugLogWindow* ui;
+        DebugLogWindowPrivate* d;
 };
 
 struct DebugLogModelPrivate;

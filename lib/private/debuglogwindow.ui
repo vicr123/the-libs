@@ -30,6 +30,80 @@
     <number>0</number>
    </property>
    <item>
+    <widget class="QWidget" name="widget_2" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item alignment="Qt::AlignHCenter">
+       <widget class="QWidget" name="searchWidget" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLineEdit" name="searchField">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="frame">
+            <bool>false</bool>
+           </property>
+           <property name="placeholderText">
+            <string>Search Debug Log</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="searchOptions">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="go-down"/>
+           </property>
+           <property name="popupMode">
+            <enum>QToolButton::InstantPopup</enum>
+           </property>
+           <property name="arrowType">
+            <enum>Qt::DownArrow</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QTreeView" name="logView">
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
@@ -82,7 +156,8 @@
          <string>Clear Log</string>
         </property>
         <property name="icon">
-         <iconset theme="edit-clear"/>
+         <iconset theme="edit-clear">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
       </item>
@@ -103,6 +178,11 @@
     </widget>
    </item>
   </layout>
+  <action name="actionFilterContext">
+   <property name="text">
+    <string>Filter by Context</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

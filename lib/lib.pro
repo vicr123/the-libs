@@ -70,6 +70,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += tvariantanimation.cpp \
     jobs/jobbutton.cpp \
     jobs/jobspopover.cpp \
+    private/debuglogpopover.cpp \
     private/debuglogwindow.cpp \
     taboutdialog.cpp \
     tconditionalwidget.cpp \
@@ -107,6 +108,7 @@ SOURCES += tvariantanimation.cpp \
 HEADERS += tvariantanimation.h\
     jobs/jobbutton.h \
     jobs/jobspopover.h \
+    private/debuglogpopover.h \
     private/debuglogwindow.h \
     taboutdialog.h \
     tconditionalwidget.h \
@@ -212,6 +214,7 @@ DISTFILES += \
 
 FORMS += \
     jobs/jobspopover.ui \
+    private/debuglogpopover.ui \
     private/debuglogwindow.ui \
     taboutdialog.ui \
     tcsdtools/csdbuttonbox.ui \

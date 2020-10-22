@@ -50,6 +50,8 @@ class THELIBSSHARED_EXPORT tLogger : public QObject {
         static void clearLog();
         static void openDebugLogWindow();
 
+        static QString severityToString(QtMsgType severity);
+
     signals:
         void newLogItem(LogItem item);
         void logCleared();
