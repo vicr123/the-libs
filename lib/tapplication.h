@@ -4,6 +4,7 @@
 #include "the-libs_global.h"
 #include <QApplication>
 #include <QJsonObject>
+#include <QUrl>
 
 struct tApplicationPrivate;
 
