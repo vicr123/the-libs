@@ -7,6 +7,7 @@ License:        GPLv3+
 URL:            https://github.com/vicr123/the-libs
 Source0:        https://github.com/vicr123/the-libs/archive/v%{version}.tar.gz
 Conflicts:      the-libs
+Provides:       the-libs
 
 %if 0%{?fedora} == 32
 BuildRequires:  make qt5-devel libunwind-devel gsettings-qt-devel
@@ -27,6 +28,8 @@ Common libraries for the* apps
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Conflicts:      the-libs-devel
+Provides:       the-libs-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

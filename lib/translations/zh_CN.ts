@@ -124,7 +124,7 @@
     </message>
     <message>
         <location filename="../tapplication.cpp" line="97"/>
-        <location filename="../thelpmenu.cpp" line="45"/>
+        <location filename="../thelpmenu.cpp" line="46"/>
         <source>About %1</source>
         <translation>关于</translation>
     </message>
@@ -274,27 +274,27 @@
 <context>
     <name>tHelpMenu</name>
     <message>
-        <location filename="../thelpmenu.cpp" line="39"/>
+        <location filename="../thelpmenu.cpp" line="40"/>
         <source>%1 Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../thelpmenu.cpp" line="42"/>
+        <location filename="../thelpmenu.cpp" line="43"/>
         <source>File Bug</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../thelpmenu.cpp" line="43"/>
+        <location filename="../thelpmenu.cpp" line="44"/>
         <source>Sources</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../thelpmenu.cpp" line="44"/>
+        <location filename="../thelpmenu.cpp" line="45"/>
         <source>View Debug Log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../thelpmenu.cpp" line="70"/>
+        <location filename="../thelpmenu.cpp" line="71"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
