@@ -23,6 +23,7 @@
 #include "taboutdialog.h"
 #include "tlogger.h"
 #include <QDesktopServices>
+#include <QUrl>
 
 struct tHelpMenuPrivate {
     QAction* helpContentsAction;
