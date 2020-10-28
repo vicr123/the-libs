@@ -68,11 +68,17 @@ struct tApplicationPrivate {
     static void crashTrapHandler();
 #endif
 
-    static void qtMessageHandler(QtMsgType messageType, const QMessageLogContext& context, const QString& message);
+    static void qtMessageHandler(QtMsgType messageType, const QMessageLogContext& context, const QString& message) {
+        tLogger::log(messageType, "QMessageLogger", message, context.file, context.line, context.function);
+        tApplication::d->oldMessageHandler(messageType, context, message);
+    }
+
     QtMessageHandler oldMessageHandler;
 };
 
 tApplicationPrivate* tApplication::d = nullptr;
+
+
 
 tApplication::tApplication(int& argc, char** argv) : QApplication(argc, argv) {
     d = new tApplicationPrivate();
@@ -303,11 +309,6 @@ void tApplicationPrivate::crashTrapHandler(int sig) {
 
     //Reset the signal and re-raise it
     raise(sig);
-}
-
-void tApplicationPrivate::qtMessageHandler(QtMsgType messageType, const QMessageLogContext& context, const QString& message) {
-    tLogger::log(messageType, "QMessageLogger", message, context.file, context.line, context.function);
-    tApplication::d->oldMessageHandler(messageType, context, message);
 }
 #endif
 

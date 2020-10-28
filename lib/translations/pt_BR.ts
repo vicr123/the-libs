@@ -98,38 +98,38 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../tapplication.cpp" line="86"/>
+        <location filename="../tapplication.cpp" line="92"/>
         <source>Services</source>
         <translation>Serviços</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="87"/>
+        <location filename="../tapplication.cpp" line="93"/>
         <source>Hide %1</source>
         <translation>Esconder %1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="88"/>
+        <location filename="../tapplication.cpp" line="94"/>
         <source>Hide Others</source>
         <translation>Esconder Outros</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="89"/>
+        <location filename="../tapplication.cpp" line="95"/>
         <source>Show All</source>
         <translation>Mostrar tudo</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="90"/>
+        <location filename="../tapplication.cpp" line="96"/>
         <source>Preferences...</source>
         <translation>Preferências...</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="91"/>
+        <location filename="../tapplication.cpp" line="97"/>
         <location filename="../thelpmenu.cpp" line="45"/>
         <source>About %1</source>
         <translation>Sobre %1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="92"/>
+        <location filename="../tapplication.cpp" line="98"/>
         <source>Quit %1</source>
         <translation>Fechar %1</translation>
     </message>
@@ -137,52 +137,52 @@
 <context>
     <name>QCommandLineParser</name>
     <message>
-        <location filename="../tapplication.cpp" line="95"/>
+        <location filename="../tapplication.cpp" line="101"/>
         <source>Displays version information.</source>
         <translation>Mostra informações sobre a versão.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="96"/>
+        <location filename="../tapplication.cpp" line="102"/>
         <source>Displays this help.</source>
         <translation>Mostra essa ajuda.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="97"/>
+        <location filename="../tapplication.cpp" line="103"/>
         <source>Unknown option &apos;%1&apos;.</source>
         <translation>Opção &apos;%1&apos; desconhecida.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="98"/>
+        <location filename="../tapplication.cpp" line="104"/>
         <source>Unknown options: %1.</source>
         <translation>Opções &apos;%1&apos; desconhecidas.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="99"/>
+        <location filename="../tapplication.cpp" line="105"/>
         <source>Missing value after &apos;%1&apos;.</source>
         <translation>Valor faltando após &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="100"/>
+        <location filename="../tapplication.cpp" line="106"/>
         <source>Unexpected value after &apos;%1&apos;.</source>
         <translation>Valor inesperado após &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="101"/>
+        <location filename="../tapplication.cpp" line="107"/>
         <source>[options]</source>
         <translation>[opções]</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="102"/>
+        <location filename="../tapplication.cpp" line="108"/>
         <source>Usage: %1</source>
         <translation>Uso: %1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="103"/>
+        <location filename="../tapplication.cpp" line="109"/>
         <source>Options:</source>
         <translation>Opções:</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="104"/>
+        <location filename="../tapplication.cpp" line="110"/>
         <source>Arguments:</source>
         <translation>Argumentos:</translation>
     </message>
@@ -214,59 +214,59 @@
 <context>
     <name>tApplication</name>
     <message>
-        <location filename="../tapplication.cpp" line="551"/>
+        <location filename="../tapplication.cpp" line="552"/>
         <source>Copyright © %1.</source>
         <translation>Copyright © %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="523"/>
-        <location filename="../tapplication.cpp" line="526"/>
-        <location filename="../tapplication.cpp" line="529"/>
-        <location filename="../tapplication.cpp" line="532"/>
-        <location filename="../tapplication.cpp" line="535"/>
-        <location filename="../tapplication.cpp" line="538"/>
-        <location filename="../tapplication.cpp" line="541"/>
-        <location filename="../tapplication.cpp" line="544"/>
+        <location filename="../tapplication.cpp" line="524"/>
+        <location filename="../tapplication.cpp" line="527"/>
+        <location filename="../tapplication.cpp" line="530"/>
+        <location filename="../tapplication.cpp" line="533"/>
+        <location filename="../tapplication.cpp" line="536"/>
+        <location filename="../tapplication.cpp" line="539"/>
+        <location filename="../tapplication.cpp" line="542"/>
+        <location filename="../tapplication.cpp" line="545"/>
         <source>Licensed under the terms of the %1.</source>
         <translation>Licenciado dentro dos termos da %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="523"/>
+        <location filename="../tapplication.cpp" line="524"/>
         <source>GNU General Public License, version 3</source>
         <translation>Licença Pública Geral GNU, versão 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="526"/>
+        <location filename="../tapplication.cpp" line="527"/>
         <source>GNU General Public License, version 3, or later</source>
         <translation>Licença Pública Geral GNU, versão 3 ou posterior</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="529"/>
+        <location filename="../tapplication.cpp" line="530"/>
         <source>GNU General Public License, version 2</source>
         <translation>Licença Pública Geral GNU, versão 2</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="532"/>
+        <location filename="../tapplication.cpp" line="533"/>
         <source>GNU General Public License, version 2, or later</source>
         <translation>Licença Pública Geral GNU, versão 2 ou posterior</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="535"/>
+        <location filename="../tapplication.cpp" line="536"/>
         <source>GNU Lesser General Public License, version 3</source>
         <translation>Licença Pública Geral Menor GNU, versão 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="538"/>
+        <location filename="../tapplication.cpp" line="539"/>
         <source>GNU Lesser General Public License, version 3, or later</source>
         <translation>Licença Pública Geral Menor GNU, versão 3 ou posterior</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="541"/>
+        <location filename="../tapplication.cpp" line="542"/>
         <source>GNU Lesser General Public License, version 2.1</source>
         <translation>Licença Pública Geral Menor GNU, versão 2.1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="544"/>
+        <location filename="../tapplication.cpp" line="545"/>
         <source>GNU Lesser General Public License, version 2.1, or later</source>
         <translation>Licença Pública Geral Menor GNU, versão 2.1 ou posterior</translation>
     </message>

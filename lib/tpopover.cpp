@@ -42,7 +42,6 @@ struct tPopoverPrivate {
 #endif
 
     QWidget* blanker;
-//    QGraphicsOpacityEffect* blankerEffect;
     QGraphicsBlurEffect* blurEffect;
     float blankerOpacity = 1;
 
@@ -81,6 +80,7 @@ tPopover::tPopover(QWidget* popoverWidget, QObject* parent) : QObject(parent) {
 
 tPopover::~tPopover() {
     tPopoverPrivate::activePopovers.remove(d->popoverWidget);
+    d->blurEffect->deleteLater();
     if (d->blanker) d->blanker->deleteLater();
     delete d;
 }
@@ -167,6 +167,7 @@ void tPopover::setPerformBlanking(bool performBlanking) {
 }
 
 void tPopover::setPerformBlur(bool performBlur) {
+    d->blanker->setAutoFillBackground(performBlur);
     d->blurEffect->setEnabled(performBlur);
 }
 
@@ -386,30 +387,31 @@ bool tPopover::eventFilter(QObject* watched, QEvent* event) {
         if (event->type() == QEvent::MouseButtonPress && d->dismissable) {
             this->dismiss();
         } else if (event->type() == QEvent::Paint) {
-            QPixmap image(d->parentWidget->width(), d->parentWidget->height());
-            image.fill(d->parentWidget->palette().color(QPalette::Window));
+            if (d->blurEffect->isEnabled()) {
+                QPixmap image(d->parentWidget->width(), d->parentWidget->height());
+                image.fill(d->parentWidget->palette().color(QPalette::Window));
 
-            QPainter imagePainter(&image);
-            QObjectList children = d->parentWidget->children();
-            for (QObject* child : children) {
-                if (child == d->blanker || child == d->popoverWidget) continue;
-                if (QWidget* childWidget = qobject_cast<QWidget*>(child)) {
-                    childWidget->render(&imagePainter, childWidget->geometry().topLeft(), QRegion(), QWidget::DrawChildren);
+                QPainter imagePainter(&image);
+                QObjectList children = d->parentWidget->children();
+                for (QObject* child : children) {
+                    if (child == d->blanker || child == d->popoverWidget) continue;
+                    if (QWidget* childWidget = qobject_cast<QWidget*>(child)) {
+                        if (!childWidget->isVisible()) continue;
+                        childWidget->render(&imagePainter, childWidget->geometry().topLeft(), QRegion(), QWidget::DrawChildren);
+                    }
                 }
+                imagePainter.end();
+
+                QPainter p(d->blanker);
+                p.setOpacity(d->blankerOpacity);
+                p.drawPixmap(QRect(QPoint(d->blankerOverscan, d->blankerOverscan), image.size()), image);
+            } else {
+                QPainter p(d->blanker);
+                p.setOpacity(1 - d->blankerOpacity);
+                p.setPen(Qt::transparent);
+                p.setBrush(d->parentWidget->palette().color(QPalette::Window));
+                p.drawRect(0, 0, d->blanker->width(), d->blanker->height());
             }
-            imagePainter.end();
-
-            QPainter p(d->blanker);
-//            p.setPen(Qt::transparent);
-//            p.setBrush(d->blanker->palette().color(QPalette::Window));
-//            p.drawRect(0, 0, d->blanker->width(), d->blanker->height());
-            p.setOpacity(d->blankerOpacity);
-            p.drawPixmap(QRect(QPoint(d->blankerOverscan, d->blankerOverscan), image.size()), image);
-
-//            QColor col = d->blanker->palette().color(QPalette::Window);
-//            col.setAlpha(127);
-//            p.setBrush(col);
-//            p.drawRect(0, 0, d->blanker->width(), d->blanker->height());
         }
     }
     return false;
