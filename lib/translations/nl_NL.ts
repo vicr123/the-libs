@@ -6,17 +6,17 @@
     <message>
         <location filename="../private/debuglogwindow.cpp" line="267"/>
         <source>Timestamp</source>
-        <translation type="unfinished"></translation>
+        <translation>Tijdstip</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.cpp" line="269"/>
         <source>Context</source>
-        <translation type="unfinished"></translation>
+        <translation>Context</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.cpp" line="271"/>
         <source>Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Bericht</translation>
     </message>
 </context>
 <context>
@@ -24,38 +24,38 @@
     <message>
         <location filename="../private/debuglogpopover.ui" line="35"/>
         <source>Debug Log Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Debug-logbericht</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="35"/>
         <source>Timestamp</source>
-        <translation type="unfinished"></translation>
+        <translation>Tijdstip</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="36"/>
         <source>Context</source>
-        <translation type="unfinished"></translation>
+        <translation>Context</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="37"/>
         <source>Severity</source>
-        <translation type="unfinished"></translation>
+        <translation>Ernst</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="38"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestand</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="38"/>
         <location filename="../private/debuglogpopover.cpp" line="39"/>
         <source>[unavailable]</source>
-        <translation type="unfinished"></translation>
+        <translation>[niet beschikbaar]</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="39"/>
         <source>Function</source>
-        <translation type="unfinished"></translation>
+        <translation>Functie</translation>
     </message>
 </context>
 <context>
@@ -63,28 +63,28 @@
     <message>
         <location filename="../private/debuglogwindow.ui" line="14"/>
         <source>Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Debug-log</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.ui" line="80"/>
         <source>Search Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Debug-log Doorzoeken</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.ui" line="156"/>
         <source>Clear Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Log Wissen</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.ui" line="183"/>
         <source>Filter by Context</source>
-        <translation type="unfinished"></translation>
+        <translation>Filteren op Context</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.cpp" line="301"/>
         <source>context</source>
         <comment>Placeholder in search box</comment>
-        <translation type="unfinished"></translation>
+        <translation>context</translation>
     </message>
 </context>
 <context>
@@ -291,7 +291,7 @@
     <message>
         <location filename="../thelpmenu.cpp" line="45"/>
         <source>View Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Debug-log Weergeven</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="71"/>
@@ -305,31 +305,31 @@
         <location filename="../tlogger.cpp" line="96"/>
         <source>Debug</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Debug</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="98"/>
         <source>Warning</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Waarschuwing</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="100"/>
         <source>Critical</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kritiek</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="102"/>
         <source>Fatal</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fataal</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="104"/>
         <source>Info</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Info</translation>
     </message>
 </context>
 </TS>
