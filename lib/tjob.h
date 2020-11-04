@@ -31,7 +31,8 @@ class THELIBSSHARED_EXPORT tJob : public QObject {
         enum State {
             Processing,
             Finished,
-            Failed
+            Failed,
+            RequiresAttention
         };
 
         virtual quint64 progress() = 0;

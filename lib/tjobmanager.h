@@ -33,6 +33,7 @@ class THELIBSSHARED_EXPORT tJobManager : public QObject {
         static tJobManager* instance();
 
         static void trackJob(tJob* job);
+        static void trackJobDelayed(tJob* job, quint64 delay = 1000);
 
         static QList<tJob*> jobs();
 

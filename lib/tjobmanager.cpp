@@ -19,6 +19,8 @@
  * *************************************/
 #include "tjobmanager.h"
 
+#include <QTimer>
+#include "tjob.h"
 #include "jobs/jobbutton.h"
 #include "jobs/jobspopover.h"
 #include "tpopover.h"
@@ -43,6 +45,26 @@ tJobManager* tJobManager::instance() {
 void tJobManager::trackJob(tJob* job) {
     instance()->d->jobs.append(job);
     emit instance()->jobAdded(job);
+}
+
+void tJobManager::trackJobDelayed(tJob* job, quint64 delay) {
+    QTimer* timer = new QTimer();
+    timer->setSingleShot(true);
+    timer->setInterval(delay);
+    connect(timer, &QTimer::timeout, [ = ] {
+        if (job->state() == tJob::Processing) trackJob(job);
+        timer->deleteLater();
+    });
+    timer->start();
+
+    connect(job, &tJob::stateChanged, timer, [ = ](tJob::State state) {
+        if (state == tJob::RequiresAttention) {
+            //Immediately register the job now
+            timer->stop();
+            trackJob(job);
+            timer->deleteLater();
+        }
+    });
 }
 
 QList<tJob*> tJobManager::jobs() {

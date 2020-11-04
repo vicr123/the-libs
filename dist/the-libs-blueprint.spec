@@ -14,7 +14,7 @@ BuildRequires:  make qt5-devel libunwind-devel gsettings-qt-devel
 Requires:       qt5 libunwind gsettings-qt
 %endif
 
-%if 0%{?fedora} == 33
+%if 0%{?fedora} >= 33
 BuildRequires:  make qt5-qtbase-devel qt5-qtmultimedia-devel qt5-qtsvg-devel qt5-qtx11extras-devel libunwind-devel gsettings-qt-devel qt5-linguist
 Requires:       qt5-qtbase qt5-qtmultimedia qt5-qtsvg qt5-qtx11extras libunwind gsettings-qt
 %endif

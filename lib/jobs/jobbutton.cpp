@@ -144,12 +144,15 @@ void JobButton::paintEvent(QPaintEvent* event) {
     for (tJob* job : d->trackedJobs) {
         if (job->state() == tJob::Finished && emblemType < 1) emblemType = 1;
         if (job->state() == tJob::Failed && emblemType < 2) emblemType = 2;
+        if (job->state() == tJob::RequiresAttention && emblemType < 3) emblemType = 3;
     }
 
     QColor emblemCol = Qt::transparent;
     if (emblemType == 1) { //Draw the success emblem
         emblemCol = QColor(0, 255, 0);
-    } else if (emblemType == 2) {
+    } else if (emblemType == 2) { //Failure emblem
+        emblemCol = QColor(255, 150, 0);
+    } else if (emblemType == 3) { //Attention required emblem
         emblemCol = QColor(255, 150, 0);
     }
 

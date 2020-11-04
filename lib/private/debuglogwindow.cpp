@@ -235,7 +235,7 @@ QVariant DebugLogModel::data(const QModelIndex& index, int role) const {
         case 0: //Timestamp
             switch (role) {
                 case Qt::DisplayRole:
-                    return log.base.timestamp.toString("[hh:MM:ss]");
+                    return log.base.timestamp.toString("[hh:mm:ss]");
                 case Qt::UserRole:
                     return log.base.severity;
             }
