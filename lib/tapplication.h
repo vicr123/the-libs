@@ -3,14 +3,15 @@
 
 #include "the-libs_global.h"
 #include <QApplication>
+#include <QJsonObject>
+#include <QUrl>
 
 struct tApplicationPrivate;
 
-class THELIBSSHARED_EXPORT tApplication : public QApplication
-{
-    Q_OBJECT
+class THELIBSSHARED_EXPORT tApplication : public QApplication {
+        Q_OBJECT
     public:
-        explicit tApplication(int &argc, char **argv);
+        explicit tApplication(int& argc, char** argv);
         ~tApplication();
 
         enum KnownLicenses {
@@ -25,6 +26,12 @@ class THELIBSSHARED_EXPORT tApplication : public QApplication
             Other
         };
 
+        enum UrlType {
+            HelpContents,
+            Sources,
+            FileBug
+        };
+
         static QIcon applicationIcon();
         static QString shareDir();
         static QString genericName();
@@ -33,10 +40,14 @@ class THELIBSSHARED_EXPORT tApplication : public QApplication
         static QStringList copyrightLines();
         static QString copyrightHolder();
         static QString copyrightYear();
+        static bool haveApplicationUrl(UrlType type);
+        static QUrl applicationUrl(UrlType type);
         static KnownLicenses applicationLicense();
+        static void ensureSingleInstance(QJsonObject launchData);
 
     Q_SIGNALS:
         void openFile(QString file);
+        void singleInstanceMessage(QJsonObject launchData);
         void updateTranslators();
 
     public Q_SLOTS:
@@ -52,10 +63,17 @@ class THELIBSSHARED_EXPORT tApplication : public QApplication
         static void setCopyrightHolder(QString copyrightHolder);
         static void setCopyrightYear(QString copyrightYear);
         static void setApplicationLicense(KnownLicenses license);
+        static void setApplicationUrl(UrlType type, QUrl url);
+
+#ifdef Q_OS_WIN
+        static void setWinApplicationClassId(QString classId);
+#endif
 
         static QPixmap aboutDialogSplashGraphicFromSvg(QString svgFile);
 
         void installTranslators();
+        static void addPluginTranslator(QString pluginName);
+        static void removePluginTranslator(QString pluginName);
         static QString macOSBundlePath();
 
         static void restart();
@@ -65,7 +83,7 @@ class THELIBSSHARED_EXPORT tApplication : public QApplication
         static QStringList exportBacktrace(void* data);
 
     private:
-        bool event(QEvent * event);
+        bool event(QEvent* event);
 
         static tApplicationPrivate* d;
 };

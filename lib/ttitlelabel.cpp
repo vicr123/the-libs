@@ -33,7 +33,7 @@ tTitleLabel::tTitleLabel(QWidget* parent) : QLabel(parent) {
     d = new tTitleLabelPrivate();
 
     d->backButton = new QToolButton(this);
-    d->backButton->setIcon(QIcon::fromTheme("go-previous"));
+    d->backButton->setIcon(QIcon::fromTheme("go-previous", QIcon(":/the-libs/icons/go-previous.svg")));
     d->backButton->setAutoRaise(true);
     d->backButton->move(0, 0);
     d->backButton->setFixedHeight(this->height() - 1);

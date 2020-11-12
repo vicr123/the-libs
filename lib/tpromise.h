@@ -10,6 +10,12 @@
 #define TPROMISE_CALL_NO_ARGS(fn) QMetaObject::invokeMethod(this, fn, Qt::QueuedConnection)
 #define TPROMISE_CALL(fn, ...) QMetaObject::invokeMethod(this, fn, Qt::QueuedConnection, __VA_ARGS__)
 
+#define TPROMISE_CREATE_SAME_THREAD_WITH_CALLBACK_NAMES(type, successCallback, failureCallback, fn) tPromise<type>::runOnSameThread([=](tPromiseFunctions<type>::SuccessFunction successCallback, tPromiseFunctions<type>::FailureFunction failureCallback) fn)
+#define TPROMISE_CREATE_SAME_THREAD(type, fn) TPROMISE_CREATE_SAME_THREAD_WITH_CALLBACK_NAMES(type, res, rej, fn)
+
+#define TPROMISE_CREATE_NEW_THREAD_WITH_CALLBACK_NAMES(type, successCallback, failureCallback, fn) tPromise<type>::runOnNewThread([=](tPromiseFunctions<type>::SuccessFunction successCallback, tPromiseFunctions<type>::FailureFunction failureCallback) fn)
+#define TPROMISE_CREATE_NEW_THREAD(type, fn) TPROMISE_CREATE_NEW_THREAD_WITH_CALLBACK_NAMES(type, res, rej, fn)
+
 template <typename T> class tPromise;
 
 template<typename T> struct tPromiseResults {
@@ -21,14 +27,12 @@ template<> struct tPromiseResults<void> {
     QString error = "";
 };
 
-template<typename T> struct tPromiseFunctions
-{
+template<typename T> struct tPromiseFunctions {
     using SuccessFunction = std::function<void(T)>;
     using FailureFunction = std::function<void(QString)>;
 };
 
-template<> struct tPromiseFunctions<void>
-{
+template<> struct tPromiseFunctions<void> {
     using SuccessFunction = std::function<void()>;
     using FailureFunction = std::function<void(QString)>;
 };
@@ -91,8 +95,7 @@ template<> struct tPromisePrivate<void> {
     }
 };
 
-template<typename T> class tPromise
-{
+template<typename T> class tPromise {
     public:
         explicit tPromise(typename tPromisePrivate<T>::RunFunction functionToRun);
         explicit tPromise(typename tPromisePrivate<T>::RunAsyncFunction functionToRun);
@@ -122,7 +125,7 @@ template<typename T> class tPromise
         }
 
         void deleteLater() {
-            QTimer::singleShot(0, [=] {
+            QTimer::singleShot(0, [ = ] {
                 delete this;
             });
         }
@@ -135,8 +138,7 @@ template<typename T> class tPromise
         void watch();
 };
 
-template<typename T> void tPromise<T>::callNextFunction()
-{
+template<typename T> void tPromise<T>::callNextFunction() {
     if (d->resolvedValue.error != "") {
         d->state = tPromisePrivate<T>::Errored;
         if (d->functionSetToRunAfterFailure) {
@@ -155,11 +157,10 @@ template<typename T> void tPromise<T>::callNextFunction()
 template<> void tPromise<void>::callNextFunction();
 
 
-template<typename T> inline void tPromise<T>::watch()
-{
+template<typename T> inline void tPromise<T>::watch() {
     QFutureWatcher<void>* runFutureWatcher = new QFutureWatcher<void>();
     runFutureWatcher->setFuture(d->runFuture);
-    QObject::connect(runFutureWatcher, &QFutureWatcher<T>::finished, [=] {
+    QObject::connect(runFutureWatcher, &QFutureWatcher<T>::finished, [ = ] {
         runFutureWatcher->deleteLater();
         callNextFunction();
     });
@@ -167,7 +168,7 @@ template<typename T> inline void tPromise<T>::watch()
 
 template<typename T> inline tPromise<T>::tPromise(typename tPromisePrivate<T>::RunFunction functionToRun) {
     d = new tPromisePrivate<T>;
-    d->runFuture = QtConcurrent::run([=]() -> void {
+    d->runFuture = QtConcurrent::run([ = ]() -> void {
         QString err;
         d->resolvedValue.result = functionToRun(err);
         d->resolvedValue.error.swap(err);
@@ -178,7 +179,7 @@ template<typename T> inline tPromise<T>::tPromise(typename tPromisePrivate<T>::R
 
 template<> inline tPromise<void>::tPromise(typename tPromisePrivate<void>::RunFunction functionToRun) {
     d = new tPromisePrivate<void>;
-    d->runFuture = QtConcurrent::run([=]() -> void {
+    d->runFuture = QtConcurrent::run([ = ]() -> void {
         QString err;
         functionToRun(err);
         d->resolvedValue.error.swap(err);
@@ -187,18 +188,17 @@ template<> inline tPromise<void>::tPromise(typename tPromisePrivate<void>::RunFu
     watch();
 }
 
-template<typename T> inline tPromise<T>::tPromise(typename tPromisePrivate<T>::RunAsyncFunction functionToRun)
-{
+template<typename T> inline tPromise<T>::tPromise(typename tPromisePrivate<T>::RunAsyncFunction functionToRun) {
     d = new tPromisePrivate<T>;
-    d->runFuture = QtConcurrent::run([=]() -> void {
+    d->runFuture = QtConcurrent::run([ = ]() -> void {
         QEventLoop* loop = new QEventLoop;
 
-        typename tPromiseFunctions<T>::SuccessFunction successFunction = [=](T retVal) {
+        typename tPromiseFunctions<T>::SuccessFunction successFunction = [ = ](T retVal) {
             d->resolvedValue.result = retVal;
             d->resolvedValue.error = "";
             QTimer::singleShot(0, loop, &QEventLoop::quit);
         };
-        typename tPromiseFunctions<T>::FailureFunction failureFunction = [=](QString error) {
+        typename tPromiseFunctions<T>::FailureFunction failureFunction = [ = ](QString error) {
             d->resolvedValue.error.swap(error);
             QTimer::singleShot(0, loop, &QEventLoop::quit);
         };
@@ -212,17 +212,16 @@ template<typename T> inline tPromise<T>::tPromise(typename tPromisePrivate<T>::R
     watch();
 }
 
-template<> inline tPromise<void>::tPromise(typename tPromisePrivate<void>::RunAsyncFunction functionToRun)
-{
+template<> inline tPromise<void>::tPromise(typename tPromisePrivate<void>::RunAsyncFunction functionToRun) {
     d = new tPromisePrivate<void>;
-    d->runFuture = QtConcurrent::run([=]() -> void {
+    d->runFuture = QtConcurrent::run([ = ]() -> void {
         QEventLoop* loop = new QEventLoop;
 
-        typename tPromiseFunctions<void>::SuccessFunction successFunction = [=]() {
+        typename tPromiseFunctions<void>::SuccessFunction successFunction = [ = ]() {
             d->resolvedValue.error = "";
             QTimer::singleShot(0, loop, &QEventLoop::quit);
         };
-        typename tPromiseFunctions<void>::FailureFunction failureFunction = [=](QString error) {
+        typename tPromiseFunctions<void>::FailureFunction failureFunction = [ = ](QString error) {
             d->resolvedValue.error.swap(error);
             QTimer::singleShot(0, loop, &QEventLoop::quit);
         };
@@ -236,30 +235,27 @@ template<> inline tPromise<void>::tPromise(typename tPromisePrivate<void>::RunAs
     watch();
 }
 
-template<typename T> inline tPromise<T>::~tPromise()
-{
+template<typename T> inline tPromise<T>::~tPromise() {
     delete d;
 }
 
-template<typename T> tPromise<T>*tPromise<T>::runOnNewThread(typename tPromisePrivate<T>::RunAsyncFunction functionToRun)
-{
+template<typename T> tPromise<T>* tPromise<T>::runOnNewThread(typename tPromisePrivate<T>::RunAsyncFunction functionToRun) {
     return new tPromise<T>(functionToRun);
 }
 
-template<typename T> tPromise<T>*tPromise<T>::runOnSameThread(typename tPromisePrivate<T>::RunAsyncFunction functionToRun)
-{
+template<typename T> tPromise<T>* tPromise<T>::runOnSameThread(typename tPromisePrivate<T>::RunAsyncFunction functionToRun) {
     tPromise<T>* promise = new tPromise<T>;
 
-    typename tPromiseFunctions<T>::SuccessFunction successFunction = [=](T retVal) {
+    typename tPromiseFunctions<T>::SuccessFunction successFunction = [ = ](T retVal) {
         promise->d->resolvedValue.result = retVal;
         promise->d->resolvedValue.error = "";
-        QTimer::singleShot(0, [=] {
+        QTimer::singleShot(0, [ = ] {
             promise->callNextFunction();
         });
     };
-    typename tPromiseFunctions<T>::FailureFunction failureFunction = [=](QString error) {
+    typename tPromiseFunctions<T>::FailureFunction failureFunction = [ = ](QString error) {
         promise->d->resolvedValue.error.swap(error);
-        QTimer::singleShot(0, [=] {
+        QTimer::singleShot(0, [ = ] {
             promise->callNextFunction();
         });
 
@@ -316,8 +312,7 @@ template<typename T> inline tPromiseResults<T> tPromise<T>::await() {
     return retval;
 }
 
-template<typename T> tPromise<T>::tPromise()
-{
+template<typename T> tPromise<T>::tPromise() {
     d = new tPromisePrivate<T>;
 }
 

@@ -3,7 +3,7 @@ branches:
   only:
   - blueprint
 skip_tags: true
-image: Visual Studio 2017
+image: Visual Studio 2019
 
 environment:
   REPO_SLUG: vicr123/the-libs

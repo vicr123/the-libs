@@ -23,10 +23,11 @@
 #include <QObject>
 #include "the-libs_global.h"
 
+class tPopover;
+class tToast;
 struct tCsdGlobalPrivate;
-class THELIBSSHARED_EXPORT tCsdGlobal : public QObject
-{
-    Q_OBJECT
+class THELIBSSHARED_EXPORT tCsdGlobal : public QObject {
+        Q_OBJECT
     public:
         enum WindowControlSide {
             Left,
@@ -52,11 +53,10 @@ class THELIBSSHARED_EXPORT tCsdGlobal : public QObject
 
 struct tCsdToolsPrivate;
 struct ResizeWidget;
-class THELIBSSHARED_EXPORT tCsdTools : public QObject
-{
+class THELIBSSHARED_EXPORT tCsdTools : public QObject {
         Q_OBJECT
     public:
-        explicit tCsdTools(QObject *parent = nullptr);
+        explicit tCsdTools(QObject* parent = nullptr);
         ~tCsdTools() override;
 
         QWidget* csdBoxForWidget(QWidget* widget);
@@ -75,11 +75,16 @@ class THELIBSSHARED_EXPORT tCsdTools : public QObject
         void removeResizeAction(QObject* widget);
         void csdsEnabledChanged(bool enabled);
 
+    protected:
+        friend tPopover;
+        friend tToast;
+        static QWidget* widgetForPopover(QWidget* selected);
+
     private:
         tCsdToolsPrivate* d;
         ResizeWidget* getResizeWidget(QWidget* widget);
 
-        bool eventFilter(QObject *watched, QEvent *event) override;
+        bool eventFilter(QObject* watched, QEvent* event) override;
 };
 
 #endif // TCSDTOOLS_H

@@ -5,12 +5,15 @@
 #-------------------------------------------------
 
 QT       += widgets multimedia svg
-CONFIG   += c++14
 
 TARGET = the-libs
 TEMPLATE = lib
 
-!android {
+unix:!android {
+    CONFIG += c++14
+
+    DEFINES += SYSTEM_LIBRARY_DIRECTORY=\\\"$$[QT_INSTALL_LIBS]\\\"
+
     system("pkg-config --version") {
         CONFIG += link_pkgconfig
         packagesExist(libunwind) {
@@ -41,11 +44,13 @@ TEMPLATE = lib
 }
 
 macx {
+    CONFIG += c++14
     LIBS += -framework CoreFoundation -framework Cocoa
 }
 
 win32 {
-    LIBS += -lUser32 -lKernel32 -lDbgHelp
+    CONFIG += c++17
+    LIBS += -lUser32 -lKernel32 -lDbgHelp -lwindowsapp
     DEFINES += _WIN32_WINNT=0x0601 # Windows 7 or up
 }
 
@@ -63,6 +68,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += tvariantanimation.cpp \
+    jobs/jobbutton.cpp \
+    jobs/jobspopover.cpp \
+    private/debuglogpopover.cpp \
+    private/debuglogwindow.cpp \
     taboutdialog.cpp \
     tconditionalwidget.cpp \
     tcsdtools.cpp \
@@ -73,7 +82,11 @@ SOURCES += tvariantanimation.cpp \
     tdatetimepicker/datetimepart.cpp \
     tdatetimepicker/datetimepartbutton.cpp \
     terrorflash.cpp \
+    thelpmenu.cpp \
+    tjob.cpp \
+    tjobmanager.cpp \
     tlocale.cpp \
+    tlogger.cpp \
     tpromise.cpp \
     tpropertyanimation.cpp \
     thelibsglobal.cpp \
@@ -93,6 +106,10 @@ SOURCES += tvariantanimation.cpp \
     tsystemsound.cpp
 
 HEADERS += tvariantanimation.h\
+    jobs/jobbutton.h \
+    jobs/jobspopover.h \
+    private/debuglogpopover.h \
+    private/debuglogwindow.h \
     taboutdialog.h \
     tconditionalwidget.h \
     tcsdtools.h \
@@ -104,7 +121,11 @@ HEADERS += tvariantanimation.h\
     tdatetimepicker/datetimepartbutton.h \
     terrorflash.h \
     the-libs_global.h \
+    thelpmenu.h \
+    tjob.h \
+    tjobmanager.h \
     tlocale.h \
+    tlogger.h \
     tpropertyanimation.h \
     tsettings.h \
     tstatusframe.h \
@@ -168,6 +189,7 @@ win32 {
     prifiles.path = "C:/Program Files/thelibs/pri"
 
     SOURCES += tnotification/tnotification-win.cpp
+    HEADERS += tnotification/tnotification-win.h
 }
 
 android {
@@ -191,6 +213,9 @@ DISTFILES += \
     qt_thelib_mac.pri
 
 FORMS += \
+    jobs/jobspopover.ui \
+    private/debuglogpopover.ui \
+    private/debuglogwindow.ui \
     taboutdialog.ui \
     tcsdtools/csdbuttonbox.ui \
     tshortcuthud.ui \
