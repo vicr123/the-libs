@@ -1,6 +1,6 @@
 Name:           the-libs
-Version:        2.2
-Release:        1%{?dist}
+Version:        3.0
+Release:        2%{?dist}
 Summary:        Common libraries for the* apps
 
 License:        GPLv3+

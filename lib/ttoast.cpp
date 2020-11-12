@@ -1,18 +1,19 @@
 #include "ttoast.h"
 
+#include "tcsdtools.h"
+
 struct tToastPrivate {
     QMap<QString, QString> actn;
 
-    QWidget *toastWidget, *announceActionWidget;
-    QLabel *titleLabel, *textLabel, *announceActionLabel;
+    QWidget* toastWidget, *announceActionWidget;
+    QLabel* titleLabel, *textLabel, *announceActionLabel;
     QBoxLayout* buttons;
 
     tVariantAnimation* hideTimer;
     int currentAnimationValue;
 };
 
-tToast::tToast(QObject *parent) : QObject(parent)
-{
+tToast::tToast(QObject* parent) : QObject(parent) {
     d = new tToastPrivate();
     d->toastWidget = new QWidget;
     d->toastWidget->installEventFilter(this);
@@ -53,15 +54,15 @@ tToast::tToast(QObject *parent) : QObject(parent)
     d->announceActionLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     announceActionLayout->addWidget(d->announceActionLabel);
 
-    d->hideTimer = new tVariantAnimation();
+    d->hideTimer = new tVariantAnimation(this);
     d->hideTimer->setStartValue(0);
     d->hideTimer->setDuration(5000);
-    connect(d->hideTimer, &tVariantAnimation::valueChanged, [=](const QVariant &value) {
+    connect(d->hideTimer, &tVariantAnimation::valueChanged, this, [ = ](const QVariant & value) {
         d->currentAnimationValue = value.toInt();
         d->toastWidget->update();
     });
     d->hideTimer->setForceAnimation(true);
-    connect(d->hideTimer, &tVariantAnimation::finished, [=]() {
+    connect(d->hideTimer, &tVariantAnimation::finished, this, [ = ]() {
         timerStopped = true;
 
         canAnnounceAction = true;
@@ -81,7 +82,9 @@ tToast::~tToast() {
     delete d;
 }
 
-void tToast::show(QWidget *parent) {
+void tToast::show(QWidget* parent) {
+    parent = tCsdTools::widgetForPopover(parent);
+
     int height = d->toastWidget->sizeHint().height();
     d->toastWidget->setFixedHeight(height);
     d->toastWidget->setParent(parent);
@@ -148,7 +151,7 @@ void tToast::announceAction(QString text) {
         connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
         anim->start();
 
-        QTimer::singleShot(3000, [=]() {
+        QTimer::singleShot(3000, [ = ]() {
             /*announceActionWidget->setVisible(false);
             announceActionWidget->setParent(NULL);*/
             announcingAction = false;
@@ -192,7 +195,7 @@ void tToast::setActions(QMap<QString, QString> actions) {
         button->setText(text);
         d->buttons->addWidget(button);
 
-        connect(button, &QPushButton::clicked, [=]() {
+        connect(button, &QPushButton::clicked, [ = ]() {
             d->hideTimer->stop();
             timerStopped = true;
 
@@ -219,7 +222,7 @@ int tToast::timeout() {
     return d->hideTimer->duration();
 }
 
-bool tToast::eventFilter(QObject *watched, QEvent *event) {
+bool tToast::eventFilter(QObject* watched, QEvent* event) {
     if (watched == d->toastWidget) {
         if (event->type() == QEvent::Paint) {
             QPaintEvent* pEvent = (QPaintEvent*) event;
