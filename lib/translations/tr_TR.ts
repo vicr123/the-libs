@@ -11,7 +11,7 @@
     <message>
         <location filename="../private/debuglogwindow.cpp" line="269"/>
         <source>Context</source>
-        <translation>Bağlam</translation>
+        <translation>Sözün gelişi</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.cpp" line="271"/>
