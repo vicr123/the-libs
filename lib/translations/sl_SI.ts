@@ -6,17 +6,17 @@
     <message>
         <location filename="../private/debuglogwindow.cpp" line="267"/>
         <source>Timestamp</source>
-        <translation type="unfinished"></translation>
+        <translation>časovni žig</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.cpp" line="269"/>
         <source>Context</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontekst</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.cpp" line="271"/>
         <source>Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Sporočilo</translation>
     </message>
 </context>
 <context>
@@ -24,38 +24,38 @@
     <message>
         <location filename="../private/debuglogpopover.ui" line="35"/>
         <source>Debug Log Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Element dnevnika za odpravljanje napak</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="35"/>
         <source>Timestamp</source>
-        <translation type="unfinished"></translation>
+        <translation>Časovni Žig</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="36"/>
         <source>Context</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontekst</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="37"/>
         <source>Severity</source>
-        <translation type="unfinished"></translation>
+        <translation>Resnost</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="38"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Datoteka</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="38"/>
         <location filename="../private/debuglogpopover.cpp" line="39"/>
         <source>[unavailable]</source>
-        <translation type="unfinished"></translation>
+        <translation>[ni na voljo]</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="39"/>
         <source>Function</source>
-        <translation type="unfinished"></translation>
+        <translation>Funkcija</translation>
     </message>
 </context>
 <context>
@@ -63,28 +63,28 @@
     <message>
         <location filename="../private/debuglogwindow.ui" line="14"/>
         <source>Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Dnevnik odpravljanja napak</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.ui" line="80"/>
         <source>Search Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Iskanje dnevnika odpravljanja napak</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.ui" line="156"/>
         <source>Clear Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Počisti dnevnik</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.ui" line="183"/>
         <source>Filter by Context</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtriraj po kontekstu</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.cpp" line="301"/>
         <source>context</source>
         <comment>Placeholder in search box</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontext</translation>
     </message>
 </context>
 <context>
@@ -92,7 +92,7 @@
     <message>
         <location filename="../jobs/jobspopover.ui" line="35"/>
         <source>Jobs</source>
-        <translation type="unfinished"></translation>
+        <translation>Službe</translation>
     </message>
 </context>
 <context>
@@ -276,27 +276,27 @@
     <message>
         <location filename="../thelpmenu.cpp" line="40"/>
         <source>%1 Help</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Pomoč</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="43"/>
         <source>File Bug</source>
-        <translation type="unfinished"></translation>
+        <translation>Prijavite napako</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="44"/>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Viri</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="45"/>
         <source>View Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Oglejte si dnevnik odpravljanja napak</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="71"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomoč</translation>
     </message>
 </context>
 <context>
@@ -305,31 +305,31 @@
         <location filename="../tlogger.cpp" line="96"/>
         <source>Debug</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Odpravljanje napak</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="98"/>
         <source>Warning</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pozor</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="100"/>
         <source>Critical</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kritično</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="102"/>
         <source>Fatal</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usodno</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="104"/>
         <source>Info</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Informacije</translation>
     </message>
 </context>
 </TS>
