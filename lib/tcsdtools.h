@@ -61,6 +61,8 @@ class THELIBSSHARED_EXPORT tCsdTools : public QObject {
 
         QWidget* csdBoxForWidget(QWidget* widget);
 
+        static bool csdsInstalled(QWidget* widget);
+
     signals:
 
     public slots:

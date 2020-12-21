@@ -28,18 +28,18 @@
 #include <tcsdtools/csdbuttonbox.h>
 
 #ifdef HAVE_X11
-#include <QX11Info>
-#include <X11/Xlib.h>
-#include <X11/Xatom.h>
+    #include <QX11Info>
+    #include <X11/Xlib.h>
+    #include <X11/Xatom.h>
 
-#ifdef HAVE_GSETTINGS
-#include <QGSettings>
-#endif
+    #ifdef HAVE_GSETTINGS
+        #include <QGSettings>
+    #endif
 
 #endif
 
 #ifdef Q_OS_WIN
-#include <Windows.h>
+    #include <Windows.h>
 #endif
 
 struct tCsdGlobalPrivate {
@@ -99,8 +99,7 @@ bool tCsdGlobal::recommendCsdForPlatform() {
 #endif
 }
 
-tCsdTools::tCsdTools(QObject *parent) : QObject(parent)
-{
+tCsdTools::tCsdTools(QObject* parent) : QObject(parent) {
     d = new tCsdToolsPrivate();
     connect(tCsdGlobal::instance(), &tCsdGlobal::csdsEnabledChanged, this, &tCsdTools::csdsEnabledChanged);
 }
@@ -110,59 +109,59 @@ tCsdTools::~tCsdTools() {
 }
 
 tCsdGlobal::WindowControlSide tCsdGlobal::windowControlsEdge() {
-    #ifdef Q_OS_MAC
-        //Window controls always on the left
-        return Left;
-    #endif
+#ifdef Q_OS_MAC
+    //Window controls always on the left
+    return Left;
+#endif
 
-    #ifdef Q_OS_WIN
-        //Window controls always on the right
-        return Right;
-    #endif
+#ifdef Q_OS_WIN
+    //Window controls always on the right
+    return Right;
+#endif
 
-    #ifdef HAVE_X11
-        if (QX11Info::isPlatformX11()) {
-            //Check the current window manager
-            Atom actualType;
-            int actualFormat;
-            unsigned long items, bytesRemain;
-            unsigned char* data = nullptr;
+#ifdef HAVE_X11
+    if (QX11Info::isPlatformX11()) {
+        //Check the current window manager
+        Atom actualType;
+        int actualFormat;
+        unsigned long items, bytesRemain;
+        unsigned char* data = nullptr;
 
-            XGetWindowProperty(QX11Info::display(), QX11Info::appRootWindow(), XInternAtom(QX11Info::display(), "_NET_SUPPORTING_WM_CHECK", False), 0, 32, False, XA_WINDOW, &actualType, &actualFormat, &items, &bytesRemain, &data);
-            if (data == nullptr) return Right;
+        XGetWindowProperty(QX11Info::display(), QX11Info::appRootWindow(), XInternAtom(QX11Info::display(), "_NET_SUPPORTING_WM_CHECK", False), 0, 32, False, XA_WINDOW, &actualType, &actualFormat, &items, &bytesRemain, &data);
+        if (data == nullptr) return Right;
 
-            quint32 supportingWindow = reinterpret_cast<quint32*>(data)[0];
-            XFree(data);
+        quint32 supportingWindow = reinterpret_cast<quint32*>(data)[0];
+        XFree(data);
 
-            //Get the name of the window manager
-            XGetWindowProperty(QX11Info::display(), supportingWindow, XInternAtom(QX11Info::display(), "_NET_WM_NAME", False), 0, 1024, False, XInternAtom(QX11Info::display(), "UTF8_STRING", False), &actualType, &actualFormat, &items, &bytesRemain, &data);
-            QString windowManagerName = QString::fromUtf8(reinterpret_cast<char*>(data));
-            XFree(data);
+        //Get the name of the window manager
+        XGetWindowProperty(QX11Info::display(), supportingWindow, XInternAtom(QX11Info::display(), "_NET_WM_NAME", False), 0, 1024, False, XInternAtom(QX11Info::display(), "UTF8_STRING", False), &actualType, &actualFormat, &items, &bytesRemain, &data);
+        QString windowManagerName = QString::fromUtf8(reinterpret_cast<char*>(data));
+        XFree(data);
 
-            if (windowManagerName == "GNOME Shell") {
-                #ifdef HAVE_GSETTINGS
-                //Use GNOME settings
-                QGSettings gsettings("org.gnome.desktop.wm.preferences");
-                QString buttonLayout = gsettings.get("button-layout").toString();
-                QString buttonsOnLeft = buttonLayout.split(":").first();
-                if (buttonsOnLeft.contains("close")) {
-                    return Left;
-                } else {
-                    return Right;
-                }
-                #endif
-            } else if (windowManagerName == "KWin") {
-                //Use KWin settings
-                QSettings kwinSettings(QDir::homePath() + "/.config/kwinrc", QSettings::IniFormat);
-                kwinSettings.beginGroup("org.kde.kdecoration2");
-                if (kwinSettings.value("ButtonsOnLeft", "M").toString().contains("X")) {
-                    return Left;
-                } else {
-                    return Right;
-                }
+        if (windowManagerName == "GNOME Shell") {
+#ifdef HAVE_GSETTINGS
+            //Use GNOME settings
+            QGSettings gsettings("org.gnome.desktop.wm.preferences");
+            QString buttonLayout = gsettings.get("button-layout").toString();
+            QString buttonsOnLeft = buttonLayout.split(":").first();
+            if (buttonsOnLeft.contains("close")) {
+                return Left;
+            } else {
+                return Right;
+            }
+#endif
+        } else if (windowManagerName == "KWin") {
+            //Use KWin settings
+            QSettings kwinSettings(QDir::homePath() + "/.config/kwinrc", QSettings::IniFormat);
+            kwinSettings.beginGroup("org.kde.kdecoration2");
+            if (kwinSettings.value("ButtonsOnLeft", "M").toString().contains("X")) {
+                return Left;
+            } else {
+                return Right;
             }
         }
-    #endif
+    }
+#endif
 
     //Default to right hand side
     return Right;
@@ -229,7 +228,7 @@ void tCsdTools::removeResizeAction(QObject* widget) {
     removeResizeAction(qobject_cast<QWidget*>(widget));
 }
 
-ResizeWidget* tCsdTools::getResizeWidget(QWidget *widget) {
+ResizeWidget* tCsdTools::getResizeWidget(QWidget* widget) {
     for (ResizeWidget* rw : d->resizeWidgets) {
         if (rw->widget == widget) {
             return rw;
@@ -238,8 +237,12 @@ ResizeWidget* tCsdTools::getResizeWidget(QWidget *widget) {
     return nullptr;
 }
 
-QWidget* tCsdTools::csdBoxForWidget(QWidget *widget) {
+QWidget* tCsdTools::csdBoxForWidget(QWidget* widget) {
     return new CsdButtonBox(widget);
+}
+
+bool tCsdTools::csdsInstalled(QWidget* widget) {
+    return tCsdToolsPrivate::csdWidgets.contains(widget);
 }
 
 void tCsdTools::csdsEnabledChanged(bool enabled) {
@@ -263,7 +266,7 @@ void tCsdTools::csdsEnabledChanged(bool enabled) {
     }
 }
 
-QWidget *tCsdTools::widgetForPopover(QWidget *selected) {
+QWidget* tCsdTools::widgetForPopover(QWidget* selected) {
     if (tCsdToolsPrivate::csdWidgets.contains(selected)) {
         if (QMainWindow* mw = qobject_cast<QMainWindow*>(selected)) {
             return mw->centralWidget();
@@ -272,7 +275,7 @@ QWidget *tCsdTools::widgetForPopover(QWidget *selected) {
     return selected;
 }
 
-bool tCsdTools::eventFilter(QObject *watched, QEvent *event) {
+bool tCsdTools::eventFilter(QObject* watched, QEvent* event) {
     //Ignore all handling if CSDs are disabled
     if (!tCsdGlobal::csdsEnabled()) return false;
 
@@ -283,7 +286,7 @@ bool tCsdTools::eventFilter(QObject *watched, QEvent *event) {
         QMouseEvent* e = static_cast<QMouseEvent*>(event);
         if (d->moveWidgets.contains(widget) && e->button() == Qt::LeftButton) {
             //Move this window
-            #ifdef HAVE_X11
+#ifdef HAVE_X11
             if (QX11Info::isPlatformX11()) {
                 XEvent event;
                 event.xclient.type = ClientMessage;
@@ -301,14 +304,14 @@ bool tCsdTools::eventFilter(QObject *watched, QEvent *event) {
                 XSendEvent(QX11Info::display(), QX11Info::appRootWindow(), False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
                 return true;
             }
-            #endif
+#endif
 
-            #ifdef Q_OS_WIN
+#ifdef Q_OS_WIN
             //Use Windows APIs to move the window
             ReleaseCapture();
             SendMessage(reinterpret_cast<HWND>(widget->window()->winId()), WM_NCLBUTTONDOWN, HTCAPTION, 0);
             return true;
-            #endif
+#endif
 
             //Move window using Qt methods
             qWarning() << "Unsupported platform; moving window manually.";

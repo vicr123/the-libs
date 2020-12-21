@@ -90,6 +90,7 @@ SOURCES += tvariantanimation.cpp \
     tpromise.cpp \
     tpropertyanimation.cpp \
     thelibsglobal.cpp \
+    tscrim.cpp \
     tsettings.cpp \
     tstatusframe.cpp \
     ttitlelabel.cpp \
@@ -127,6 +128,7 @@ HEADERS += tvariantanimation.h\
     tlocale.h \
     tlogger.h \
     tpropertyanimation.h \
+    tscrim.h \
     tsettings.h \
     tstatusframe.h \
     ttitlelabel.h \
