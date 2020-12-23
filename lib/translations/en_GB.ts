@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US">
+<TS version="2.1" sourcelanguage="en_US" language="en_GB">
 <context>
     <name>DebugLogModel</name>
     <message>
         <location filename="../private/debuglogwindow.cpp" line="267"/>
         <source>Timestamp</source>
-        <translation type="unfinished"></translation>
+        <translation>Timestamp</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.cpp" line="269"/>
         <source>Context</source>
-        <translation type="unfinished"></translation>
+        <translation>Context</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.cpp" line="271"/>
         <source>Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Message</translation>
     </message>
 </context>
 <context>
@@ -24,38 +24,38 @@
     <message>
         <location filename="../private/debuglogpopover.ui" line="35"/>
         <source>Debug Log Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Debug Log Item</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="35"/>
         <source>Timestamp</source>
-        <translation type="unfinished"></translation>
+        <translation>Timestamp</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="36"/>
         <source>Context</source>
-        <translation type="unfinished"></translation>
+        <translation>Context</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="37"/>
         <source>Severity</source>
-        <translation type="unfinished"></translation>
+        <translation>Severity</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="38"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>File</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="38"/>
         <location filename="../private/debuglogpopover.cpp" line="39"/>
         <source>[unavailable]</source>
-        <translation type="unfinished"></translation>
+        <translation>[unavailable]</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="39"/>
         <source>Function</source>
-        <translation type="unfinished"></translation>
+        <translation>Function</translation>
     </message>
 </context>
 <context>
@@ -63,28 +63,28 @@
     <message>
         <location filename="../private/debuglogwindow.ui" line="14"/>
         <source>Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Debug Log</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.ui" line="80"/>
         <source>Search Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Search Debug Log</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.ui" line="156"/>
         <source>Clear Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Clear Log</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.ui" line="183"/>
         <source>Filter by Context</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter by Context</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.cpp" line="301"/>
         <source>context</source>
         <comment>Placeholder in search box</comment>
-        <translation type="unfinished"></translation>
+        <translation>context</translation>
     </message>
 </context>
 <context>
@@ -92,7 +92,7 @@
     <message>
         <location filename="../jobs/jobspopover.ui" line="35"/>
         <source>Jobs</source>
-        <translation type="unfinished"></translation>
+        <translation>Jobs</translation>
     </message>
 </context>
 <context>
@@ -100,38 +100,38 @@
     <message>
         <location filename="../tapplication.cpp" line="92"/>
         <source>Services</source>
-        <translation type="unfinished"></translation>
+        <translation>Services</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="93"/>
         <source>Hide %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hide %1</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="94"/>
         <source>Hide Others</source>
-        <translation type="unfinished"></translation>
+        <translation>Hide Others</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="95"/>
         <source>Show All</source>
-        <translation type="unfinished"></translation>
+        <translation>Show All</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="96"/>
         <source>Preferences...</source>
-        <translation type="unfinished"></translation>
+        <translation>Preferences...</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="97"/>
         <location filename="../thelpmenu.cpp" line="46"/>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>About %1</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="98"/>
         <source>Quit %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Quit %1</translation>
     </message>
 </context>
 <context>
@@ -139,52 +139,52 @@
     <message>
         <location filename="../tapplication.cpp" line="101"/>
         <source>Displays version information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Displays version information.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="102"/>
         <source>Displays this help.</source>
-        <translation type="unfinished"></translation>
+        <translation>Displays this help.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="103"/>
         <source>Unknown option &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Unknown option &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="104"/>
         <source>Unknown options: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Unknown options: %1.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="105"/>
         <source>Missing value after &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Missing value after &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="106"/>
         <source>Unexpected value after &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Unexpected value after &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="107"/>
         <source>[options]</source>
-        <translation type="unfinished"></translation>
+        <translation>[options]</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="108"/>
         <source>Usage: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Usage: %1</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="109"/>
         <source>Options:</source>
-        <translation type="unfinished"></translation>
+        <translation>Options:</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="110"/>
         <source>Arguments:</source>
-        <translation type="unfinished"></translation>
+        <translation>Arguments:</translation>
     </message>
 </context>
 <context>
@@ -192,23 +192,23 @@
     <message>
         <location filename="../taboutdialog.ui" line="194"/>
         <source>SOFTWARE</source>
-        <translation type="unfinished"></translation>
+        <translation>SOFTWARE</translation>
     </message>
     <message>
         <location filename="../taboutdialog.ui" line="239"/>
         <source>COPYRIGHT</source>
-        <translation type="unfinished"></translation>
+        <translation>COPYRIGHT</translation>
     </message>
     <message>
         <location filename="../taboutdialog.ui" line="299"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../taboutdialog.cpp" line="14"/>
         <location filename="../taboutdialog.cpp" line="15"/>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>About %1</translation>
     </message>
 </context>
 <context>
@@ -216,7 +216,7 @@
     <message>
         <location filename="../tapplication.cpp" line="552"/>
         <source>Copyright © %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright © %1.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="524"/>
@@ -228,47 +228,47 @@
         <location filename="../tapplication.cpp" line="542"/>
         <location filename="../tapplication.cpp" line="545"/>
         <source>Licensed under the terms of the %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Licensed under the terms of the %1.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="524"/>
         <source>GNU General Public License, version 3</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU General Public License, version 3</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="527"/>
         <source>GNU General Public License, version 3, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU General Public License, version 3, or later</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="530"/>
         <source>GNU General Public License, version 2</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU General Public License, version 2</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="533"/>
         <source>GNU General Public License, version 2, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU General Public License, version 2, or later</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="536"/>
         <source>GNU Lesser General Public License, version 3</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU Lesser General Public License, version 3</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="539"/>
         <source>GNU Lesser General Public License, version 3, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU Lesser General Public License, version 3, or later</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="542"/>
         <source>GNU Lesser General Public License, version 2.1</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU Lesser General Public License, version 2.1</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="545"/>
         <source>GNU Lesser General Public License, version 2.1, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU Lesser General Public License, version 2.1, or later</translation>
     </message>
 </context>
 <context>
@@ -276,27 +276,27 @@
     <message>
         <location filename="../thelpmenu.cpp" line="40"/>
         <source>%1 Help</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Help</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="43"/>
         <source>File Bug</source>
-        <translation type="unfinished"></translation>
+        <translation>File Bug</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="44"/>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Sources</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="45"/>
         <source>View Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>View Debug Log</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="71"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Help</translation>
     </message>
 </context>
 <context>
@@ -305,31 +305,31 @@
         <location filename="../tlogger.cpp" line="96"/>
         <source>Debug</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Debug</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="98"/>
         <source>Warning</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Warning</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="100"/>
         <source>Critical</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Critical</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="102"/>
         <source>Fatal</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fatal</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="104"/>
         <source>Info</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Info</translation>
     </message>
 </context>
 </TS>
