@@ -11,12 +11,12 @@
     <message>
         <location filename="../private/debuglogwindow.cpp" line="269"/>
         <source>Context</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontekst</translation>
     </message>
     <message>
         <location filename="../private/debuglogwindow.cpp" line="271"/>
         <source>Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Wiadomość</translation>
     </message>
 </context>
 <context>
