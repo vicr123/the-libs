@@ -46,6 +46,8 @@ unix:!android {
 macx {
     CONFIG += c++14
     LIBS += -framework CoreFoundation -framework Cocoa
+
+    SOURCES += tcsdtools/csdbuttonbox-objc.mm
 }
 
 win32 {

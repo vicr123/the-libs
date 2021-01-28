@@ -43,6 +43,10 @@ CsdButtonBox::CsdButtonBox(QWidget *parent) :
 
     connect(tCsdGlobal::instance(), &tCsdGlobal::csdsEnabledChanged, this, &CsdButtonBox::csdsEnabledChanged);
     csdsEnabledChanged(tCsdGlobal::csdsEnabled());
+
+#ifdef Q_OS_MAC
+    setupMacOs();
+#endif
 }
 
 CsdButtonBox::~CsdButtonBox()

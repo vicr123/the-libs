@@ -46,6 +46,10 @@ class CsdButtonBox : public QWidget
     private:
         Ui::CsdButtonBox *ui;
 
+#ifdef Q_OS_MAC
+        void setupMacOs();
+#endif
+
         QWidget* parentWidget;
         bool eventFilter(QObject* watched, QEvent* event) override;
 };
