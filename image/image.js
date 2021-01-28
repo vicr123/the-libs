@@ -79,7 +79,7 @@ const fs = require('fs');
             if (lib == "") continue;
             
             let libname = lib.substring(lib.lastIndexOf("/") + 1, lib.indexOf(".dylib"));
-            await exec.exec('cp', ['-R', '-L', lib, `${libDir}/${libname}.1.dylib`]);
+            await exec.exec('cp', ['-R', '-L', `${process.cwd()}/build/${lib}`, `${libDir}/${libname}.1.dylib`]);
             await exec.exec("install_name_tool", ["-change", `${libname}.1.dylib`, `@executable_path/../Libraries/${libname}.1.dylib`, `${bundlePath}/Contents/MacOS/${executableName}`])
             if (lib != "the-libs") {
                 await exec.exec("install_name_tool", ["-change", `libthe-libs.1.dylib`, `@executable_path/../Libraries/libthe-libs.1.dylib`, `${libDir}/${libname}.1.dylib`])

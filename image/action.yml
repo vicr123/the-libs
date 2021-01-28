@@ -16,6 +16,10 @@ inputs:
     description: 'Libraries (in /usr/local/lib) to embed in the application bundle'
     required: false
     default: ''
+  embed-local-libraries-mac:
+    description: 'Libraries (in application root folder) to embed in the application bundle'
+    required: false
+    default: ''
 outputs:
   image-path:
     description: 'Path of the final image'
