@@ -72,7 +72,18 @@ const fs = require('fs');
             if (lib != "the-libs") {
                 await exec.exec("install_name_tool", ["-change", `libthe-libs.1.dylib`, `@executable_path/../Libraries/libthe-libs.1.dylib`, `${libDir}/lib${lib}.1.dylib`])
             }
-//             macDeployQtArgs.push(`-executable=${libDir}/lib${lib}.1.dylib`);
+        }
+        
+        let embedLocalLibs = core.getInput("embed-local-libraries-mac").split(" ");
+        for (let lib of embedLibs) {
+            if (lib == "") continue;
+            
+            let libname = lib.substring(lib.lastIndexOf("/") + 1, lib.indexOf(".dylib"));
+            await exec.exec('cp', [lib, `${libDir}/${libname}.1.dylib`]);
+            await exec.exec("install_name_tool", ["-change", `${libname}.1.dylib`, `@executable_path/../Libraries/${libname}.1.dylib`, `${bundlePath}/Contents/MacOS/${executableName}`])
+            if (lib != "the-libs") {
+                await exec.exec("install_name_tool", ["-change", `libthe-libs.1.dylib`, `@executable_path/../Libraries/libthe-libs.1.dylib`, `${libDir}/${libname}.1.dylib`])
+            }
         }
         
         await exec.exec("macdeployqt", macDeployQtArgs);
