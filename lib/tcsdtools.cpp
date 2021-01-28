@@ -313,6 +313,11 @@ bool tCsdTools::eventFilter(QObject* watched, QEvent* event) {
             return true;
 #endif
 
+#ifdef Q_OS_MAC
+            macHandleDrag(e->globalPos(), widget->window());
+            return true;
+#endif
+
             //Move window using Qt methods
             qWarning() << "Unsupported platform; moving window manually.";
             widget->setProperty("tcsdtools_action", "move");

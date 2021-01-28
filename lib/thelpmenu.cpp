@@ -66,6 +66,8 @@ tHelpMenu::tHelpMenu(QWidget* parent) : QMenu(parent) {
     d->fileBugAction->setVisible(tApplication::haveApplicationUrl(tApplication::FileBug));
     d->sourcesAction->setVisible(tApplication::haveApplicationUrl(tApplication::Sources));
 
+    d->aboutAction->setMenuRole(QAction::AboutRole);
+
     qInfo() << "";
 
     this->setTitle(tr("Help"));
