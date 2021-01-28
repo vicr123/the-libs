@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US" language="ur_PK">
+<TS version="2.1" language="ur_PK" sourcelanguage="en_US">
 <context>
     <name>DebugLogModel</name>
     <message>
@@ -29,12 +29,12 @@
     <message>
         <location filename="../private/debuglogpopover.cpp" line="35"/>
         <source>Timestamp</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">وقت مہر</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="36"/>
         <source>Context</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">مضمون</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="37"/>

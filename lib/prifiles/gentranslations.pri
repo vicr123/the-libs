@@ -172,19 +172,22 @@ TRANSLATIONS += \
     translations/cy_GB.ts \
     translations/zu_ZA.ts
 
-# Prepare lupdate and lrelease
-qtPrepareTool(LUPDATE, lupdate)
-qtPrepareTool(LRELEASE, lrelease)
+SKIP_GENTRANSLATION = $$(THE_LIBS_SKIP_GENTRANSLATION);
+isEmpty(SKIP_GENTRANSLATION) {
+    # Prepare lupdate and lrelease
+    qtPrepareTool(LUPDATE, lupdate)
+    qtPrepareTool(LRELEASE, lrelease)
 
-# Run lupdate before each build
-genlang.commands = "$$LUPDATE -no-obsolete -source-language en_US $$_PRO_FILE_"
+    # Run lupdate before each build
+    genlang.commands = "$$LUPDATE -no-obsolete -source-language en_US $$_PRO_FILE_"
 
-# Run lrelease before each build
-rellang.commands = "$$LRELEASE -removeidentical $$_PRO_FILE_"
-rellang.depends = genlang
+    # Run lrelease before each build
+    rellang.commands = "$$LRELEASE -removeidentical $$_PRO_FILE_"
+    rellang.depends = genlang
 
-QMAKE_EXTRA_TARGETS = genlang rellang
-PRE_TARGETDEPS = genlang rellang
+    QMAKE_EXTRA_TARGETS = genlang rellang
+    PRE_TARGETDEPS = genlang rellang
+}
 
 DISTFILES += \
     $$PWD/checkblueprint.pri

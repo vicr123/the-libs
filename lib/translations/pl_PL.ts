@@ -34,7 +34,7 @@
     <message>
         <location filename="../private/debuglogpopover.cpp" line="36"/>
         <source>Context</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kontekst</translation>
     </message>
     <message>
         <location filename="../private/debuglogpopover.cpp" line="37"/>
