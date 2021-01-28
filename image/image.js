@@ -75,7 +75,7 @@ const fs = require('fs');
         }
         
         let embedLocalLibs = core.getInput("embed-local-libraries-mac").split(" ");
-        for (let lib of embedLibs) {
+        for (let lib of embedLocalLibs) {
             if (lib == "") continue;
             
             let libname = lib.substring(lib.lastIndexOf("/") + 1, lib.indexOf(".dylib"));
