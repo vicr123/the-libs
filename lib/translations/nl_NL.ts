@@ -214,59 +214,59 @@
 <context>
     <name>tApplication</name>
     <message>
-        <location filename="../tapplication.cpp" line="552"/>
+        <location filename="../tapplication.cpp" line="556"/>
         <source>Copyright © %1.</source>
         <translation>Copyright © %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="524"/>
-        <location filename="../tapplication.cpp" line="527"/>
-        <location filename="../tapplication.cpp" line="530"/>
-        <location filename="../tapplication.cpp" line="533"/>
-        <location filename="../tapplication.cpp" line="536"/>
-        <location filename="../tapplication.cpp" line="539"/>
-        <location filename="../tapplication.cpp" line="542"/>
-        <location filename="../tapplication.cpp" line="545"/>
+        <location filename="../tapplication.cpp" line="528"/>
+        <location filename="../tapplication.cpp" line="531"/>
+        <location filename="../tapplication.cpp" line="534"/>
+        <location filename="../tapplication.cpp" line="537"/>
+        <location filename="../tapplication.cpp" line="540"/>
+        <location filename="../tapplication.cpp" line="543"/>
+        <location filename="../tapplication.cpp" line="546"/>
+        <location filename="../tapplication.cpp" line="549"/>
         <source>Licensed under the terms of the %1.</source>
         <translation>Gelicenseerd onder de termen van de %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="524"/>
+        <location filename="../tapplication.cpp" line="528"/>
         <source>GNU General Public License, version 3</source>
         <translation>GNU General Public License, versie 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="527"/>
+        <location filename="../tapplication.cpp" line="531"/>
         <source>GNU General Public License, version 3, or later</source>
         <translation>GNU General Public License, versie 3, of later</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="530"/>
+        <location filename="../tapplication.cpp" line="534"/>
         <source>GNU General Public License, version 2</source>
         <translation>GNU General Public License, versie 2</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="533"/>
+        <location filename="../tapplication.cpp" line="537"/>
         <source>GNU General Public License, version 2, or later</source>
         <translation>GNU General Public License, versie 2, of later</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="536"/>
+        <location filename="../tapplication.cpp" line="540"/>
         <source>GNU Lesser General Public License, version 3</source>
         <translation>GNU Lesser General Public License, versie 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="539"/>
+        <location filename="../tapplication.cpp" line="543"/>
         <source>GNU Lesser General Public License, version 3, or later</source>
         <translation>GNU Lesser General Public License, versie 3, of later</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="542"/>
+        <location filename="../tapplication.cpp" line="546"/>
         <source>GNU Lesser General Public License, version 2.1</source>
         <translation>GNU Lesser General Public License, versie 2.1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="545"/>
+        <location filename="../tapplication.cpp" line="549"/>
         <source>GNU Lesser General Public License, version 2.1, or later</source>
         <translation>GNU Lesser General Public License, versie 2.1, of later</translation>
     </message>
@@ -294,7 +294,7 @@
         <translation>Debug-log Weergeven</translation>
     </message>
     <message>
-        <location filename="../thelpmenu.cpp" line="71"/>
+        <location filename="../thelpmenu.cpp" line="73"/>
         <source>Help</source>
         <translation>Hulp</translation>
     </message>

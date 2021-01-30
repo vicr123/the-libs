@@ -172,7 +172,7 @@ TRANSLATIONS += \
     translations/cy_GB.ts \
     translations/zu_ZA.ts
 
-SKIP_GENTRANSLATION = $$(THE_LIBS_SKIP_GENTRANSLATION);
+SKIP_GENTRANSLATION = $$(THE_LIBS_SKIP_GENTRANSLATION)
 isEmpty(SKIP_GENTRANSLATION) {
     # Prepare lupdate and lrelease
     qtPrepareTool(LUPDATE, lupdate)
@@ -187,6 +187,8 @@ isEmpty(SKIP_GENTRANSLATION) {
 
     QMAKE_EXTRA_TARGETS = genlang rellang
     PRE_TARGETDEPS = genlang rellang
+} else {
+    message(Skipping translation generation)
 }
 
 DISTFILES += \
