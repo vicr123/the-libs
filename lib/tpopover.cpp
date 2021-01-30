@@ -147,10 +147,6 @@ void tPopover::setPerformBlanking(bool performBlanking) {
     d->performBlanking = performBlanking;
 }
 
-void tPopover::setPerformBlur(bool performBlur) {
-    tScrim::scrimForWidget(d->parentWidget)->setBlurEnabled(performBlur);
-}
-
 void tPopover::setDismissable(bool dismissable) {
     d->dismissable = dismissable;
 }

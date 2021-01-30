@@ -11,6 +11,7 @@
 #include <QSharedMemory>
 #include <QLocalServer>
 #include <QLocalSocket>
+#include <QThread>
 #include "tlogger.h"
 
 #ifdef T_OS_UNIX_NOT_MAC
@@ -238,7 +239,12 @@ tApplication::~tApplication() {
         d->singleInstanceMemory->detach();
         delete d->singleInstanceMemory;
     }
-    if (d->singleInstanceServer) d->singleInstanceServer->close();
+    if (d->singleInstanceServer) {
+        d->singleInstanceServer->close();
+
+        //There's a race condition here...
+        QThread::sleep(1);
+    }
 }
 
 void writeCrashSysInfo(QStringList& bt) {

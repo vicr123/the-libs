@@ -54,6 +54,8 @@ class THELIBSSHARED_EXPORT tStatusFrame : public QFrame {
         State state() const;
         void setState(const State& state);
 
+        void addActionWidget(QWidget* widget);
+
     signals:
         void titleChanged();
         void textChanged();
