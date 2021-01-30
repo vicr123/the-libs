@@ -26,6 +26,7 @@ namespace Ui {
     class CsdButtonBox;
 }
 
+struct CsdButtonBoxPrivate;
 class CsdButtonBox : public QWidget
 {
         Q_OBJECT
@@ -43,14 +44,17 @@ class CsdButtonBox : public QWidget
 
         void csdsEnabledChanged(bool enabled);
 
-    private:
+    protected:
+        friend CsdButtonBoxPrivate;
         Ui::CsdButtonBox *ui;
+
+    private:
+        CsdButtonBoxPrivate* d;
 
 #ifdef Q_OS_MAC
         void setupMacOs();
 #endif
 
-        QWidget* parentWidget;
         bool eventFilter(QObject* watched, QEvent* event) override;
 };
 

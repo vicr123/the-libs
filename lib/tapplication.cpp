@@ -136,6 +136,10 @@ bool tApplication::event(QEvent* event) {
 
         //Tell everyone the translations have changed
         emit updateTranslators();
+    } else if (event->type() == QEvent::ApplicationActivate) {
+#ifdef Q_OS_MAC
+        emit dockIconClicked();
+#endif
     }
 
     return QApplication::event(event);

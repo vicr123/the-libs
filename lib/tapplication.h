@@ -48,6 +48,7 @@ class THELIBSSHARED_EXPORT tApplication : public QApplication {
     Q_SIGNALS:
         void openFile(QString file);
         void singleInstanceMessage(QJsonObject launchData);
+        void dockIconClicked();
         void updateTranslators();
 
     public Q_SLOTS:

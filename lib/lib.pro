@@ -118,6 +118,7 @@ HEADERS += tvariantanimation.h\
     tconditionalwidget.h \
     tcsdtools.h \
     tcsdtools/csdbuttonbox.h \
+    tcsdtools/csdbuttonbox_p.h \
     tcsdtools/csdsizegrip.h \
     private/nativeeventfilter.h \
     tdatetimepicker.h \
