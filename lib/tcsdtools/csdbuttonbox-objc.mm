@@ -41,4 +41,7 @@ void CsdButtonBox::setupMacOs() {
 
     ui->macWindowControlsLayout->setContentsMargins(6, 0, 6, 0);
     ui->macWindowControlsLayout->setSpacing(6);
+
+    //BUG: The following line causes the bug
+    //windowShown();
 }

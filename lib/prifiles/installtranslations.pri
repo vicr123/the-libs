@@ -14,7 +14,7 @@ unix:!macx {
 
 macx {
     #macOS: Put translations inside the application bundle
-    translations.files = translations/
+    translations.files = $$files($$_PRO_FILE_PWD_/translations/*.qm)
     translations.path = Contents/translations
 
     QMAKE_BUNDLE_DATA += translations
