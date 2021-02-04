@@ -88,6 +88,8 @@ class THELIBSSHARED_EXPORT tCsdTools : public QObject {
 
 #ifdef Q_OS_MAC
         void macHandleDrag(QPoint screenPos, QWidget* dragWindow);
+        void macInstallResizeAction(QWidget* widget);
+        void macRemoveResizeAction(QWidget* widget);
 #endif
 
         bool eventFilter(QObject* watched, QEvent* event) override;

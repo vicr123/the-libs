@@ -92,11 +92,7 @@ bool tCsdGlobal::csdsEnabled() {
 }
 
 bool tCsdGlobal::recommendCsdForPlatform() {
-#ifdef Q_OS_MAC
-    return false;
-#else
     return true;
-#endif
 }
 
 tCsdTools::tCsdTools(QObject* parent) : QObject(parent) {
@@ -188,6 +184,12 @@ void tCsdTools::installResizeAction(QWidget* widget) {
     connect(widget, &QWidget::destroyed, this, QOverload<QObject*>::of(&tCsdTools::removeResizeAction));
     widget->installEventFilter(this);
 
+    ResizeWidget* resize = new ResizeWidget();
+    resize->widget = widget;
+
+#ifdef Q_OS_MAC
+    macInstallResizeAction(widget);
+#else
     if (tCsdGlobal::csdsEnabled()) {
         int border = CsdSizeGrip::borderWidth();
         widget->setContentsMargins(border, border, border, border);
@@ -196,15 +198,13 @@ void tCsdTools::installResizeAction(QWidget* widget) {
         widget->setAttribute(Qt::WA_TranslucentBackground);
     }
 
-    ResizeWidget* resize = new ResizeWidget();
-    resize->widget = widget;
-
     for (int i = 0; i < 4; i++) {
         CsdSizeGrip* grip = new CsdSizeGrip(i, widget);
         resize->sizeGrips[i] = grip;
     }
 
     d->resizeWidgets.append(resize);
+#endif
 }
 
 void tCsdTools::removeResizeAction(QWidget* widget) {
@@ -214,9 +214,13 @@ void tCsdTools::removeResizeAction(QWidget* widget) {
     widget->removeEventFilter(this);
     disconnect(widget, &QWidget::destroyed, this, QOverload<QObject*>::of(&tCsdTools::removeResizeAction));
 
+#ifdef Q_OS_MAC
+    macRemoveResizeAction(widget);
+#else
     for (int i = 0; i < 4; i++) {
         rw->sizeGrips[i]->deleteLater();
     }
+#endif
 
     d->resizeWidgets.removeOne(rw);
     delete rw;
@@ -345,7 +349,7 @@ bool tCsdTools::eventFilter(QObject* watched, QEvent* event) {
             //Stop moving the window
             widget->setProperty("tcsdtools_action", "none");
         }
-    } else if (event->type() == QEvent::Resize) {
+    } else if (event->type() == QEvent::Resize || event->type() == QEvent::WindowStateChange) {
         QWidget* widget = qobject_cast<QWidget*>(watched);
         Q_ASSERT(widget);
 

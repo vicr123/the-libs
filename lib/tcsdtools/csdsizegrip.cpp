@@ -26,12 +26,11 @@
 #include "tcsdtools.h"
 
 #ifdef HAVE_X11
-#include <QX11Info>
-#include <X11/Xlib.h>
+    #include <QX11Info>
+    #include <X11/Xlib.h>
 #endif
 
-CsdSizeGrip::CsdSizeGrip(int side, QWidget *parent) : QWidget(parent)
-{
+CsdSizeGrip::CsdSizeGrip(int side, QWidget* parent) : QWidget(parent) {
     connect(tCsdGlobal::instance(), &tCsdGlobal::csdsEnabledChanged, this, &CsdSizeGrip::csdsEnabledChanged);
     this->side = side;
     this->parentWidget = parent;
@@ -68,14 +67,14 @@ void CsdSizeGrip::resizeGrip() {
     }
 }
 
-bool CsdSizeGrip::eventFilter(QObject *watched, QEvent *event) {
+bool CsdSizeGrip::eventFilter(QObject* watched, QEvent* event) {
     if (event->type() == QEvent::Resize || event->type() == QEvent::WindowStateChange) {
         resizeGrip();
     }
     return false;
 }
 
-void CsdSizeGrip::paintEvent(QPaintEvent *event) {
+void CsdSizeGrip::paintEvent(QPaintEvent* event) {
     QPainter painter(this);
     painter.setBrush(Qt::transparent);
     painter.setBrush(this->palette().color(QPalette::WindowText));
@@ -94,10 +93,10 @@ void CsdSizeGrip::paintEvent(QPaintEvent *event) {
     }
 }
 
-void CsdSizeGrip::mousePressEvent(QMouseEvent *e) {
+void CsdSizeGrip::mousePressEvent(QMouseEvent* e) {
     if (e->button() == Qt::LeftButton) {
         //Resize this window
-        #ifdef HAVE_X11
+#ifdef HAVE_X11
         if (QX11Info::isPlatformX11()) {
             XEvent event;
             event.xclient.type = ClientMessage;
@@ -141,15 +140,15 @@ void CsdSizeGrip::mousePressEvent(QMouseEvent *e) {
             XSendEvent(QX11Info::display(), QX11Info::appRootWindow(), False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
             return;
         }
-        #endif
+#endif
 
         startPoint = e->pos();
         moving = true;
-        qWarning() << "No method to initiate a window move.";
+        qWarning() << "No method to initiate a window resize.";
     }
 }
 
-void CsdSizeGrip::mouseMoveEvent(QMouseEvent *e) {
+void CsdSizeGrip::mouseMoveEvent(QMouseEvent* e) {
     if (moving) {
         QRect geometry = parentWidget->window()->geometry();
         switch (hitTest(startPoint)) {
@@ -202,7 +201,7 @@ void CsdSizeGrip::mouseMoveEvent(QMouseEvent *e) {
     }
 }
 
-void CsdSizeGrip::mouseReleaseEvent(QMouseEvent *e) {
+void CsdSizeGrip::mouseReleaseEvent(QMouseEvent* e) {
     moving = false;
 }
 
