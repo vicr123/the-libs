@@ -1,12 +1,13 @@
 #include "ttoast.h"
 
 #include "tcsdtools.h"
+#include <QPointer>
 
 struct tToastPrivate {
     QMap<QString, QString> actn;
 
-    QWidget* toastWidget, *announceActionWidget;
-    QLabel* titleLabel, *textLabel, *announceActionLabel;
+    QPointer<QWidget> toastWidget, announceActionWidget;
+    QPointer<QLabel> titleLabel, textLabel, announceActionLabel;
     QBoxLayout* buttons;
 
     tVariantAnimation* hideTimer;
@@ -15,9 +16,10 @@ struct tToastPrivate {
 
 tToast::tToast(QObject* parent) : QObject(parent) {
     d = new tToastPrivate();
-    d->toastWidget = new QWidget;
+    d->toastWidget = new QWidget();
     d->toastWidget->installEventFilter(this);
     d->toastWidget->setAttribute(Qt::WA_TranslucentBackground);
+    connect(d->toastWidget, &QWidget::destroyed, this, &tToast::deleteLater);
 
     QBoxLayout* layout = new QBoxLayout(QBoxLayout::LeftToRight);
     d->toastWidget->setLayout(layout);
@@ -57,7 +59,7 @@ tToast::tToast(QObject* parent) : QObject(parent) {
     d->hideTimer = new tVariantAnimation(this);
     d->hideTimer->setStartValue(0);
     d->hideTimer->setDuration(5000);
-    connect(d->hideTimer, &tVariantAnimation::valueChanged, this, [ = ](const QVariant & value) {
+    connect(d->hideTimer, &tVariantAnimation::valueChanged, d->toastWidget, [ = ](const QVariant & value) {
         d->currentAnimationValue = value.toInt();
         d->toastWidget->update();
     });
@@ -76,9 +78,9 @@ tToast::tToast(QObject* parent) : QObject(parent) {
 }
 
 tToast::~tToast() {
-    d->textLabel->deleteLater();
-    d->titleLabel->deleteLater();
-    d->toastWidget->deleteLater();
+    if (d->textLabel) d->textLabel->deleteLater();
+    if (d->titleLabel) d->titleLabel->deleteLater();
+    if (d->toastWidget) d->toastWidget->deleteLater();
     delete d;
 }
 
@@ -130,8 +132,8 @@ void tToast::announceAction(QString text) {
         d->announceActionLabel->setText(text);
 
         int width;
-        if (d->buttons->sizeHint().width() < d->announceActionLabel->fontMetrics().width(text) + 30) {
-            width = d->announceActionLabel->fontMetrics().width(text) + 30;
+        if (d->buttons->sizeHint().width() < d->announceActionLabel->fontMetrics().horizontalAdvance(text) + 30) {
+            width = d->announceActionLabel->fontMetrics().horizontalAdvance(text) + 30;
         } else {
             width = d->buttons->sizeHint().width();
         }
@@ -151,7 +153,7 @@ void tToast::announceAction(QString text) {
         connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
         anim->start();
 
-        QTimer::singleShot(3000, [ = ]() {
+        QTimer::singleShot(3000, this, [ = ]() {
             /*announceActionWidget->setVisible(false);
             announceActionWidget->setParent(NULL);*/
             announcingAction = false;
@@ -195,7 +197,7 @@ void tToast::setActions(QMap<QString, QString> actions) {
         button->setText(text);
         d->buttons->addWidget(button);
 
-        connect(button, &QPushButton::clicked, [ = ]() {
+        connect(button, &QPushButton::clicked, this, [ = ]() {
             d->hideTimer->stop();
             timerStopped = true;
 
@@ -246,9 +248,9 @@ bool tToast::eventFilter(QObject* watched, QEvent* event) {
             QColor highlightCol = d->toastWidget->palette().color(QPalette::Window);
             int average = (highlightCol.red() + highlightCol.green() + highlightCol.blue()) / 3;
             if (average < 127) { //Dark color
-                highlightCol = highlightCol.light(150);
+                highlightCol = highlightCol.lighter(150);
             } else {
-                highlightCol = highlightCol.dark(150);
+                highlightCol = highlightCol.lighter(150);
             }
             painter.setBrush(highlightCol);
             painter.drawRect(rect.left(), rect.top(), d->currentAnimationValue, rect.height());
@@ -257,7 +259,7 @@ bool tToast::eventFilter(QObject* watched, QEvent* event) {
             painter.drawLine(rect.topLeft(), rect.topRight());
 #endif
         }
-    } else if (watched == d->toastWidget->parentWidget()) {
+    } else if (d->toastWidget && watched == d->toastWidget->parentWidget()) {
         if (event->type() == QEvent::Resize) {
             updateToastGeometry();
         }

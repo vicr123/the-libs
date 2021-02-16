@@ -98,6 +98,7 @@ void tScrim::addIgnoreWidget(QWidget* ignoreWidget) {
 
 void tScrim::setBlurEnabled(bool blurEnabled) {
     d->blurEffect->setEnabled(blurEnabled);
+    this->setAutoFillBackground(blurEnabled);
 }
 
 void tScrim::show() {
