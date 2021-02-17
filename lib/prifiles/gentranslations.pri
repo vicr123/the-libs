@@ -1,7 +1,13 @@
 # Generate translations
 
+# Ensure translations directory exists
+!exists($$_PRO_FILE_PWD_/translations) {
+    system(mkdir $$_PRO_FILE_PWD_/translations)
+}
+
 # Define all target languages
-TRANSLATIONS += $$files($$_PRO_FILE_PWD_/translations/*.ts)
+TRANSLATIONS += translations/en_US.ts \
+    $$files($$_PRO_FILE_PWD_/translations/*.ts)
 
 SKIP_GENTRANSLATION = $$(THE_LIBS_SKIP_GENTRANSLATION)
 isEmpty(SKIP_GENTRANSLATION) {
