@@ -56,18 +56,18 @@ void JobsPopover::addJob(tJob* job) {
     if (job->isTransient()) {
         if (job->state() == tJob::Finished) return;
 
-        ui->jobsLayout->addWidget(progressWidget);
+        ui->jobsLayout->insertWidget(0, progressWidget);
         connect(job, &tJob::stateChanged, this, [ = ](tJob::State state) {
             if (state == tJob::Finished) {
                 ui->jobsLayout->removeWidget(progressWidget);
             }
         });
     } else {
-        ui->jobsLayout->addWidget(progressWidget);
+        ui->jobsLayout->insertWidget(0, progressWidget);
     }
 
     QFrame* frame = new QFrame(this);
     frame->setFrameShape(QFrame::HLine);
     frame->setFixedHeight(1);
-    ui->jobsLayout->addWidget(frame);
+    ui->jobsLayout->insertWidget(1, frame);
 }
