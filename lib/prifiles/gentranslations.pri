@@ -29,4 +29,5 @@ isEmpty(SKIP_GENTRANSLATION) {
 }
 
 DISTFILES += \
-    $$PWD/checkblueprint.pri
+    $$PWD/checkblueprint.pri \
+    $$PWD/processdesktoptranslations.pri
