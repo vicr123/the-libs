@@ -25,12 +25,25 @@
 #include "jobs/jobspopover.h"
 #include "tpopover.h"
 
+#ifdef T_OS_UNIX_NOT_MAC
+    #include "jobs/jobdbusmanager.h"
+#endif
+
 struct tJobManagerPrivate {
     QList<tJob*> jobs;
+    JobDbusManager* dbusManager = nullptr;
 };
 
 tJobManager::tJobManager(QObject* parent) : QObject(parent) {
     d = new tJobManagerPrivate();
+}
+
+void tJobManager::registerDBus() {
+#ifdef T_OS_UNIX_NOT_MAC
+    if (!d->dbusManager) {
+        d->dbusManager = new JobDbusManager(this);
+    }
+#endif
 }
 
 tJobManager::~tJobManager() {
@@ -45,6 +58,7 @@ tJobManager* tJobManager::instance() {
 void tJobManager::trackJob(tJob* job) {
     instance()->d->jobs.append(job);
     emit instance()->jobAdded(job);
+    instance()->registerDBus();
 }
 
 void tJobManager::trackJobDelayed(tJob* job, quint64 delay) {

@@ -1,0 +1,23 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="com.vicr123.thelibs.tjob.Job">
+    <signal name="ProgressChanged">
+      <arg name="progress" type="t" direction="out"/>
+    </signal>
+    <signal name="TotalProgressChanged">
+      <arg name="totalProgress" type="t" direction="out"/>
+    </signal>
+    <signal name="StateChanged">
+      <arg name="state" type="s" direction="out"/>
+    </signal>
+    <method name="Progress">
+      <arg type="t" direction="out"/>
+    </method>
+    <method name="TotalProgress">
+      <arg type="t" direction="out"/>
+    </method>
+    <method name="State">
+      <arg type="s" direction="out"/>
+    </method>
+  </interface>
+</node>

@@ -149,6 +149,8 @@ HEADERS += tvariantanimation.h\
     tswitch.h \
     tsystemsound.h
 
+DBUS_ADAPTORS += jobs/com.vicr123.thelibs.tjob.Manager.xml jobs/com.vicr123.thelibs.tjob.Job.xml
+
 # Include required build tools
 include($$PWD/prifiles/gentranslations.pri)
 
@@ -171,8 +173,13 @@ unix:!macx:!android {
     module.files = qt_thelib.pri
     prifiles.path = /usr/share/the-libs/pri
 
-    HEADERS += tnotification/tnotification-linux.h
-    SOURCES += tnotification/tnotification-linux.cpp
+    HEADERS += tnotification/tnotification-linux.h \
+        jobs/jobdbus.h \
+        jobs/jobdbusmanager.h
+
+    SOURCES += tnotification/tnotification-linux.cpp \
+        jobs/jobdbus.cpp \
+        jobs/jobdbusmanager.cpp
 }
 
 macx {

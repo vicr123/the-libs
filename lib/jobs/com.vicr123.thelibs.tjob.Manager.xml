@@ -1,0 +1,11 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="com.vicr123.thelibs.tjob.Manager">
+    <signal name="JobAdded">
+      <arg name="job" type="o" direction="out"/>
+    </signal>
+    <method name="Jobs">
+      <arg type="ao" direction="out"/>
+    </method>
+  </interface>
+</node>

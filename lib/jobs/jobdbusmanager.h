@@ -1,7 +1,7 @@
 /****************************************
  *
  *   INSERT-PROJECT-NAME-HERE - INSERT-GENERIC-NAME-HERE
- *   Copyright (C) 2020 Victor Tran
+ *   Copyright (C) 2021 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,37 +17,31 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef TJOBMANAGER_H
-#define TJOBMANAGER_H
+#ifndef JOBDBUSMANAGER_H
+#define JOBDBUSMANAGER_H
 
-#include "the-libs_global.h"
 #include <QObject>
+#include <QDBusObjectPath>
 
 class tJob;
-struct tJobManagerPrivate;
-class THELIBSSHARED_EXPORT tJobManager : public QObject {
+struct JobDbusManagerPrivate;
+class JobDbusManager : public QObject {
         Q_OBJECT
+        Q_CLASSINFO("D-Bus Interface", "com.vicr123.thelibs.tjob.Manager")
     public:
-        ~tJobManager();
+        explicit JobDbusManager(QObject* parent = nullptr);
+        ~JobDbusManager();
 
-        static tJobManager* instance();
-
-        static void trackJob(tJob* job);
-        static void trackJobDelayed(tJob* job, quint64 delay = 1000);
-
-        static QList<tJob*> jobs();
-
-        static QWidget* makeJobButton();
-        static void showJobsPopover(QWidget* parent);
+    public slots:
+        Q_SCRIPTABLE QList<QDBusObjectPath> Jobs();
 
     signals:
-        void jobAdded(tJob* job);
+        Q_SCRIPTABLE void JobAdded(QDBusObjectPath job);
 
     private:
-        explicit tJobManager(QObject* parent = nullptr);
-        tJobManagerPrivate* d;
+        JobDbusManagerPrivate* d;
 
-        void registerDBus();
+        void addJob(tJob* job);
 };
 
-#endif // TJOBMANAGER_H
+#endif // JOBDBUSMANAGER_H
