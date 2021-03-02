@@ -31,7 +31,10 @@
 
 struct tJobManagerPrivate {
     QList<tJob*> jobs;
+
+#ifdef T_OS_UNIX_NOT_MAC
     JobDbusManager* dbusManager = nullptr;
+#endif
 };
 
 tJobManager::tJobManager(QObject* parent) : QObject(parent) {
