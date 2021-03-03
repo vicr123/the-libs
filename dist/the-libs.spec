@@ -60,6 +60,7 @@ mv $RPM_BUILD_ROOT/../lib64/qt5/mkspecs/modules/qt_thelib.pri $RPM_BUILD_ROOT/us
 %{_libdir}/*.so
 %{_libdir}/qt5/mkspecs/modules/qt_thelib.pri
 %{_datadir}/the-libs/pri/*.pri
+%{_bindir}/tltrdesktop
 
 
 %changelog
