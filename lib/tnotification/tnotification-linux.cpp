@@ -27,13 +27,13 @@ void tNotification::post(bool deleteWhenDone) {
         hints.insert("sound-file", this->snd);
     }
 
-    hints.insert("desktop-entry", QApplication::applicationName().toLower());
-    for (QString key : extraHints.keys()) {
+    hints.insert("desktop-entry", QApplication::desktopFileName());
+    for (const QString& key : extraHints.keys()) {
         hints.insert(key, extraHints.value(key));
     }
 
     QStringList actions;
-    for (QString key : this->actions.keys()) {
+    for (const QString& key : this->actions.keys()) {
         actions << key << this->actions.value(key);
     }
 
