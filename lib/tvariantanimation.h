@@ -3,24 +3,32 @@
 
 #include <QVariantAnimation>
 #include <QDebug>
+#include <functional>
 #include "the-libs_global.h"
 
-class THELIBSSHARED_EXPORT tVariantAnimation : public QVariantAnimation
-{
-    Q_OBJECT
+class THELIBSSHARED_EXPORT tVariantAnimation : public QVariantAnimation {
+        Q_OBJECT
 
-public:
-    tVariantAnimation(QObject *parent = nullptr);
-    ~tVariantAnimation();
+    public:
+        tVariantAnimation(QObject* parent = nullptr);
+        ~tVariantAnimation();
 
-    void setForceAnimation(bool force);
-    bool forceAnimation();
+        typedef std::function<void(QVariant)> ValueChangedFunction;
+        typedef std::function<void()> FinishedFunction;
 
-public slots:
-    void start(QAbstractAnimation::DeletionPolicy policy = KeepWhenStopped);
+        void setForceAnimation(bool force);
+        bool forceAnimation();
 
-private:
-    bool forceAnim = false;
+        static tVariantAnimation* singleShot(QObject* parent, QVariant start, QVariant end, int duration, QEasingCurve easingCurve, ValueChangedFunction valueChangedCallback, FinishedFunction finishedCallback);
+        static tVariantAnimation* singleShot(QObject* parent, QVariant start, QVariant end, int duration, QEasingCurve easingCurve, ValueChangedFunction valueChangedCallback);
+        static tVariantAnimation* singleShot(QObject* parent, QVariant start, QVariant end, int duration, ValueChangedFunction valueChangedCallback, FinishedFunction finishedCallback);
+        static tVariantAnimation* singleShot(QObject* parent, QVariant start, QVariant end, int duration, ValueChangedFunction valueChangedCallback);
+
+    public slots:
+        void start(QAbstractAnimation::DeletionPolicy policy = KeepWhenStopped);
+
+    private:
+        bool forceAnim = false;
 };
 
 #endif // TVARIANTANIMATION_H
