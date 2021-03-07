@@ -300,6 +300,19 @@
     </message>
 </context>
 <context>
+    <name>tInputDialog</name>
+    <message>
+        <location filename="../tinputdialog.ui" line="48"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tinputdialog.ui" line="55"/>
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+</context>
+<context>
     <name>tLogger</name>
     <message>
         <location filename="../tlogger.cpp" line="96"/>

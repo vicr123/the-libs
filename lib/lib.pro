@@ -86,6 +86,7 @@ SOURCES += tvariantanimation.cpp \
     tdatetimepicker/datetimepartbutton.cpp \
     terrorflash.cpp \
     thelpmenu.cpp \
+    tinputdialog.cpp \
     tjob.cpp \
     tjobmanager.cpp \
     tlocale.cpp \
@@ -127,6 +128,7 @@ HEADERS += tvariantanimation.h\
     terrorflash.h \
     the-libs_global.h \
     thelpmenu.h \
+    tinputdialog.h \
     tjob.h \
     tjobmanager.h \
     tlocale.h \
@@ -231,6 +233,7 @@ FORMS += \
     private/debuglogwindow.ui \
     taboutdialog.ui \
     tcsdtools/csdbuttonbox.ui \
+    tinputdialog.ui \
     tshortcuthud.ui \
     tstatusframe.ui
 
