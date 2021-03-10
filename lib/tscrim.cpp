@@ -32,6 +32,8 @@ struct tScrimPrivate {
     QWidget* parentWidget;
     double opacity = 1;
 
+    bool showing = false;
+
     tVariantAnimation* anim;
 
     const int scrimOverscan = SC_DPI(50);
@@ -73,6 +75,8 @@ tScrim::tScrim(QWidget* parent) : QWidget(parent) {
         }
     });
 
+    QWidget::hide();
+
     updateGeometry();
 }
 
@@ -102,6 +106,9 @@ void tScrim::setBlurEnabled(bool blurEnabled) {
 }
 
 void tScrim::show() {
+    if (d->showing) return;
+
+    d->showing = true;
     QWidget::show();
     QWidget::raise();
     d->anim->setDirection(tVariantAnimation::Forward);
@@ -109,6 +116,9 @@ void tScrim::show() {
 }
 
 void tScrim::hide() {
+    if (!d->showing) return;
+
+    d->showing = false;
     d->anim->setDirection(tVariantAnimation::Backward);
     d->anim->start();
 }

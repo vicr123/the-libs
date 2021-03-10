@@ -173,7 +173,7 @@ unix:!macx:!android {
     target.path = $$[QT_INSTALL_LIBS]
     header.path = $$[QT_INSTALL_HEADERS]/the-libs
     module.files = qt_thelib.pri
-    prifiles.path = /usr/share/the-libs/pri
+    prifiles.path = $$[QT_INSTALL_PREFIX]/share/the-libs/pri
 
     HEADERS += tnotification/tnotification-linux.h \
         jobs/jobdbus.h \

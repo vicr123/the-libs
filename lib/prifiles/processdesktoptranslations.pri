@@ -17,8 +17,8 @@ unix:!macx {
 
     !isEmpty(DESKTOP_FILE):!blueprint {
         desktop.files = DESKTOP_FILE_GENERATED
-        desktop.path = /usr/share/applications
-        desktop.extra = $$QMAKE_COPY $${OUT_PWD}/$$DESKTOP_FILE $(INSTALL_ROOT)/usr/share/applications
+        desktop.path = $$[QT_INSTALL_PREFIX]/share/applications
+        desktop.extra = $$QMAKE_COPY $${OUT_PWD}/$$DESKTOP_FILE $(INSTALL_ROOT)$$[QT_INSTALL_PREFIX]/share/applications
         INSTALLS += desktop
 
         message(Will install $$DESKTOP_FILE as the desktop file)
@@ -26,8 +26,8 @@ unix:!macx {
 
     !isEmpty(DESKTOP_FILE_BLUEPRINT):blueprint {
         desktopbp.files = DESKTOP_FILE_GENERATED_BLUEPRINT
-        desktopbp.path = /usr/share/applications
-        desktopbp.extra = $$QMAKE_COPY $${OUT_PWD}/$$DESKTOP_FILE_BLUEPRINT $(INSTALL_ROOT)/usr/share/applications
+        desktopbp.path = $$[QT_INSTALL_PREFIX]/share/applications
+        desktopbp.extra = $$QMAKE_COPY $${OUT_PWD}/$$DESKTOP_FILE_BLUEPRINT $(INSTALL_ROOT)$$[QT_INSTALL_PREFIX]/share/applications
         INSTALLS += desktopbp
 
         message(Will install $$DESKTOP_FILE_BLUEPRINT as the desktop file)
