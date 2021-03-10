@@ -12,7 +12,7 @@ TEMPLATE = lib
 unix:!android {
     CONFIG += c++14
 
-    DEFINES += SYSTEM_LIBRARY_DIRECTORY=\\\"$$[QT_INSTALL_LIBS]\\\"
+    DEFINES += SYSTEM_LIBRARY_DIRECTORY=\\\"$$THELIBS_INSTALL_LIB\\\"
 
     system("pkg-config --version") {
         CONFIG += link_pkgconfig
@@ -171,7 +171,7 @@ unix {
 unix:!macx:!android {
     QT += dbus
 
-    target.path = $$[QT_INSTALL_LIBS]
+    target.path = $$THELIBS_INSTALL_LIB
     header.path = $$[QT_INSTALL_HEADERS]/the-libs
     module.files = qt_thelib.pri
     prifiles.path = $$THELIBS_INSTALL_PREFIX/share/the-libs/pri
