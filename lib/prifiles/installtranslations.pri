@@ -8,7 +8,7 @@ unix:!macx {
 
     translations.files = translations/*.qm
 
-    translations.path = $$[QT_INSTALL_PREFIX]/share/$$SHARE_APP_NAME/translations
+    translations.path = $$THELIBS_INSTALL_PREFIX/share/$$SHARE_APP_NAME/translations
     INSTALLS += translations
 }
 
