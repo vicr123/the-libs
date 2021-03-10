@@ -27,7 +27,7 @@ equals(THELIBS_INSTALL_MODULES, "") {
     THELIBS_INSTALL_PREFIX_IS_DEFAULT {
         THELIBS_INSTALL_MODULES = $$[QMAKE_MKSPECS]/modules
     } else {
-        THELIBS_INSTALL_HEADERS = $$THELIBS_INSTALL_PREFIX/qt/mkspecs/modules
+        THELIBS_INSTALL_MODULES = $$THELIBS_INSTALL_PREFIX/qt/mkspecs/modules
     }
 }
 
