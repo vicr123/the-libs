@@ -15,7 +15,7 @@ SOURCES += \
 include($$PWD/../prifiles/varset.pri)
 
 unix:!macx {
-    target.path = $$THELIBS_INSTALL_PREFIX/bin
+    target.path = $$THELIBS_INSTALL_BIN
     INSTALLS += target
 }
 
