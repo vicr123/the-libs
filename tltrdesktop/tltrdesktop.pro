@@ -13,7 +13,7 @@ SOURCES += \
         main.cpp
 
 unix:!macx {
-    target.path = $$[QT_INSTALL_PREFIX]/bin
+    target.path = $$THELIBS_INSTALL_PREFIX/bin
     INSTALLS += target
 }
 

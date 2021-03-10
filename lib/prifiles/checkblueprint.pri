@@ -24,3 +24,6 @@ blueprint {
     message("Building in Stable configuration")
     DEFINES += T_STABLE_BUILD
 }
+
+DISTFILES += \
+    $$PWD/varset.pri

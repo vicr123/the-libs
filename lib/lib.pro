@@ -154,6 +154,7 @@ HEADERS += tvariantanimation.h\
 DBUS_ADAPTORS += jobs/com.vicr123.thelibs.tjob.Manager.xml jobs/com.vicr123.thelibs.tjob.Job.xml
 
 # Include required build tools
+include($$PWD/prifiles/varset.pri)
 include($$PWD/prifiles/gentranslations.pri)
 
 # Translations are compiled in so installation is not required
@@ -173,7 +174,7 @@ unix:!macx:!android {
     target.path = $$[QT_INSTALL_LIBS]
     header.path = $$[QT_INSTALL_HEADERS]/the-libs
     module.files = qt_thelib.pri
-    prifiles.path = $$[QT_INSTALL_PREFIX]/share/the-libs/pri
+    prifiles.path = $$THELIBS_INSTALL_PREFIX/share/the-libs/pri
 
     HEADERS += tnotification/tnotification-linux.h \
         jobs/jobdbus.h \
@@ -224,6 +225,7 @@ DISTFILES += \
     prifiles/gentranslations.pri \
     prifiles/installtranslations.pri \
     prifiles/checkblueprint.pri \
+    prifiles/varset.pri \
     qt_thelib.pri \
     qt_thelib_mac.pri
 

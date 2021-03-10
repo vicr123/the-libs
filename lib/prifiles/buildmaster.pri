@@ -1,3 +1,6 @@
+# Set common variables
+include(varset.pri)
+
 # Generate translations
 include(gentranslations.pri)
 
