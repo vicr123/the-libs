@@ -161,7 +161,7 @@ include($$PWD/prifiles/gentranslations.pri)
 
 # Install rules
 header.files = *.h
-module.path = $$[QMAKE_MKSPECS]/modules
+module.path = $$THELIB_INSTALL_MODULES
 prifiles.files = prifiles/*
 
 unix {
@@ -172,7 +172,7 @@ unix:!macx:!android {
     QT += dbus
 
     target.path = $$THELIBS_INSTALL_LIB
-    header.path = $$[QT_INSTALL_HEADERS]/the-libs
+    header.path = $$THELIBS_INSTALL_HEADERS/the-libs
     module.files = qt_thelib.pri
     prifiles.path = $$THELIBS_INSTALL_PREFIX/share/the-libs/pri
 
