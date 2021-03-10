@@ -12,7 +12,7 @@ SOURCES += \
         jsonfile.cpp \
         main.cpp
 
-include($$PWD/../the-libs/prifiles/varset.pri)
+include($$PWD/../lib/prifiles/varset.pri)
 
 unix:!macx {
     target.path = $$THELIBS_INSTALL_BIN
