@@ -161,7 +161,7 @@ include($$PWD/prifiles/gentranslations.pri)
 
 # Install rules
 header.files = *.h
-module.path = $$THELIB_INSTALL_MODULES
+module.path = $$THELIBS_INSTALL_MODULES
 prifiles.files = prifiles/*
 
 unix {
