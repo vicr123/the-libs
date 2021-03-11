@@ -18,7 +18,7 @@ unix:!macx {
     !isEmpty(DESKTOP_FILE):!blueprint {
         desktop.files = DESKTOP_FILE_GENERATED
         desktop.path = $$[QT_INSTALL_PREFIX]/share/applications
-        desktop.extra = $$QMAKE_COPY $${OUT_PWD}/$$DESKTOP_FILE $(INSTALL_ROOT)$$THELIBS_INSTALL_PREFIX/share/applications/
+        desktop.extra = mkdir -p $(INSTALL_ROOT)$$THELIBS_INSTALL_PREFIX/share/applications/ && $$QMAKE_COPY $${OUT_PWD}/$$DESKTOP_FILE $(INSTALL_ROOT)$$THELIBS_INSTALL_PREFIX/share/applications/
         INSTALLS += desktop
 
         message(Will install $$DESKTOP_FILE as the desktop file)
@@ -27,7 +27,7 @@ unix:!macx {
     !isEmpty(DESKTOP_FILE_BLUEPRINT):blueprint {
         desktopbp.files = DESKTOP_FILE_GENERATED_BLUEPRINT
         desktopbp.path = $$[QT_INSTALL_PREFIX]/share/applications
-        desktopbp.extra = $$QMAKE_COPY $${OUT_PWD}/$$DESKTOP_FILE_BLUEPRINT $(INSTALL_ROOT)$$THELIBS_INSTALL_PREFIX/share/applications/
+        desktopbp.extra = mkdir -p $(INSTALL_ROOT)$$THELIBS_INSTALL_PREFIX/share/applications/ && $$QMAKE_COPY $${OUT_PWD}/$$DESKTOP_FILE_BLUEPRINT $(INSTALL_ROOT)$$THELIBS_INSTALL_PREFIX/share/applications/
         INSTALLS += desktopbp
 
         message(Will install $$DESKTOP_FILE_BLUEPRINT as the desktop file)
