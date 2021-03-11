@@ -18,7 +18,7 @@ const process = require('process');
         core.exportVariable("PKG_CONFIG_PATH", `${qtBase}/lib/pkgconfig:${process.env["PKG_CONFIG_PATH"]}`);
     } else if (process.platform == 'darwin') {
         await exec.exec(`brew install qt5 ${core.getInput("extra-deps-mac")}`)
-        core.addPath("/usr/local/opt/qt/bin");
+        core.addPath("/usr/local/opt/qt@5/bin");
     } else if (process.platform == 'win32') {
         //TODO
         core.setFailed("Not running on a supported platform.");
