@@ -23,7 +23,7 @@
 
 struct tStyleManagerPrivate {
     tStyleManager::Style currentStyle = tStyleManager::System;
-    tStyleManager::Platforms overrideOnPlatforms = tStyleManager::Windows | tStyleManager::MacOS | tStyleManager::OtherPlatform;
+    tApplication::Platforms overrideOnPlatforms = tApplication::Flatpak | tApplication::Windows | tApplication::MacOS | tApplication::OtherPlatform;
 };
 
 tStyleManager::tStyleManager(QObject* parent) : QObject(parent) {
@@ -33,6 +33,7 @@ tStyleManager::tStyleManager(QObject* parent) : QObject(parent) {
 void tStyleManager::updateStyle() {
     if (isOverridingStyle()) {
         //Override the styles!
+
         QApplication::setStyle(QStyleFactory::create("contemporary"));
 
         QIcon::setThemeSearchPaths({
@@ -108,22 +109,11 @@ void tStyleManager::setOverrideStyleForApplication(tStyleManager::Style style) {
     instance()->updateStyle();
 }
 
-void tStyleManager::setOverrideStyleOnPlatforms(tStyleManager::Platforms platforms) {
+void tStyleManager::setOverrideStyleOnPlatforms(tApplication::Platforms platforms) {
     instance()->d->overrideOnPlatforms = platforms;
     instance()->updateStyle();
 }
 
 bool tStyleManager::isOverridingStyle() {
-#if defined(Q_OS_WIN)
-    return instance()->d->overrideOnPlatforms & Windows;
-#elif defined(Q_OS_MAC)
-    return instance()->d->overrideOnPlatforms & MacOS;
-#else
-    QString desktop = qEnvironmentVariable("XDG_CURRENT_DESKTOP");
-    if (desktop == "thedesk") {
-        return instance()->d->overrideOnPlatforms & TheDesk;
-    } else {
-        return instance()->d->overrideOnPlatforms & OtherPlatform;
-    }
-#endif
+    return instance()->d->overrideOnPlatforms & tApplication::currentPlatform();
 }

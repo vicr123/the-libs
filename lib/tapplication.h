@@ -32,6 +32,15 @@ class THELIBSSHARED_EXPORT tApplication : public QApplication {
             FileBug
         };
 
+        enum Platform {
+            TheDesk,
+            Flatpak,
+            Windows,
+            MacOS,
+            OtherPlatform
+        };
+        Q_DECLARE_FLAGS(Platforms, Platform)
+
         static QIcon applicationIcon();
         static QString shareDir();
         static QString genericName();
@@ -44,6 +53,7 @@ class THELIBSSHARED_EXPORT tApplication : public QApplication {
         static QUrl applicationUrl(UrlType type);
         static KnownLicenses applicationLicense();
         static void ensureSingleInstance(QJsonObject launchData);
+        static Platform currentPlatform();
 
     Q_SIGNALS:
         void openFile(QString file);
@@ -88,5 +98,7 @@ class THELIBSSHARED_EXPORT tApplication : public QApplication {
 
         static tApplicationPrivate* d;
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(tApplication::Platforms)
 
 #endif // TAPPLICATION_H

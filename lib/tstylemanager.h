@@ -20,7 +20,7 @@
 #ifndef TSTYLEMANAGER_H
 #define TSTYLEMANAGER_H
 
-#include "the-libs_global.h"
+#include "tapplication.h"
 #include <QObject>
 
 struct tStyleManagerPrivate;
@@ -35,16 +35,8 @@ class THELIBSSHARED_EXPORT tStyleManager : public QObject {
             ContemporaryDark
         };
 
-        enum Platform {
-            TheDesk,
-            Windows,
-            MacOS,
-            OtherPlatform
-        };
-        Q_DECLARE_FLAGS(Platforms, Platform)
-
         static void setOverrideStyleForApplication(Style style);
-        static void setOverrideStyleOnPlatforms(Platforms platforms);
+        static void setOverrideStyleOnPlatforms(tApplication::Platforms platforms);
         static bool isOverridingStyle();
 
     signals:
@@ -55,7 +47,5 @@ class THELIBSSHARED_EXPORT tStyleManager : public QObject {
 
         void updateStyle();
 };
-
-Q_DECLARE_OPERATORS_FOR_FLAGS(tStyleManager::Platforms)
 
 #endif // TSTYLEMANAGER_H

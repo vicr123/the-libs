@@ -122,6 +122,10 @@ tApplication::tApplication(int& argc, char** argv) : QApplication(argc, argv) {
 
     d->versions.append({"the-libs", QStringLiteral("%1 (API %2)").arg(THE_LIBS_VERSION).arg(THE_LIBS_API_VERSION)});
     d->versions.append({"Qt", QString(qVersion())});
+
+    if (this->currentPlatform() == Flatpak) {
+        this->addLibraryPath("/lib/qt/plugins");
+    }
 }
 
 bool tApplication::event(QEvent* event) {
@@ -607,6 +611,25 @@ void tApplication::ensureSingleInstance(QJsonObject launchData) {
 
         std::exit(0);
     }
+}
+
+tApplication::Platform tApplication::currentPlatform() {
+#if defined(Q_OS_WIN)
+    return Windows;
+#elif defined(Q_OS_MAC)
+    return MacOS;
+#else
+    if (qEnvironmentVariableIsSet("FLATPAK_ID")) {
+        return Flatpak;
+    }
+
+    QString desktop = qEnvironmentVariable("XDG_CURRENT_DESKTOP");
+    if (desktop == "thedesk") {
+        return TheDesk;
+    } else {
+        return OtherPlatform;
+    }
+#endif
 }
 
 QString tApplication::copyrightHolder() {
