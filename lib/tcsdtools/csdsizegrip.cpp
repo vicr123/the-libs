@@ -23,6 +23,7 @@
 #include <QEvent>
 #include <QPainter>
 #include <QDebug>
+#include <QWindow>
 #include "tcsdtools.h"
 
 #ifdef HAVE_X11
@@ -96,6 +97,35 @@ void CsdSizeGrip::paintEvent(QPaintEvent* event) {
 void CsdSizeGrip::mousePressEvent(QMouseEvent* e) {
     if (e->button() == Qt::LeftButton) {
         //Resize this window
+        Qt::Edges edge;
+        switch (hitTest(e->pos())) {
+            case 0: //Top
+                edge = Qt::TopEdge;
+                break;
+            case 1: //Left
+                edge = Qt::LeftEdge;
+                break;
+            case 2: //Bottom
+                edge = Qt::BottomEdge;
+                break;
+            case 3: //Right
+                edge = Qt::RightEdge;
+                break;
+            case 4: //Upper right
+                edge = Qt::RightEdge | Qt::TopEdge;
+                break;
+            case 5: //Upper left
+                edge = Qt::LeftEdge | Qt::TopEdge;
+                break;
+            case 6: //Lower left
+                edge = Qt::LeftEdge | Qt::BottomEdge;
+                break;
+            case 7: //Lower right
+                edge = Qt::RightEdge | Qt::BottomEdge;
+                break;
+        }
+        if (this->window()->windowHandle()->startSystemResize(edge)) return;
+
 #ifdef HAVE_X11
         if (QX11Info::isPlatformX11()) {
             XEvent event;

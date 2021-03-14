@@ -24,6 +24,7 @@
 #include <QDebug>
 #include <QDir>
 #include <QMainWindow>
+#include <QWindow>
 #include <tcsdtools/csdsizegrip.h>
 #include <tcsdtools/csdbuttonbox.h>
 
@@ -35,7 +36,6 @@
     #ifdef HAVE_GSETTINGS
         #include <QGSettings>
     #endif
-
 #endif
 
 #ifdef Q_OS_WIN
@@ -290,23 +290,26 @@ bool tCsdTools::eventFilter(QObject* watched, QEvent* event) {
         QMouseEvent* e = static_cast<QMouseEvent*>(event);
         if (d->moveWidgets.contains(widget) && e->button() == Qt::LeftButton) {
             //Move this window
+            if (widget->window()->windowHandle()->startSystemMove()) return true;
+
 #ifdef HAVE_X11
             if (QX11Info::isPlatformX11()) {
-                XEvent event;
-                event.xclient.type = ClientMessage;
-                event.xclient.message_type = XInternAtom(QX11Info::display(), "_NET_WM_MOVERESIZE", False);
-                event.xclient.display = QX11Info::display();
-                event.xclient.window = widget->window()->winId(); //Move the parent window of the widget
-                event.xclient.format = 32;
-                event.xclient.data.l[0] = e->globalPos().x();
-                event.xclient.data.l[1] = e->globalPos().y();
-                event.xclient.data.l[2] = 8;
-                event.xclient.data.l[3] = Button1;
-                event.xclient.data.l[4] = 0;
+                int x = e->globalX();
+                int y = e->globalY();
+                XClientMessageEvent event;
+                XUngrabPointer(QX11Info::display(), QX11Info::appTime());
+                event.type = ClientMessage;
+                event.message_type = XInternAtom(QX11Info::display(), "_NET_WM_MOVERESIZE", False);
+                event.window = widget->window()->winId(); //Move the parent window of the widget
+                event.format = 32;
+                event.data.l[0] = x;
+                event.data.l[1] = y;
+                event.data.l[2] = 8;
+                event.data.l[3] = Button1;
+                event.data.l[4] = 0;
 
-                XUngrabPointer(QX11Info::display(), CurrentTime);
-                XSendEvent(QX11Info::display(), QX11Info::appRootWindow(), False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
-                return true;
+                XSendEvent(QX11Info::display(), QX11Info::appRootWindow(), False, SubstructureRedirectMask | SubstructureNotifyMask, reinterpret_cast<XEvent*>(&event));
+                return false;
             }
 #endif
 
