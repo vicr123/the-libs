@@ -42,7 +42,7 @@ void tStyleManager::updateStyle() {
             tApplication::applicationDirPath() + "\\icons", //Windows
             tApplication::macOSBundlePath() + "/Contents/Resources/icons" //macOS
         });
-        QIcon::setThemeName("Contemporary");
+        QIcon::setThemeName("contemporary");
 
         QPalette pal = QApplication::palette();
 
