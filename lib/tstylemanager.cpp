@@ -38,7 +38,7 @@ void tStyleManager::updateStyle() {
 
         QIcon::setThemeSearchPaths({
             "/usr/share/icons", //Linux
-            "/share/icons", //Flatpak
+            "/app/share/icons", //Flatpak
             tApplication::applicationDirPath() + "\\icons", //Windows
             tApplication::macOSBundlePath() + "/Contents/Resources/icons" //macOS
         });
