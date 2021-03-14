@@ -97,6 +97,7 @@ SOURCES += tvariantanimation.cpp \
     tscrim.cpp \
     tsettings.cpp \
     tstatusframe.cpp \
+    tstylemanager.cpp \
     ttitlelabel.cpp \
     ttoast.cpp \
     tvirtualkeyboard.cpp \
@@ -137,6 +138,7 @@ HEADERS += tvariantanimation.h\
     tscrim.h \
     tsettings.h \
     tstatusframe.h \
+    tstylemanager.h \
     ttitlelabel.h \
     ttoast.h \
     tnotification.h \
