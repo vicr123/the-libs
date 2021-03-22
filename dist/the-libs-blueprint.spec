@@ -1,6 +1,6 @@
 Name:           the-libs-blueprint
 Version:        3.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Common libraries for the* apps
 
 License:        GPLv3+
