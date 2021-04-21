@@ -304,12 +304,12 @@
     <message>
         <location filename="../tinputdialog.ui" line="48"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuller</translation>
     </message>
     <message>
         <location filename="../tinputdialog.ui" line="55"/>
         <source>OK</source>
-        <translation type="unfinished">OKAY</translation>
+        <translation>OKAY</translation>
     </message>
 </context>
 <context>
