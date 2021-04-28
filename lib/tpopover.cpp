@@ -151,6 +151,10 @@ void tPopover::setDismissable(bool dismissable) {
     d->dismissable = dismissable;
 }
 
+void tPopover::setPerformBlur(bool performBlur) {
+    tScrim::scrimForWidget(d->parentWidget)->setBlurEnabled(performBlur);
+}
+
 void tPopover::show(QWidget* parent) {
     parent = tCsdTools::widgetForPopover(parent);
     if (d->showing) return;
