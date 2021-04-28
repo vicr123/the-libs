@@ -1,5 +1,5 @@
 Name:           the-libs
-Version:        3.0
+Version:        4.0
 Release:        2%{?dist}
 Summary:        Common libraries for the* apps
 
