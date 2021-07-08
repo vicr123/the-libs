@@ -91,6 +91,7 @@ SOURCES += tvariantanimation.cpp \
     tjobmanager.cpp \
     tlocale.cpp \
     tlogger.cpp \
+    tpaintcalculator.cpp \
     tpromise.cpp \
     tpropertyanimation.cpp \
     thelibsglobal.cpp \
@@ -134,6 +135,7 @@ HEADERS += tvariantanimation.h\
     tjobmanager.h \
     tlocale.h \
     tlogger.h \
+    tpaintcalculator.h \
     tpropertyanimation.h \
     tscrim.h \
     tsettings.h \

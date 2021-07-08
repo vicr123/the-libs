@@ -29,6 +29,7 @@
 #include "tpopover.h"
 #include "debuglogpopover.h"
 #include "tlogger.h"
+#include "tpaintcalculator.h"
 
 struct DebugLogWindowPrivate {
     QSortFilterProxyModel* severityModel;
@@ -103,54 +104,60 @@ void DebugLogWindow::on_clearButton_clicked() {
 
 
 void LogDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const {
+    tPaintCalculator paintCalculator = this->calculatePaint(painter, option, index);
+    paintCalculator.performPaint();
+}
+
+QSize LogDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const {
+    tPaintCalculator paintCalculator = this->calculatePaint(nullptr, option, index);
+    return paintCalculator.sizeWithMargins().toSize();
+}
+
+tPaintCalculator LogDelegate::calculatePaint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const {
     QRect rect = option.rect;
-    painter->setLayoutDirection(option.direction);
+
+    tPaintCalculator paintCalculator;
+    paintCalculator.setDrawBounds(rect);
+
     if (index.column() == 0) {
         QRect severityRect = rect;
         severityRect.setWidth(SC_DPI(6));
+        rect.setLeft(severityRect.right());
 
-        if (option.direction == Qt::RightToLeft) {
-            severityRect.moveRight(rect.right());
-            rect.setRight(severityRect.left());
-        } else {
-            rect.setLeft(severityRect.right());
-        }
-
-        painter->setPen(Qt::transparent);
-        switch (index.data(Qt::UserRole).toInt()) {
-            case QtDebugMsg:
-                painter->setBrush(QColor(0, 100, 255));
-                break;
-            case QtWarningMsg:
-                painter->setBrush(QColor(255, 100, 0));
-                break;
-            case QtCriticalMsg:
-                painter->setBrush(QColor(255, 0, 0));
-                break;
-            case QtFatalMsg:
-                painter->setBrush(QColor(100, 0, 0));
-                break;
-            case QtInfoMsg:
-                painter->setBrush(Qt::transparent);
-                break;
-        }
-        painter->drawRect(severityRect);
+        paintCalculator.addRect(severityRect, [ = ](QRectF adjusted) {
+            painter->setPen(Qt::transparent);
+            switch (index.data(Qt::UserRole).toInt()) {
+                case QtDebugMsg:
+                    painter->setBrush(QColor(0, 100, 255));
+                    break;
+                case QtWarningMsg:
+                    painter->setBrush(QColor(255, 100, 0));
+                    break;
+                case QtCriticalMsg:
+                    painter->setBrush(QColor(255, 0, 0));
+                    break;
+                case QtFatalMsg:
+                    painter->setBrush(QColor(100, 0, 0));
+                    break;
+                case QtInfoMsg:
+                    painter->setBrush(Qt::transparent);
+                    break;
+            }
+            painter->drawRect(adjusted);
+        });
     }
-
-    Qt::Alignment textAlignment = (option.direction == Qt::RightToLeft ? Qt::AlignRight : Qt::AlignLeft);
 
     QString text = index.data().toString();
-    QRect textRect = option.fontMetrics.boundingRect(rect, Qt::AlignTop | textAlignment, text);
-    textRect.adjust(SC_DPI(3), SC_DPI(3), SC_DPI(3), SC_DPI(3));
 
-    if (option.direction == Qt::RightToLeft) {
-        rect.setRight(textRect.left());
-    } else {
-        rect.setLeft(textRect.right());
-    }
-    painter->setFont(option.font);
-    painter->setPen(option.palette.color(QPalette::WindowText));
-    painter->drawText(textRect, Qt::AlignTop | textAlignment, text);
+    QRect textRect = option.fontMetrics.boundingRect(rect, Qt::AlignTop | Qt::AlignLeft, text);
+    textRect.adjust(SC_DPI(3), SC_DPI(3), SC_DPI(3), SC_DPI(3));
+    rect.setLeft(textRect.right());
+
+    paintCalculator.addRect(textRect, [ = ](QRectF adjusted) {
+        painter->setFont(option.font);
+        painter->setPen(option.palette.color(QPalette::WindowText));
+        painter->drawText(adjusted, Qt::AlignTop | Qt::AlignLeft, text);
+    });
 
     if (index.column() == 2) {
         quint64 repeat = index.data(Qt::UserRole).toULongLong();
@@ -159,31 +166,14 @@ void LogDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, c
             QRect repeatRect = rect;
             repeatRect.adjust(SC_DPI(3), SC_DPI(3), SC_DPI(-3), SC_DPI(-3));
 
-            painter->setPen(option.palette.color(QPalette::Disabled, QPalette::WindowText));
-            painter->drawText(repeatRect, Qt::AlignLeft | Qt::AlignVCenter, text);
+            paintCalculator.addRect(repeatRect, [ = ](QRectF adjusted) {
+                painter->setPen(option.palette.color(QPalette::Disabled, QPalette::WindowText));
+                painter->drawText(adjusted, Qt::AlignLeft | Qt::AlignVCenter, text);
+            });
         }
     }
-}
 
-QSize LogDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const {
-    switch (index.column()) {
-        case 0: {
-            QSize size;
-            size.setHeight(option.fontMetrics.height() + SC_DPI(6));
-            size.setWidth(option.fontMetrics.horizontalAdvance("[00:00:00]") + SC_DPI(12));
-            return size;
-        }
-        case 1: {
-            return QStyledItemDelegate::sizeHint(option, index);
-        }
-        case 2: {
-            QSize size = option.fontMetrics.size(0, index.data().toString());
-            size.rheight() += SC_DPI(6);
-            size.rwidth() += SC_DPI(6);
-            return size;
-        }
-    }
-    return QSize();
+    return paintCalculator;
 }
 
 DebugLogModel::DebugLogModel() {

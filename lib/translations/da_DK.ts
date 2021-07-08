@@ -4,17 +4,17 @@
 <context>
     <name>DebugLogModel</name>
     <message>
-        <location filename="../private/debuglogwindow.cpp" line="281"/>
+        <location filename="../private/debuglogwindow.cpp" line="271"/>
         <source>Timestamp</source>
         <translation>Tidsstempler</translation>
     </message>
     <message>
-        <location filename="../private/debuglogwindow.cpp" line="283"/>
+        <location filename="../private/debuglogwindow.cpp" line="273"/>
         <source>Context</source>
         <translation>Kontekst</translation>
     </message>
     <message>
-        <location filename="../private/debuglogwindow.cpp" line="285"/>
+        <location filename="../private/debuglogwindow.cpp" line="275"/>
         <source>Message</source>
         <translation>Besked</translation>
     </message>
@@ -81,7 +81,7 @@
         <translation>Filtrer efter kontekst</translation>
     </message>
     <message>
-        <location filename="../private/debuglogwindow.cpp" line="315"/>
+        <location filename="../private/debuglogwindow.cpp" line="305"/>
         <source>context</source>
         <comment>Placeholder in search box</comment>
         <translation>kontekst</translation>

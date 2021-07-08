@@ -24,6 +24,7 @@
 #include <QStyledItemDelegate>
 #include <QAbstractListModel>
 #include <tlogger.h>
+#include "tpaintcalculator.h"
 
 namespace Ui {
     class DebugLogWindow;
@@ -81,6 +82,9 @@ class LogDelegate : public QStyledItemDelegate {
     public:
         void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
         QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
+
+    private:
+        tPaintCalculator calculatePaint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 };
 
 #endif // DEBUGLOGWINDOW_H
