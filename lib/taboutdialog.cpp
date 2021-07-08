@@ -5,10 +5,9 @@
 #include <QScroller>
 #include "tapplication.h"
 
-tAboutDialog::tAboutDialog(QWidget *parent) :
+tAboutDialog::tAboutDialog(QWidget* parent) :
     QDialog(parent),
-    ui(new Ui::tAboutDialog)
-{
+    ui(new Ui::tAboutDialog) {
     ui->setupUi(this);
 
     this->setWindowTitle((tr("About %1").arg(tApplication::applicationName())));
@@ -56,32 +55,35 @@ tAboutDialog::tAboutDialog(QWidget *parent) :
         ui->copyrightLayout->addWidget(label);
     }
 
-    #ifndef Q_OS_MAC
-        QToolButton* backButton = new QToolButton(this);
-        backButton->setAutoRaise(true);
-        backButton->setIcon(QIcon::fromTheme("go-previous", QIcon(":/the-libs/icons/go-previous.svg")));
-        if (graphicAvailable) {
-            backButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-            backButton->setParent(ui->splashGraphicLabel);
+#ifndef Q_OS_MAC
+    QToolButton* backButton = new QToolButton(this);
+    backButton->setAutoRaise(true);
+    backButton->setIcon(QIcon::fromTheme("go-previous", QIcon(":/the-libs/icons/go-previous.svg")));
+    if (graphicAvailable) {
+        backButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        backButton->setParent(ui->splashGraphicLabel);
+
+        if (this->layoutDirection() == Qt::LeftToRight) {
             backButton->move(0, 0);
         } else {
-            backButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
-            ui->titleLayout->insertWidget(0, backButton);
+            backButton->move(ui->splashGraphicLabel->width() - backButton->width(), 0);
         }
-        connect(backButton, &QToolButton::clicked, this, &tAboutDialog::on_okButton_clicked);
+    } else {
+        backButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+        ui->titleLayout->insertWidget(0, backButton);
+    }
+    connect(backButton, &QToolButton::clicked, this, &tAboutDialog::on_okButton_clicked);
 
-        ui->macOkPanel->setVisible(false);
-    #endif
+    ui->macOkPanel->setVisible(false);
+#endif
 
     QScroller::grabGesture(ui->scrollArea->viewport(), QScroller::LeftMouseButtonGesture);
 }
 
-tAboutDialog::~tAboutDialog()
-{
+tAboutDialog::~tAboutDialog() {
     delete ui;
 }
 
-void tAboutDialog::on_okButton_clicked()
-{
+void tAboutDialog::on_okButton_clicked() {
     this->close();
 }

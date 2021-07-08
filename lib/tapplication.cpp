@@ -113,7 +113,7 @@ tApplication::tApplication(int& argc, char** argv) : QApplication(argc, argv) {
 
     Q_INIT_RESOURCE(thelibs_translations);
     Q_INIT_RESOURCE(thelibs_icons);
-    d->translator.load(QLocale::system().name(), ":/the-libs/translations/");
+    d->translator.load(QLocale::system(), ":/the-libs/translations/");
     installTranslator(&d->translator);
 
 #ifdef Q_OS_MAC
@@ -416,14 +416,15 @@ void tApplication::installTranslators() {
     }
     d->applicationTranslators.clear();
 
+    QLocale locale;
 
     QTranslator* localTranslator = new QTranslator();
 #if defined(Q_OS_MAC)
-    localTranslator->load(QLocale::system().name(), macOSBundlePath() + "/Contents/translations/");
+    localTranslator->load(locale, "", "", macOSBundlePath() + "/Contents/translations/");
 #elif defined(Q_OS_LINUX)
-    localTranslator->load(QLocale::system().name(), d->shareDir + "/translations");
+    localTranslator->load(locale, "", "", d->shareDir + "/translations");
 #elif defined(Q_OS_WIN)
-    localTranslator->load(QLocale::system().name(), this->applicationDirPath() + "\\translations");
+    localTranslator->load(locale, "", "", this->applicationDirPath() + "\\translations");
 #endif
     this->installTranslator(localTranslator);
     d->applicationTranslators.append(localTranslator);
@@ -431,15 +432,17 @@ void tApplication::installTranslators() {
     for (QString plugin : d->pluginTranslators) {
         QTranslator* translator = new QTranslator();
 #if defined(Q_OS_MAC)
-        translator->load(QLocale::system().name(), macOSBundlePath() + "/Contents/Resources/Plugins/" + plugin + "/translations/");
+        translator->load(locale, "", "", macOSBundlePath() + "/Contents/Resources/Plugins/" + plugin + "/translations/");
 #elif defined(Q_OS_LINUX)
-        translator->load(QLocale::system().name(), d->shareDir + "/" + plugin + "/translations");
+        translator->load(locale, "", "", d->shareDir + "/" + plugin + "/translations");
 #elif defined(Q_OS_WIN)
-        translator->load(QLocale::system().name(), this->applicationDirPath() + "\\plugins\\" + plugin + "\\translations");
+        translator->load(locale, "", "", this->applicationDirPath() + "\\plugins\\" + plugin + "\\translations");
 #endif
         installTranslator(translator);
         d->applicationTranslators.append(translator);
     }
+
+    this->setLayoutDirection(locale.textDirection());
 }
 
 void tApplication::addPluginTranslator(QString pluginName) {
@@ -652,7 +655,7 @@ void tApplication::restart() {
 #ifdef Q_OS_MAC
     QProcess::startDetached("open", {macOSBundlePath(), "-n"});
 #else
-    QProcess::startDetached(tApplication::applicationFilePath());
+    QProcess::startDetached(tApplication::applicationFilePath(), QStringList());
 #endif
     tApplication::quit();
 }

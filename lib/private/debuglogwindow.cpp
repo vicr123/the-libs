@@ -104,10 +104,17 @@ void DebugLogWindow::on_clearButton_clicked() {
 
 void LogDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const {
     QRect rect = option.rect;
+    painter->setLayoutDirection(option.direction);
     if (index.column() == 0) {
         QRect severityRect = rect;
         severityRect.setWidth(SC_DPI(6));
-        rect.setLeft(severityRect.right());
+
+        if (option.direction == Qt::RightToLeft) {
+            severityRect.moveRight(rect.right());
+            rect.setRight(severityRect.left());
+        } else {
+            rect.setLeft(severityRect.right());
+        }
 
         painter->setPen(Qt::transparent);
         switch (index.data(Qt::UserRole).toInt()) {
@@ -130,13 +137,20 @@ void LogDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, c
         painter->drawRect(severityRect);
     }
 
+    Qt::Alignment textAlignment = (option.direction == Qt::RightToLeft ? Qt::AlignRight : Qt::AlignLeft);
+
     QString text = index.data().toString();
-    QRect textRect = option.fontMetrics.boundingRect(rect, Qt::AlignTop | Qt::AlignLeading, text);
+    QRect textRect = option.fontMetrics.boundingRect(rect, Qt::AlignTop | textAlignment, text);
     textRect.adjust(SC_DPI(3), SC_DPI(3), SC_DPI(3), SC_DPI(3));
-    rect.setLeft(textRect.right());
+
+    if (option.direction == Qt::RightToLeft) {
+        rect.setRight(textRect.left());
+    } else {
+        rect.setLeft(textRect.right());
+    }
     painter->setFont(option.font);
     painter->setPen(option.palette.color(QPalette::WindowText));
-    painter->drawText(textRect, Qt::AlignTop | Qt::AlignLeading, text);
+    painter->drawText(textRect, Qt::AlignTop | textAlignment, text);
 
     if (index.column() == 2) {
         quint64 repeat = index.data(Qt::UserRole).toULongLong();
@@ -146,7 +160,7 @@ void LogDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, c
             repeatRect.adjust(SC_DPI(3), SC_DPI(3), SC_DPI(-3), SC_DPI(-3));
 
             painter->setPen(option.palette.color(QPalette::Disabled, QPalette::WindowText));
-            painter->drawText(repeatRect, Qt::AlignLeading | Qt::AlignVCenter, text);
+            painter->drawText(repeatRect, Qt::AlignLeft | Qt::AlignVCenter, text);
         }
     }
 }
