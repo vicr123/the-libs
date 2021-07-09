@@ -22,13 +22,17 @@
 #include <QPainter>
 
 struct tPaintCalculatorPrivate {
-    QList<QString> namedRects;
+    QStringList namedRects;
     QMap<QString, QRectF> rects;
     QMap<QString, tPaintCalculator::DrawFunction> functions;
     Qt::LayoutDirection direction = Qt::LeftToRight;
     QRectF drawBounds = QRectF(0, 0, 0, 0);
     QPainter* painter = nullptr;
     quint16 generatedRectName = 0;
+};
+
+struct tPaintCalculatorScoperPrivate {
+    tPaintCalculator* paintCalculator;
 };
 
 tPaintCalculator::tPaintCalculator() {
@@ -50,7 +54,6 @@ tPaintCalculator::tPaintCalculator(const tPaintCalculator& other) {
     d->painter = other.d->painter;
     d->generatedRectName = other.d->generatedRectName;
 }
-
 
 tPaintCalculator::~tPaintCalculator() {
     delete d;
@@ -81,12 +84,12 @@ void tPaintCalculator::performPaint() {
         d->painter->setLayoutDirection(d->direction);
     }
 
-    for (QString rectName : d->namedRects) {
+    for (const QString& rectName : d->namedRects) {
         d->functions.value(rectName)(this->boundsOf(rectName));
     }
 }
 
-QRectF tPaintCalculator::boundsOf(QString name) {
+QRectF tPaintCalculator::boundsOf(QString name) const {
     QRectF newRect = d->rects.value(name);
     if (d->direction == Qt::RightToLeft) {
         //Flip the layout
@@ -96,7 +99,7 @@ QRectF tPaintCalculator::boundsOf(QString name) {
     return newRect;
 }
 
-QRectF tPaintCalculator::boundingRect() {
+QRectF tPaintCalculator::boundingRect() const {
     if (d->rects.isEmpty()) return QRectF();
     QRectF totalRect = d->rects.first();
     for (QRectF rect : d->rects.values()) {
@@ -105,21 +108,32 @@ QRectF tPaintCalculator::boundingRect() {
     return totalRect;
 }
 
-QRectF tPaintCalculator::anchoredBoundingRect() {
+QRectF tPaintCalculator::anchoredBoundingRect() const {
     QRectF bounding = this->boundingRect();
     bounding.setTop(0);
     bounding.setLeft(0);
     return bounding;
 }
 
-QSizeF tPaintCalculator::sizeWithMargins() {
+QSizeF tPaintCalculator::sizeWithMargins() const {
     return boundingRect().size() + QSize(boundingRect().left(), boundingRect().top()) * 2;
 }
 
-Qt::LayoutDirection tPaintCalculator::layoutDirection() {
+Qt::LayoutDirection tPaintCalculator::layoutDirection() const {
     return d->direction;
 }
 
 void tPaintCalculator::setLayoutDirection(Qt::LayoutDirection direction) {
     d->direction = direction;
+}
+
+tPaintCalculatorScoper::tPaintCalculatorScoper(tPaintCalculator* paintCalculator) {
+    d = new tPaintCalculatorScoperPrivate();
+    d->paintCalculator = paintCalculator;
+}
+
+tPaintCalculatorScoper::~tPaintCalculatorScoper() {
+    d->paintCalculator->performPaint();
+    delete d->paintCalculator;
+    delete d;
 }

@@ -35,19 +35,30 @@ class THELIBSSHARED_EXPORT tPaintCalculator {
 
         void setPainter(QPainter* painter);
         void setDrawBounds(QRectF bounds);
+
         void addRect(QRectF rect, DrawFunction drawFunction);
         void addRect(QString name, QRectF rect, DrawFunction drawFunction);
         void performPaint();
-        QRectF boundsOf(QString name);
-        QRectF boundingRect();
-        QRectF anchoredBoundingRect();
-        QSizeF sizeWithMargins();
+        QRectF boundsOf(QString name) const;
+        QRectF boundingRect() const;
+        QRectF anchoredBoundingRect() const;
+        QSizeF sizeWithMargins() const;
 
-        Qt::LayoutDirection layoutDirection();
+        Qt::LayoutDirection layoutDirection() const;
         void setLayoutDirection(Qt::LayoutDirection direction);
 
     private:
         tPaintCalculatorPrivate* d;
+};
+
+struct tPaintCalculatorScoperPrivate;
+class THELIBSSHARED_EXPORT tPaintCalculatorScoper {
+    public:
+        tPaintCalculatorScoper(tPaintCalculator* paintCalculator);
+        ~tPaintCalculatorScoper();
+
+    private:
+        tPaintCalculatorScoperPrivate* d;
 };
 
 #endif // TPAINTCALCULATOR_H
