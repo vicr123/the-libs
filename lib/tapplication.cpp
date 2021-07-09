@@ -79,8 +79,6 @@ struct tApplicationPrivate {
 
 tApplicationPrivate* tApplication::d = nullptr;
 
-
-
 tApplication::tApplication(int& argc, char** argv) : QApplication(argc, argv) {
     d = new tApplicationPrivate();
     d->applicationInstance = this;
@@ -113,7 +111,7 @@ tApplication::tApplication(int& argc, char** argv) : QApplication(argc, argv) {
 
     Q_INIT_RESOURCE(thelibs_translations);
     Q_INIT_RESOURCE(thelibs_icons);
-    d->translator.load(QLocale::system(), ":/the-libs/translations/");
+    d->translator.load(QLocale(), "", "", ":/the-libs/translations/");
     installTranslator(&d->translator);
 
 #ifdef Q_OS_MAC
