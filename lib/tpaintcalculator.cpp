@@ -67,6 +67,10 @@ void tPaintCalculator::setDrawBounds(QRectF bounds) {
     d->drawBounds = bounds;
 }
 
+void tPaintCalculator::setDrawBounds(QSizeF size) {
+    d->drawBounds = QRectF(QPointF(0, 0), size);
+}
+
 void tPaintCalculator::addRect(QRectF rect, DrawFunction drawFunction) {
     QString name = QStringLiteral("PaintCalculatorGeneratedRect%1").arg(d->generatedRectName);
     d->generatedRectName++;

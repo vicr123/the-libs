@@ -35,6 +35,7 @@ class THELIBSSHARED_EXPORT tPaintCalculator {
 
         void setPainter(QPainter* painter);
         void setDrawBounds(QRectF bounds);
+        void setDrawBounds(QSizeF size);
 
         void addRect(QRectF rect, DrawFunction drawFunction);
         void addRect(QString name, QRectF rect, DrawFunction drawFunction);
