@@ -47,10 +47,6 @@ void tNotification::post(bool deleteWhenDone) {
             QSettings(QStringLiteral("HKEY_CURRENT_USER\\SOFTWARE\\Classes\\CLSID\\%1\\LocalServer32").arg(tNotificationWindows::classId), QSettings::NativeFormat).value(".").toString().isEmpty()) {
             shouldUseFallback = true;
         } else {
-            QString amuid = QStringLiteral("%1.%2").arg(tApplication::organizationName()).arg(tApplication::applicationName());
-            if (tApplication::currentPlatform() == tApplication::WindowsAppPackage) {
-                amuid = "";
-            }
 
             uint thisId = ++tNotificationPrivateByOS::current;
             tNotificationPrivateByOS::notifications.insert(thisId, this);
@@ -91,7 +87,7 @@ void tNotification::post(bool deleteWhenDone) {
             ToastNotification toast(toastXml);
             toast.Dismissed([ = ](ToastNotification sender, ToastDismissedEventArgs args) {
                 if (isTransient && args.Reason() != ToastDismissalReason::ApplicationHidden) {
-                    ToastNotificationManager::CreateToastNotifier(amuid.toStdWString()).Hide(sender);
+                    tNotificationWindows::createToastNotifier().Hide(sender);
 
                     emit dismissed();
 
@@ -100,7 +96,8 @@ void tNotification::post(bool deleteWhenDone) {
                     }
                 }
             });
-            ToastNotificationManager::CreateToastNotifier(amuid.toStdWString()).Show(toast);
+
+            tNotificationWindows::createToastNotifier().Show(toast);
         }
     } else {
         shouldUseFallback = true;
@@ -157,6 +154,16 @@ void tNotificationWindows::initialise(QString classId) {
             //whatever
             qDebug() << "Exception caught in tNotificationWindows::initialise";
         }
+    }
+}
+
+winrt::Windows::UI::Notifications::ToastNotifier tNotificationWindows::createToastNotifier() {
+
+    if (tApplication::currentPlatform() == tApplication::WindowsAppPackage) {
+        return ToastNotificationManager::CreateToastNotifier();
+    } else {
+        QString amuid = QStringLiteral("%1.%2").arg(tApplication::organizationName()).arg(tApplication::applicationName());
+        return ToastNotificationManager::CreateToastNotifier(amuid.toStdWString());
     }
 }
 

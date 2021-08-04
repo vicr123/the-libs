@@ -621,9 +621,10 @@ void tApplication::ensureSingleInstance(QJsonObject launchData) {
 tApplication::Platform tApplication::currentPlatform() {
 #if defined(Q_OS_WIN)
     if (!d->hasCheckedIsRunningAsUwp) {
-        UINT32 length;
+        UINT32 length = PACKAGE_FAMILY_NAME_MAX_LENGTH + 1;
         wchar_t packageFamilyName[PACKAGE_FAMILY_NAME_MAX_LENGTH + 1];
         LONG result = GetPackageFamilyName(GetCurrentProcess(), &length, packageFamilyName);
+        tDebug("tApplication") << "your 23 bit number is " << QString::number(result);
         d->isRunningAsUwp = result == ERROR_SUCCESS;
         d->hasCheckedIsRunningAsUwp = true;
     }
