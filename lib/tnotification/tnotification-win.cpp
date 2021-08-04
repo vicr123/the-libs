@@ -42,7 +42,7 @@ void tNotification::post(bool deleteWhenDone) {
     if (QOperatingSystemVersion::current() >= QOperatingSystemVersion::Windows10 && tNotificationWindows::classId != "") {
         //TODO: Review
 
-        if (tApplication::currentPlatform() != tApplication::WindowsAppPackage &&
+        if (tApplication::currentPlatform() == tApplication::Windows &&
             QSettings(QStringLiteral("HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\CLSID\\%1\\LocalServer32").arg(tNotificationWindows::classId), QSettings::NativeFormat).value(".").toString().isEmpty() &&
             QSettings(QStringLiteral("HKEY_CURRENT_USER\\SOFTWARE\\Classes\\CLSID\\%1\\LocalServer32").arg(tNotificationWindows::classId), QSettings::NativeFormat).value(".").toString().isEmpty()) {
             shouldUseFallback = true;
