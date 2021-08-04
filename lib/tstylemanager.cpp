@@ -47,9 +47,9 @@ void tStyleManager::updateStyle() {
         QPalette pal = QApplication::palette();
 
         //Get the accent colour
+        QColor accentCol;
 #ifdef Q_OS_WIN
         QSettings accentDetection("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\DWM", QSettings::NativeFormat);
-        QColor accentCol;
         if (accentDetection.contains("ColorizationColor")) {
             accentCol = QColor::fromRgb(QRgb(accentDetection.value("ColorizationColor").toInt() & 0x00FFFFFF));
             if (d->currentStyle == ContemporaryLight) {
