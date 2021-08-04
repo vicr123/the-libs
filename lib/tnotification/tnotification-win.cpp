@@ -40,15 +40,21 @@ uint tNotificationPrivateByOS::current = 0;
 void tNotification::post(bool deleteWhenDone) {
     bool shouldUseFallback = false;
     if (QOperatingSystemVersion::current() >= QOperatingSystemVersion::Windows10 && tNotificationWindows::classId != "") {
-        if (QSettings(QStringLiteral("HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\CLSID\\%1\\LocalServer32").arg(tNotificationWindows::classId), QSettings::NativeFormat).value(".").toString().isEmpty() &&
-                QSettings(QStringLiteral("HKEY_CURRENT_USER\\SOFTWARE\\Classes\\CLSID\\%1\\LocalServer32").arg(tNotificationWindows::classId), QSettings::NativeFormat).value(".").toString().isEmpty()) {
+        //TODO: Review
+
+        if (/*tApplication::currentPlatform() != tApplication::WindowsAppPackage &&*/
+            QSettings(QStringLiteral("HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\CLSID\\%1\\LocalServer32").arg(tNotificationWindows::classId), QSettings::NativeFormat).value(".").toString().isEmpty() &&
+            QSettings(QStringLiteral("HKEY_CURRENT_USER\\SOFTWARE\\Classes\\CLSID\\%1\\LocalServer32").arg(tNotificationWindows::classId), QSettings::NativeFormat).value(".").toString().isEmpty()) {
             shouldUseFallback = true;
         } else {
             QString amuid = QStringLiteral("%1.%2").arg(tApplication::organizationName()).arg(tApplication::applicationName());
+            if (tApplication::currentPlatform() == tApplication::WindowsAppPackage) {
+                amuid = "";
+            }
 
             uint thisId = ++tNotificationPrivateByOS::current;
             tNotificationPrivateByOS::notifications.insert(thisId, this);
-            connect(this, &tNotification::destroyed, this, [=] {
+            connect(this, &tNotification::destroyed, this, [ = ] {
                 tNotificationPrivateByOS::notifications.remove(thisId);
             });
 
@@ -83,7 +89,7 @@ void tNotification::post(bool deleteWhenDone) {
             toastXml.LoadXml(xmlContents.toStdWString());
 
             ToastNotification toast(toastXml);
-            toast.Dismissed([=](ToastNotification sender, ToastDismissedEventArgs args) {
+            toast.Dismissed([ = ](ToastNotification sender, ToastDismissedEventArgs args) {
                 if (isTransient && args.Reason() != ToastDismissalReason::ApplicationHidden) {
                     ToastNotificationManager::CreateToastNotifier(amuid.toStdWString()).Hide(sender);
 
@@ -104,7 +110,7 @@ void tNotification::post(bool deleteWhenDone) {
         QSystemTrayIcon* ic = new QSystemTrayIcon(QApplication::style()->standardIcon(QStyle::SP_MessageBoxInformation));
         ic->show();
         ic->showMessage(sum, txt, QSystemTrayIcon::Information, 10000);
-        QTimer::singleShot(10000, [=] {
+        QTimer::singleShot(10000, [ = ] {
             ic->hide();
             ic->deleteLater();
         });
@@ -123,19 +129,16 @@ void tNotification::dismiss() {
 
 }
 
-struct CallbackFactory : winrt::implements<CallbackFactory, IClassFactory>
-{
+struct CallbackFactory : winrt::implements<CallbackFactory, IClassFactory> {
     HRESULT __stdcall CreateInstance( IUnknown* outer, GUID const& iid, void** result) noexcept;
     HRESULT __stdcall LockServer(BOOL) noexcept;
 };
 
-struct Callback : winrt::implements<Callback, INotificationActivationCallback>
-{
+struct Callback : winrt::implements<Callback, INotificationActivationCallback> {
     HRESULT __stdcall Activate(LPCWSTR app, LPCWSTR args, NOTIFICATION_USER_INPUT_DATA const* data, ULONG count) noexcept;
 };
 
-void tNotificationWindows::initialise(QString classId)
-{
+void tNotificationWindows::initialise(QString classId) {
     tNotificationWindows::classId = classId;
 
     if (QOperatingSystemVersion::current() >= QOperatingSystemVersion::Windows10) {
@@ -145,11 +148,11 @@ void tNotificationWindows::initialise(QString classId)
 
             winrt::check_hresult(::CLSIDFromString(classId.toStdWString().c_str(), &clsid));
             winrt::check_hresult(::CoRegisterClassObject(
-                clsid,
-                winrt::make<CallbackFactory>().get(),
-                CLSCTX_LOCAL_SERVER,
-                REGCLS_MULTIPLEUSE,
-                &registration));
+                    clsid,
+                    winrt::make<CallbackFactory>().get(),
+                    CLSCTX_LOCAL_SERVER,
+                    REGCLS_MULTIPLEUSE,
+                    &registration));
         } catch (...) {
             //whatever
             qDebug() << "Exception caught in tNotificationWindows::initialise";
@@ -157,7 +160,7 @@ void tNotificationWindows::initialise(QString classId)
     }
 }
 
-HRESULT CallbackFactory::CreateInstance(IUnknown *outer, const GUID &iid, void **result) noexcept {
+HRESULT CallbackFactory::CreateInstance(IUnknown* outer, const GUID& iid, void** result) noexcept {
     *result = nullptr;
 
     if (outer) {
@@ -171,7 +174,7 @@ HRESULT CallbackFactory::LockServer(BOOL) noexcept {
     return S_OK;
 }
 
-HRESULT Callback::Activate(LPCWSTR app, LPCWSTR args, const NOTIFICATION_USER_INPUT_DATA *data, ULONG count) noexcept {
+HRESULT Callback::Activate(LPCWSTR app, LPCWSTR args, const NOTIFICATION_USER_INPUT_DATA* data, ULONG count) noexcept {
     try {
         QString qargs = QString::fromWCharArray(args);
         QJsonObject json = QJsonDocument::fromJson(qargs.toUtf8()).object();

@@ -25,6 +25,7 @@
 #ifdef Q_OS_WIN
     #include <Windows.h>
     #include <DbgHelp.h>
+    #include <appmodel.h>
     #include "tnotification/tnotification-win.h"
 #endif
 
@@ -63,6 +64,9 @@ struct tApplicationPrivate {
 #elif defined(Q_OS_WIN)
     static LONG WINAPI crashTrapHandler(PEXCEPTION_POINTERS exceptionInfo);
     PCONTEXT crashCtx = nullptr;
+
+    bool hasCheckedIsRunningAsUwp = false;
+    bool isRunningAsUwp = false;
 
     QString winClassId;
 #else
@@ -616,6 +620,15 @@ void tApplication::ensureSingleInstance(QJsonObject launchData) {
 
 tApplication::Platform tApplication::currentPlatform() {
 #if defined(Q_OS_WIN)
+    if (!d->hasCheckedIsRunningAsUwp) {
+        UINT32 length;
+        wchar_t packageFamilyName[PACKAGE_FAMILY_NAME_MAX_LENGTH + 1];
+        LONG result = GetPackageFamilyName(GetCurrentProcess(), &length, packageFamilyName);
+        d->isRunningAsUwp = result == ERROR_SUCCESS;
+        d->hasCheckedIsRunningAsUwp = true;
+    }
+
+    if (d->isRunningAsUwp) return WindowsAppPackage;
     return Windows;
 #elif defined(Q_OS_MAC)
     return MacOS;

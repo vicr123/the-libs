@@ -36,6 +36,7 @@ class THELIBSSHARED_EXPORT tApplication : public QApplication {
             TheDesk,
             Flatpak,
             Windows,
+            WindowsAppPackage,
             MacOS,
             OtherPlatform
         };

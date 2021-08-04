@@ -23,7 +23,7 @@
 
 struct tStyleManagerPrivate {
     tStyleManager::Style currentStyle = tStyleManager::System;
-    tApplication::Platforms overrideOnPlatforms = tApplication::Flatpak | tApplication::Windows | tApplication::MacOS | tApplication::OtherPlatform;
+    tApplication::Platforms overrideOnPlatforms = tApplication::Flatpak | tApplication::Windows | tApplication::WindowsAppPackage | tApplication::MacOS | tApplication::OtherPlatform;
 };
 
 tStyleManager::tStyleManager(QObject* parent) : QObject(parent) {
@@ -47,6 +47,7 @@ void tStyleManager::updateStyle() {
         QPalette pal = QApplication::palette();
 
         //Get the accent colour
+#ifdef Q_OS_WIN
         QSettings accentDetection("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\DWM", QSettings::NativeFormat);
         QColor accentCol;
         if (accentDetection.contains("ColorizationColor")) {
@@ -57,9 +58,12 @@ void tStyleManager::updateStyle() {
                 pal.setColor(QPalette::Button, accentCol);
             }
         } else {
+#endif
             accentCol = QColor::fromRgb((d->currentStyle == ContemporaryLight ? 0xC400C8FF : 0xC4003296) & 0x00FFFFFF);
             pal.setColor(QPalette::Button, accentCol);
+#ifdef Q_OS_WIN
         }
+#endif
 
         if (d->currentStyle == ContemporaryLight) {
             pal.setColor(QPalette::ButtonText, QColor(0, 0, 0));
