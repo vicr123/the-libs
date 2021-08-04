@@ -123,6 +123,15 @@ QSizeF tPaintCalculator::sizeWithMargins() const {
     return boundingRect().size() + QSize(boundingRect().left(), boundingRect().top()) * 2;
 }
 
+QStringList tPaintCalculator::hitTest(QPointF point, bool includeDefaultNamed) const {
+    QStringList hits;
+    for (const QString& rectName : d->namedRects) {
+        if (!includeDefaultNamed && rectName.startsWith(QStringLiteral("PaintCalculatorGeneratedRect"))) continue;
+        if (this->boundsOf(rectName).contains(point)) hits.append(rectName);
+    }
+    return hits;
+}
+
 Qt::LayoutDirection tPaintCalculator::layoutDirection() const {
     return d->direction;
 }

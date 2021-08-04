@@ -45,6 +45,8 @@ class THELIBSSHARED_EXPORT tPaintCalculator {
         QRectF anchoredBoundingRect() const;
         QSizeF sizeWithMargins() const;
 
+        QStringList hitTest(QPointF point, bool includeDefaultNamed = false) const;
+
         Qt::LayoutDirection layoutDirection() const;
         void setLayoutDirection(Qt::LayoutDirection direction);
 

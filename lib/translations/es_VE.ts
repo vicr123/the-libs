@@ -272,6 +272,14 @@
     </message>
 </context>
 <context>
+    <name>tDocumentTabber</name>
+    <message>
+        <location filename="../tdocumenttabber.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>tHelpMenu</name>
     <message>
         <location filename="../thelpmenu.cpp" line="40"/>

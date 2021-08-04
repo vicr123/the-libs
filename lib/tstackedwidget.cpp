@@ -36,8 +36,7 @@ class tStackedWidgetPrivate {
         tStackedWidget* parent;
 };
 
-tStackedWidget::tStackedWidget(QWidget *parent) : QStackedWidget(parent)
-{
+tStackedWidget::tStackedWidget(QWidget* parent) : QStackedWidget(parent) {
     d = new tStackedWidgetPrivate(this);
 }
 
@@ -99,7 +98,7 @@ void tStackedWidget::doSetCurrentIndex(int index) {
                     animation->setEndValue(QRect(0, 0, this->width(), this->height()));
                     animation->setEasingCurve(QEasingCurve::OutCubic);
                     animation->setDuration(250);
-                    connect(this, &tStackedWidget::resized, animation, [=] {
+                    connect(this, &tStackedWidget::resized, animation, [ = ] {
                         animation->setEndValue(QRect(0, 0, this->width(), this->height()));
                     });
                     group->addAnimation(animation);
@@ -111,7 +110,7 @@ void tStackedWidget::doSetCurrentIndex(int index) {
                     animation2->setDuration(250);
                     group->addAnimation(animation2);
 
-                    connect(group, &QParallelAnimationGroup::finished, [=]() {
+                    connect(group, &QParallelAnimationGroup::finished, [ = ]() {
                         QStackedWidget::setCurrentIndex(index);
                         d->doingNewAnimation = false;
                         group->deleteLater();
@@ -140,7 +139,7 @@ void tStackedWidget::doSetCurrentIndex(int index) {
                     animation->setEndValue(QRect(0, 0, this->width(), this->height()));
                     animation->setEasingCurve(QEasingCurve::OutCubic);
                     animation->setDuration(250);
-                    connect(this, &tStackedWidget::resized, animation, [=] {
+                    connect(this, &tStackedWidget::resized, animation, [ = ] {
                         animation->setEndValue(QRect(0, 0, this->width(), this->height()));
                     });
                     group->addAnimation(animation);
@@ -152,7 +151,7 @@ void tStackedWidget::doSetCurrentIndex(int index) {
                     animation2->setDuration(250);
                     group->addAnimation(animation2);
 
-                    connect(group, &QParallelAnimationGroup::finished, [=]() {
+                    connect(group, &QParallelAnimationGroup::finished, [ = ]() {
                         QStackedWidget::setCurrentIndex(index);
                         d->doingNewAnimation = false;
                         group->deleteLater();
@@ -176,7 +175,7 @@ void tStackedWidget::doSetCurrentIndex(int index) {
                     anim->setEndValue((float) 1);
                     anim->setEasingCurve(QEasingCurve::OutCubic);
                     anim->setDuration(250);
-                    connect(anim, &tPropertyAnimation::finished, [=] {
+                    connect(anim, &tPropertyAnimation::finished, [ = ] {
                         QStackedWidget::setCurrentIndex(index);
                         anim->deleteLater();
                         effect->deleteLater();
@@ -189,8 +188,8 @@ void tStackedWidget::doSetCurrentIndex(int index) {
                 case Lift: {
                     //QRect newGeometry;
                     //if (currentIndex() < index) {
-                        nextWidget->setGeometry(0, this->height() / 8, this->width(), this->height());
-                        //newGeometry.setRect(0, -this->height() / 8, this->width(), this->height());
+                    nextWidget->setGeometry(0, this->height() / 8, this->width(), this->height());
+                    //newGeometry.setRect(0, -this->height() / 8, this->width(), this->height());
                     //} else {
                     //    nextWidget->setGeometry(0, -this->height(), this->width(), this->height());
                     //    newGeometry.setRect(0, this->height() / 8, this->width(), this->height());
@@ -205,7 +204,7 @@ void tStackedWidget::doSetCurrentIndex(int index) {
                     animation->setEndValue(QRect(0, 0, this->width(), this->height()));
                     animation->setEasingCurve(QEasingCurve::OutCubic);
                     animation->setDuration(250);
-                    connect(this, &tStackedWidget::resized, animation, [=] {
+                    connect(this, &tStackedWidget::resized, animation, [ = ] {
                         animation->setEndValue(QRect(0, 0, this->width(), this->height()));
                     });
                     group->addAnimation(animation);
@@ -221,7 +220,7 @@ void tStackedWidget::doSetCurrentIndex(int index) {
                     anim->setDuration(250);
                     group->addAnimation(anim);
 
-                    connect(group, &QParallelAnimationGroup::finished, [=]() {
+                    connect(group, &QParallelAnimationGroup::finished, [ = ]() {
                         QStackedWidget::setCurrentIndex(index);
                         d->doingNewAnimation = false;
                         group->deleteLater();
@@ -238,7 +237,7 @@ void tStackedWidget::doSetCurrentIndex(int index) {
     emit switchingFrame(index);
 }
 
-void tStackedWidget::setCurrentWidget(QWidget *w, bool doAnimation) {
+void tStackedWidget::setCurrentWidget(QWidget* w, bool doAnimation) {
     this->setCurrentIndex(indexOf(w), doAnimation);
 }
 
@@ -253,14 +252,18 @@ void tStackedWidget::setCurrentAnimation(Animation animation) {
 
 int tStackedWidget::addWidget(QWidget* w) {
     w->setAutoFillBackground(true);
-    return QStackedWidget::addWidget(w);
+    int index = QStackedWidget::addWidget(w);
+    emit widgetAdded();
+    return index;
 }
 
 int tStackedWidget::insertWidget(int index, QWidget* w) {
     w->setAutoFillBackground(true);
-    return QStackedWidget::insertWidget(index, w);
+    int indexReturn = QStackedWidget::insertWidget(index, w);
+    emit widgetAdded();
+    return indexReturn;
 }
 
-void tStackedWidget::resizeEvent(QResizeEvent *event) {
+void tStackedWidget::resizeEvent(QResizeEvent* event) {
     emit resized();
 }

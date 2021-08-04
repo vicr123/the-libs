@@ -13,13 +13,12 @@
 
 class tStackedWidgetPrivate;
 
-class THELIBSSHARED_EXPORT tStackedWidget : public QStackedWidget
-{
-    Q_OBJECT
-    Q_PROPERTY(Animation CurrentAnimation READ CurrentAnimation WRITE setCurrentAnimation NOTIFY CurrentAnimationChanged)
+class THELIBSSHARED_EXPORT tStackedWidget : public QStackedWidget {
+        Q_OBJECT
+        Q_PROPERTY(Animation CurrentAnimation READ CurrentAnimation WRITE setCurrentAnimation NOTIFY CurrentAnimationChanged)
 
     public:
-        explicit tStackedWidget(QWidget *parent = nullptr);
+        explicit tStackedWidget(QWidget* parent = nullptr);
         ~tStackedWidget();
 
         enum Animation {
@@ -31,13 +30,14 @@ class THELIBSSHARED_EXPORT tStackedWidget : public QStackedWidget
         };
         Animation CurrentAnimation();
 
-        int addWidget(QWidget *w);
-        int insertWidget(int index, QWidget *w);
+        int addWidget(QWidget* w);
+        int insertWidget(int index, QWidget* w);
 
     signals:
         void switchingFrame(int switchTo);
         void CurrentAnimationChanged(Animation currentAnimation);
         void resized();
+        void widgetAdded();
 
     public slots:
         void setCurrentIndex(int index, bool doAnimation = true);
