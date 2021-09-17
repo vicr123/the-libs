@@ -59,6 +59,8 @@ class THELIBSSHARED_EXPORT tLogger : public QObject {
     private:
         explicit tLogger(QObject* parent = nullptr);
 
+        void appendToLog(QString logItem);
+
         tLoggerPrivate* d;
 };
 

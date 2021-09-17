@@ -19,6 +19,7 @@
  * *************************************/
 #include "tlogger.h"
 
+#include <QTextStream>
 #include <QMutex>
 #include "private/debuglogwindow.h"
 
@@ -35,6 +36,10 @@ struct tLogWriterPrivate {
 tLogger::tLogger(QObject* parent) : QObject(parent) {
     d = new tLoggerPrivate();
     d->logs.reserve(10000);
+}
+
+void tLogger::appendToLog(QString logItem) {
+
 }
 
 tLogger::~tLogger() {
@@ -56,6 +61,10 @@ void tLogger::log(QtMsgType severity, QString context, QString text, QString fil
     item.function = function;
 
     tLogger::log(item);
+
+    QString qlogEntry = item.text;
+
+    QTextStream(stderr) << qlogEntry;
 }
 
 void tLogger::log(tLogger::LogItem item) {

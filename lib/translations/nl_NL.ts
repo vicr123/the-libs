@@ -323,31 +323,31 @@
 <context>
     <name>tLogger</name>
     <message>
-        <location filename="../tlogger.cpp" line="96"/>
+        <location filename="../tlogger.cpp" line="105"/>
         <source>Debug</source>
         <comment>Severity Level</comment>
         <translation>Debug</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="98"/>
+        <location filename="../tlogger.cpp" line="107"/>
         <source>Warning</source>
         <comment>Severity Level</comment>
         <translation>Waarschuwing</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="100"/>
+        <location filename="../tlogger.cpp" line="109"/>
         <source>Critical</source>
         <comment>Severity Level</comment>
         <translation>Kritiek</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="102"/>
+        <location filename="../tlogger.cpp" line="111"/>
         <source>Fatal</source>
         <comment>Severity Level</comment>
         <translation>Fataal</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="104"/>
+        <location filename="../tlogger.cpp" line="113"/>
         <source>Info</source>
         <comment>Severity Level</comment>
         <translation>Info</translation>

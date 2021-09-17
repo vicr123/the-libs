@@ -323,31 +323,31 @@
 <context>
     <name>tLogger</name>
     <message>
-        <location filename="../tlogger.cpp" line="96"/>
+        <location filename="../tlogger.cpp" line="105"/>
         <source>Debug</source>
         <comment>Severity Level</comment>
         <translation>Gỡ Lỗi</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="98"/>
+        <location filename="../tlogger.cpp" line="107"/>
         <source>Warning</source>
         <comment>Severity Level</comment>
         <translation>Cảnh Báo</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="100"/>
+        <location filename="../tlogger.cpp" line="109"/>
         <source>Critical</source>
         <comment>Severity Level</comment>
         <translation>Quan Trọng</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="102"/>
+        <location filename="../tlogger.cpp" line="111"/>
         <source>Fatal</source>
         <comment>Severity Level</comment>
         <translation>Gây Tử</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="104"/>
+        <location filename="../tlogger.cpp" line="113"/>
         <source>Info</source>
         <comment>Severity Level</comment>
         <translation>Thông Tin</translation>

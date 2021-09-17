@@ -40,10 +40,14 @@ class THELIBSSHARED_EXPORT tTitleLabel : public QLabel {
         bool backButtonIsMenu();
         void setBackButtonIsMenu(bool backButtonIsMenu);
 
+        bool drawBottomBorder();
+        void setDrawBottomBorder(bool drawBottomBorder);
+
     signals:
         void backButtonClicked();
         void backButtonShownChanged(bool backButtonShown);
         void backButtonIsMenuChanged(bool backButtonIsMenu);
+        void drawBottomBorderChanged(bool drawBottomBorder);
 
     private:
         tTitleLabelPrivate* d;

@@ -27,6 +27,7 @@ struct tTitleLabelPrivate {
     QToolButton* backButton;
     bool backButtonShown = false;
     bool backButtonIsMenu = false;
+    bool drawBottomBorder = true;
 };
 
 tTitleLabel::tTitleLabel(QWidget* parent) : QLabel(parent) {
@@ -91,6 +92,17 @@ void tTitleLabel::setBackButtonIsMenu(bool backButtonIsMenu) {
     emit backButtonIsMenuChanged(backButtonIsMenu);
 }
 
+bool tTitleLabel::drawBottomBorder() {
+    return d->drawBottomBorder;
+}
+
+void tTitleLabel::setDrawBottomBorder(bool drawBottomBorder) {
+    d->drawBottomBorder = drawBottomBorder;
+    emit drawBottomBorderChanged(drawBottomBorder);
+
+    this->update();
+}
+
 void tTitleLabel::updateFont() {
     QFont font = qApp->font(this);
     font.setPointSizeF(font.pointSizeF() * 1.5);
@@ -99,9 +111,12 @@ void tTitleLabel::updateFont() {
 
 void tTitleLabel::paintEvent(QPaintEvent* event) {
     QLabel::paintEvent(event);
-    QPainter painter(this);
-    painter.setPen(theLibsGlobal::lineColor(this->palette().color(QPalette::WindowText)));
-    painter.drawLine(0, this->height() - 1, this->width(), this->height() - 1);
+
+    if (d->drawBottomBorder) {
+        QPainter painter(this);
+        painter.setPen(theLibsGlobal::lineColor(this->palette().color(QPalette::WindowText)));
+        painter.drawLine(0, this->height() - 1, this->width(), this->height() - 1);
+    }
 }
 
 void tTitleLabel::resizeEvent(QResizeEvent* event) {
