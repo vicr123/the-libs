@@ -43,6 +43,7 @@ void tStyleManager::updateStyle() {
             tApplication::macOSBundlePath() + "/Contents/Resources/icons" //macOS
         });
         QIcon::setThemeName("contemporary");
+        QIcon::setFallbackThemeName("contemporary-icons");
 
         QPalette pal = QApplication::palette();
 
