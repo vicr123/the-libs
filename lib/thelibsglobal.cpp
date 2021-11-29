@@ -22,6 +22,10 @@
     #include <Windows.h>
 #endif
 
+#ifdef T_OS_UNIX_NOT_MAC
+    #include <QDBusInterface>
+#endif
+
 struct theLibsGlobalPrivate {
     bool powerStretch = false;
     theLibsPrivate::NativeEventFilter* filter;
@@ -42,13 +46,22 @@ theLibsGlobal::theLibsGlobal() : QObject(nullptr) {
 #ifdef T_OS_UNIX_NOT_MAC
     d->contemporarySettings = new tSettings("theSuite", "contemporary_widget", this);
 
-    QDBusMessage message = QDBusMessage::createMethodCall("org.thesuite.theshell", "/org/thesuite/Power", "org.thesuite.Power", "powerStretch");
-    QDBusReply<bool> reply = QDBusConnection::sessionBus().call(message);
-    if (reply.isValid()) {
-        d->powerStretch = reply.value();
-    }
+    if (qEnvironmentVariable("XDG_CURRENT_DESKTOP") == "theshell") {
+        QDBusMessage message = QDBusMessage::createMethodCall("org.thesuite.theshell", "/org/thesuite/Power", "org.thesuite.Power", "powerStretch");
+        QDBusReply<bool> reply = QDBusConnection::sessionBus().call(message);
+        if (reply.isValid()) {
+            d->powerStretch = reply.value();
+        }
 
-    QDBusConnection::sessionBus().connect("org.thesuite.theshell", "/org/thesuite/Power", "org.thesuite.Power", "powerStretchChanged", this, SIGNAL(powerStretchChangedPrivate(bool)));
+        QDBusConnection::sessionBus().connect("org.thesuite.theshell", "/org/thesuite/Power", "org.thesuite.Power", "powerStretchChanged", this, SIGNAL(powerStretchChangedPrivate(bool)));
+    } else {
+        QDBusInterface powerProfilesDaemon("net.hadess.PowerProfiles", "/net/hadess/PowerProfiles", "net.hadess.PowerProfiles", QDBusConnection::systemBus());
+
+        QString currentProfile = powerProfilesDaemon.property("ActiveProfile").toString();
+        d->powerStretch = currentProfile == "power-saver";
+
+        QDBusConnection::systemBus().connect("net.hadess.PowerProfiles", "/net/hadess/PowerProfiles", "org.freedesktop.DBus.Properties", "PropertiesChanged", this, SLOT(dbusPropertyChangedPrivate(QString, QMap<QString, QVariant>, QStringList)));
+    }
 #elif defined(Q_OS_WIN)
     //Register for power notifications
     QWidget* powerNotificationHandleWidget = new QWidget();
@@ -81,6 +94,13 @@ void theLibsGlobal::powerStretchChangedPrivate(bool isOn) {
     d->powerStretch = isOn;
 
     emit powerStretchChanged(isOn);
+}
+
+void theLibsGlobal::dbusPropertyChangedPrivate(QString interfaceName, QMap<QString, QVariant> changedProperties, QStringList invalidatedProperties) {
+    if (interfaceName == "net.hadess.PowerProfiles" && changedProperties.contains("ActiveProfile")) {
+        d->powerStretch = changedProperties.value("ActiveProfile").toString() == "power-saver";
+        emit powerStretchChanged(d->powerStretch);
+    }
 }
 
 bool theLibsGlobal::allowSystemAnimations() {

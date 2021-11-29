@@ -56,6 +56,7 @@ class THELIBSSHARED_EXPORT theLibsGlobal : public QObject {
 
     private Q_SLOTS:
         void powerStretchChangedPrivate(bool isOn);
+        void dbusPropertyChangedPrivate(QString interfaceName, QMap<QString, QVariant> changedProperties, QStringList invalidatedProperties);
 
     Q_SIGNALS:
         void powerStretchChanged(bool isOn);
