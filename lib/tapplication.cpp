@@ -115,7 +115,8 @@ tApplication::tApplication(int& argc, char** argv) : QApplication(argc, argv) {
 
     Q_INIT_RESOURCE(thelibs_translations);
     Q_INIT_RESOURCE(thelibs_icons);
-    d->translator.load(QLocale(), "", "", ":/the-libs/translations/");
+
+    d->translator.load(QLocale().name(), ":/the-libs/translations/");
     installTranslator(&d->translator);
 
 #ifdef Q_OS_MAC
@@ -136,7 +137,7 @@ bool tApplication::event(QEvent* event) {
         emit openFile(openEvent->file());
     } else if (event->type() == QEvent::LocaleChange) {
         //Reinstall the-libs translator
-        d->translator.load(QLocale::system().name(), ":/the-libs/translations/");
+        d->translator.load(QLocale().name(), ":/the-libs/translations/");
 
         //Reinstall the application translators
         installTranslators();
@@ -419,10 +420,16 @@ void tApplication::installTranslators() {
     d->applicationTranslators.clear();
 
     QLocale locale;
+    tDebug("tApplication") << locale.uiLanguages();
 
     QTranslator* localTranslator = new QTranslator();
 #if defined(Q_OS_MAC)
-    localTranslator->load(locale, "", "", macOSBundlePath() + "/Contents/translations/");
+    QString translationsPath = macOSBundlePath() + "/Contents/translations/";
+
+    //macOS gives weird language/region combinations sometimes so extra logic might be required
+    if (!localTranslator->load(locale, "", "", translationsPath)) {
+        localTranslator->load(locale.name(), translationsPath);
+    }
 #elif defined(Q_OS_LINUX)
     localTranslator->load(locale, "", "", d->shareDir + "/translations");
 #elif defined(Q_OS_WIN)
@@ -434,7 +441,12 @@ void tApplication::installTranslators() {
     for (QString plugin : d->pluginTranslators) {
         QTranslator* translator = new QTranslator();
 #if defined(Q_OS_MAC)
-        translator->load(locale, "", "", macOSBundlePath() + "/Contents/Resources/Plugins/" + plugin + "/translations/");
+        QString translationsPath = macOSBundlePath() + "/Contents/Resources/Plugins/" + plugin + "/translations/";
+
+        //macOS gives weird language/region combinations sometimes so extra logic might be required
+        if (!translator->load(locale, "", "", translationsPath)) {
+            translator->load(locale.name(), translationsPath);
+        }
 #elif defined(Q_OS_LINUX)
         translator->load(locale, "", "", d->shareDir + "/" + plugin + "/translations");
 #elif defined(Q_OS_WIN)
