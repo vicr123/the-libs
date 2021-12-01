@@ -214,69 +214,61 @@
 <context>
     <name>tApplication</name>
     <message>
-        <location filename="../tapplication.cpp" line="571"/>
+        <location filename="../tapplication.cpp" line="583"/>
         <source>Copyright © %1.</source>
         <translation>Hak cipta © %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="543"/>
-        <location filename="../tapplication.cpp" line="546"/>
-        <location filename="../tapplication.cpp" line="549"/>
-        <location filename="../tapplication.cpp" line="552"/>
         <location filename="../tapplication.cpp" line="555"/>
         <location filename="../tapplication.cpp" line="558"/>
         <location filename="../tapplication.cpp" line="561"/>
         <location filename="../tapplication.cpp" line="564"/>
+        <location filename="../tapplication.cpp" line="567"/>
+        <location filename="../tapplication.cpp" line="570"/>
+        <location filename="../tapplication.cpp" line="573"/>
+        <location filename="../tapplication.cpp" line="576"/>
         <source>Licensed under the terms of the %1.</source>
         <translation>Dilisensi di bawah ketentuan %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="543"/>
+        <location filename="../tapplication.cpp" line="555"/>
         <source>GNU General Public License, version 3</source>
         <translation>Lisensi Publik Umum GNU (GNU GPL), versi 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="546"/>
+        <location filename="../tapplication.cpp" line="558"/>
         <source>GNU General Public License, version 3, or later</source>
         <translation>Lisensi Publik Umum GNU (GNU GPL), versi 3 ke atas</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="549"/>
+        <location filename="../tapplication.cpp" line="561"/>
         <source>GNU General Public License, version 2</source>
         <translation>Lisensi Publik Umum GNU (GNU GPL), versi 2</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="552"/>
+        <location filename="../tapplication.cpp" line="564"/>
         <source>GNU General Public License, version 2, or later</source>
         <translation>Lisensi Publik Umum GNU (GNU GPL), versi 2 ke atas</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="555"/>
+        <location filename="../tapplication.cpp" line="567"/>
         <source>GNU Lesser General Public License, version 3</source>
         <translation>Lisensi Publik Sedikit Kurang Umum GNU (GNU LGPL), versi 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="558"/>
+        <location filename="../tapplication.cpp" line="570"/>
         <source>GNU Lesser General Public License, version 3, or later</source>
         <translation>Lisensi Publik Sedikit Kurang Umum GNU (GNU LGPL), versi 3 ke atas</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="561"/>
+        <location filename="../tapplication.cpp" line="573"/>
         <source>GNU Lesser General Public License, version 2.1</source>
         <translation>Lisensi Publik Sedikit Kurang Umum GNU (GNU LGPL), versi 2.1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="564"/>
+        <location filename="../tapplication.cpp" line="576"/>
         <source>GNU Lesser General Public License, version 2.1, or later</source>
         <translation>Lisensi Publik Sedikit Kurang Umum GNU (GNU LGPL), versi 2.1 ke atas</translation>
-    </message>
-</context>
-<context>
-    <name>tDocumentTabber</name>
-    <message>
-        <location filename="../tdocumenttabber.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
