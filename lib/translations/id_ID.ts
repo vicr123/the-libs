@@ -120,7 +120,7 @@
     <message>
         <location filename="../tapplication.cpp" line="99"/>
         <source>Preferences...</source>
-        <translation type="unfinished"></translation>
+        <translation>Preferensi...</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="100"/>
@@ -276,27 +276,27 @@
     <message>
         <location filename="../thelpmenu.cpp" line="40"/>
         <source>%1 Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Bantuan %1</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="43"/>
         <source>File Bug</source>
-        <translation type="unfinished"></translation>
+        <translation>Laporkan Bug</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="44"/>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Sumber</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="45"/>
         <source>View Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Lihat Keluaran Debug</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="73"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Bantuan</translation>
     </message>
 </context>
 <context>
@@ -304,7 +304,7 @@
     <message>
         <location filename="../tinputdialog.ui" line="48"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Batal</translation>
     </message>
     <message>
         <location filename="../tinputdialog.ui" line="55"/>
@@ -324,13 +324,13 @@
         <location filename="../tlogger.cpp" line="107"/>
         <source>Warning</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Peringatan</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="109"/>
         <source>Critical</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kritis</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="111"/>
