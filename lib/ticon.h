@@ -20,11 +20,12 @@
 #ifndef TICON_H
 #define TICON_H
 
+#include "the-libs_global.h"
 #include <QObject>
 #include <QIcon>
 #include <QLocale>
 
-class tIcon : public QObject {
+class THELIBSSHARED_EXPORT tIcon : public QObject {
         Q_OBJECT
     public:
         static QIcon fromTheme(QString iconName);
