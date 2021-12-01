@@ -21,11 +21,13 @@
 #include "ui_debuglogpopover.h"
 
 #include <QFontDatabase>
+#include "ticon.h"
 
 DebugLogPopover::DebugLogPopover(tLogger::LogItem item, QWidget* parent) :
     QWidget(parent),
     ui(new Ui::DebugLogPopover) {
     ui->setupUi(this);
+    tIcon::processWidgetLater(this);
 
     ui->titleLabel->setBackButtonShown(true);
 

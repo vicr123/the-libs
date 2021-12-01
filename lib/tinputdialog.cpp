@@ -26,6 +26,7 @@
 #include "tcsdtools.h"
 #include "tscrim.h"
 #include "tvariantanimation.h"
+#include "ticon.h"
 
 struct tInputDialogPrivate {
     QWidget* parentWidget;
@@ -36,6 +37,8 @@ tInputDialog::tInputDialog(QWidget* parent) :
     QWidget(parent),
     ui(new Ui::tInputDialog) {
     ui->setupUi(this);
+    tIcon::processWidgetLater(this);
+
     d = new tInputDialogPrivate();
 
     QMainWindow* mainWindow = qobject_cast<QMainWindow*>(parent);

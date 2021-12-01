@@ -4,17 +4,17 @@
 <context>
     <name>DebugLogModel</name>
     <message>
-        <location filename="../private/debuglogwindow.cpp" line="271"/>
+        <location filename="../private/debuglogwindow.cpp" line="273"/>
         <source>Timestamp</source>
         <translation>časovni žig</translation>
     </message>
     <message>
-        <location filename="../private/debuglogwindow.cpp" line="273"/>
+        <location filename="../private/debuglogwindow.cpp" line="275"/>
         <source>Context</source>
         <translation>Kontekst</translation>
     </message>
     <message>
-        <location filename="../private/debuglogwindow.cpp" line="275"/>
+        <location filename="../private/debuglogwindow.cpp" line="277"/>
         <source>Message</source>
         <translation>Sporočilo</translation>
     </message>
@@ -27,33 +27,33 @@
         <translation>Element dnevnika za odpravljanje napak</translation>
     </message>
     <message>
-        <location filename="../private/debuglogpopover.cpp" line="35"/>
+        <location filename="../private/debuglogpopover.cpp" line="37"/>
         <source>Timestamp</source>
         <translation>Časovni Žig</translation>
     </message>
     <message>
-        <location filename="../private/debuglogpopover.cpp" line="36"/>
+        <location filename="../private/debuglogpopover.cpp" line="38"/>
         <source>Context</source>
         <translation>Kontekst</translation>
     </message>
     <message>
-        <location filename="../private/debuglogpopover.cpp" line="37"/>
+        <location filename="../private/debuglogpopover.cpp" line="39"/>
         <source>Severity</source>
         <translation>Resnost</translation>
     </message>
     <message>
-        <location filename="../private/debuglogpopover.cpp" line="38"/>
+        <location filename="../private/debuglogpopover.cpp" line="40"/>
         <source>File</source>
         <translation>Datoteka</translation>
     </message>
     <message>
-        <location filename="../private/debuglogpopover.cpp" line="38"/>
-        <location filename="../private/debuglogpopover.cpp" line="39"/>
+        <location filename="../private/debuglogpopover.cpp" line="40"/>
+        <location filename="../private/debuglogpopover.cpp" line="41"/>
         <source>[unavailable]</source>
         <translation>[ni na voljo]</translation>
     </message>
     <message>
-        <location filename="../private/debuglogpopover.cpp" line="39"/>
+        <location filename="../private/debuglogpopover.cpp" line="41"/>
         <source>Function</source>
         <translation>Funkcija</translation>
     </message>
@@ -81,7 +81,7 @@
         <translation>Filtriraj po kontekstu</translation>
     </message>
     <message>
-        <location filename="../private/debuglogwindow.cpp" line="305"/>
+        <location filename="../private/debuglogwindow.cpp" line="307"/>
         <source>context</source>
         <comment>Placeholder in search box</comment>
         <translation>Kontext</translation>
@@ -205,8 +205,8 @@
         <translation>V redu</translation>
     </message>
     <message>
-        <location filename="../taboutdialog.cpp" line="13"/>
-        <location filename="../taboutdialog.cpp" line="14"/>
+        <location filename="../taboutdialog.cpp" line="15"/>
+        <location filename="../taboutdialog.cpp" line="16"/>
         <source>About %1</source>
         <translation>O programu %1</translation>
     </message>

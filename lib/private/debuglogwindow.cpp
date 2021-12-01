@@ -26,6 +26,7 @@
 #include <QPainter>
 #include <QSortFilterProxyModel>
 #include <QMenu>
+#include "ticon.h"
 #include "tpopover.h"
 #include "debuglogpopover.h"
 #include "tlogger.h"
@@ -52,6 +53,7 @@ DebugLogWindow::DebugLogWindow(QWidget* parent) :
     QDialog(parent),
     ui(new Ui::DebugLogWindow) {
     ui->setupUi(this);
+    tIcon::processWidgetLater(this);
 
     d = new DebugLogWindowPrivate();
 

@@ -87,6 +87,7 @@ SOURCES += tvariantanimation.cpp \
     tdocumenttabber.cpp \
     terrorflash.cpp \
     thelpmenu.cpp \
+    ticon.cpp \
     tinputdialog.cpp \
     tjob.cpp \
     tjobmanager.cpp \
@@ -132,6 +133,7 @@ HEADERS += tvariantanimation.h\
     terrorflash.h \
     the-libs_global.h \
     thelpmenu.h \
+    ticon.h \
     tinputdialog.h \
     tjob.h \
     tjobmanager.h \

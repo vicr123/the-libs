@@ -51,7 +51,7 @@
          <property name="spacing">
           <number>0</number>
          </property>
-         <item>
+         <item alignment="Qt::AlignLeft">
           <widget class="QLabel" name="titleLabel">
            <property name="font">
             <font>
@@ -94,8 +94,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>434</width>
-            <height>273</height>
+            <width>435</width>
+            <height>266</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -131,7 +131,7 @@
              <property name="bottomMargin">
               <number>9</number>
              </property>
-             <item>
+             <item alignment="Qt::AlignLeft">
               <widget class="QLabel" name="applicationTitle">
                <property name="font">
                 <font>
@@ -143,7 +143,7 @@
                </property>
               </widget>
              </item>
-             <item>
+             <item alignment="Qt::AlignLeft">
               <widget class="QLabel" name="genericName">
                <property name="text">
                 <string notr="true">Application Generic Name</string>
@@ -182,7 +182,7 @@
              <property name="spacing">
               <number>6</number>
              </property>
-             <item row="0" column="0">
+             <item row="0" column="0" alignment="Qt::AlignLeft">
               <widget class="QLabel" name="label">
                <property name="font">
                 <font>
@@ -227,7 +227,7 @@
              <property name="bottomMargin">
               <number>9</number>
              </property>
-             <item>
+             <item alignment="Qt::AlignLeft">
               <widget class="QLabel" name="label_2">
                <property name="font">
                 <font>
@@ -299,7 +299,8 @@
              <string>OK</string>
             </property>
             <property name="icon">
-             <iconset theme="dialog-ok"/>
+             <iconset theme="dialog-ok">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>

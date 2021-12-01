@@ -22,6 +22,7 @@
 
 #include "tjob.h"
 #include "tjobmanager.h"
+#include "ticon.h"
 
 struct JobsPopoverPrivate {
 
@@ -30,6 +31,8 @@ struct JobsPopoverPrivate {
 JobsPopover::JobsPopover(QWidget* parent) :
     QWidget(parent),
     ui(new Ui::JobsPopover) {
+    tIcon::processWidgetLater(this);
+
     ui->setupUi(this);
 
     d = new JobsPopoverPrivate();

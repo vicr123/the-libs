@@ -22,6 +22,7 @@
 #include <QPainter>
 #include <QToolButton>
 #include <QApplication>
+#include "ticon.h"
 
 struct tTitleLabelPrivate {
     QToolButton* backButton;
@@ -34,7 +35,7 @@ tTitleLabel::tTitleLabel(QWidget* parent) : QLabel(parent) {
     d = new tTitleLabelPrivate();
 
     d->backButton = new QToolButton(this);
-    d->backButton->setIcon(QIcon::fromTheme("go-previous", QIcon(":/the-libs/icons/go-previous.svg")));
+    d->backButton->setIcon(tIcon::fromTheme("go-previous", QIcon(":/the-libs/icons/go-previous.svg")));
     d->backButton->setAutoRaise(true);
     d->backButton->move(0, 0);
     d->backButton->setFixedHeight(this->height() - 1);
@@ -84,9 +85,9 @@ bool tTitleLabel::backButtonIsMenu() {
 void tTitleLabel::setBackButtonIsMenu(bool backButtonIsMenu) {
     d->backButtonIsMenu = backButtonIsMenu;
     if (backButtonIsMenu) {
-        d->backButton->setIcon(QIcon::fromTheme("application-menu"));
+        d->backButton->setIcon(tIcon::fromTheme("application-menu"));
     } else {
-        d->backButton->setIcon(QIcon::fromTheme("go-previous"));
+        d->backButton->setIcon(tIcon::fromTheme("go-previous"));
     }
 
     emit backButtonIsMenuChanged(backButtonIsMenu);

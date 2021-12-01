@@ -4,11 +4,13 @@
 #include <QToolButton>
 #include <QScroller>
 #include "tapplication.h"
+#include "ticon.h"
 
 tAboutDialog::tAboutDialog(QWidget* parent) :
     QDialog(parent),
     ui(new Ui::tAboutDialog) {
     ui->setupUi(this);
+    tIcon::processWidgetLater(this);
 
     this->setWindowTitle((tr("About %1").arg(tApplication::applicationName())));
     ui->titleLabel->setText(tr("About %1").arg(tApplication::applicationName()));
@@ -33,11 +35,13 @@ tAboutDialog::tAboutDialog(QWidget* parent) :
         QLabel* label1 = new QLabel(this);
         label1->setText(softwareVersions.at(i).first);
         ui->versionsLayout->addWidget(label1, i + 1, 0);
+        ui->versionsLayout->setAlignment(label1, Qt::AlignLeft);
 
         QLabel* label2 = new QLabel(this);
         label2->setText(softwareVersions.at(i).second);
         label2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
         ui->versionsLayout->addWidget(label2, i + 1, 1);
+        ui->versionsLayout->setAlignment(label2, Qt::AlignLeft);
     }
 
     QFont copyrightFont = this->font();
@@ -66,7 +70,7 @@ tAboutDialog::tAboutDialog(QWidget* parent) :
         if (this->layoutDirection() == Qt::LeftToRight) {
             backButton->move(0, 0);
         } else {
-            backButton->move(ui->splashGraphicLabel->width() - backButton->width(), 0);
+            backButton->move(splashGraphic.width() - backButton->width(), 0);
         }
     } else {
         backButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
