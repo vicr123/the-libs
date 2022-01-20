@@ -86,6 +86,7 @@ class THELIBSSHARED_EXPORT tApplication : public QApplication {
         void installTranslators();
         static void addPluginTranslator(QString pluginName);
         static void removePluginTranslator(QString pluginName);
+        static void addLibraryTranslator(QString sharePath);
         static QString macOSBundlePath();
 
         static void restart();

@@ -41,6 +41,7 @@
 struct tApplicationPrivate {
     QTranslator translator;
     QStringList pluginTranslators;
+    QStringList libraryTranslators;
     QList<QTranslator*> applicationTranslators;
     tApplication* applicationInstance;
 
@@ -438,6 +439,13 @@ void tApplication::installTranslators() {
     this->installTranslator(localTranslator);
     d->applicationTranslators.append(localTranslator);
 
+    for (QString library : d->libraryTranslators) {
+        QTranslator* translator = new QTranslator();
+        translator->load(locale, "", "", d->shareDir + "/../" + library + "/translations");
+        installTranslator(translator);
+        d->applicationTranslators.append(translator);
+    }
+
     for (QString plugin : d->pluginTranslators) {
         QTranslator* translator = new QTranslator();
 #if defined(Q_OS_MAC)
@@ -466,6 +474,11 @@ void tApplication::addPluginTranslator(QString pluginName) {
 
 void tApplication::removePluginTranslator(QString pluginName) {
     d->pluginTranslators.removeOne(pluginName);
+    d->applicationInstance->installTranslators();
+}
+
+void tApplication::addLibraryTranslator(QString sharePath) {
+    d->libraryTranslators.append(sharePath);
     d->applicationInstance->installTranslators();
 }
 
