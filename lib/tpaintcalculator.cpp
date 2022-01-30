@@ -29,6 +29,7 @@ struct tPaintCalculatorPrivate {
     QRectF drawBounds = QRectF(0, 0, 0, 0);
     QPainter* painter = nullptr;
     quint16 generatedRectName = 0;
+    QStringList boundsCalculationExcludeList;
 };
 
 struct tPaintCalculatorScoperPrivate {
@@ -53,6 +54,7 @@ tPaintCalculator::tPaintCalculator(const tPaintCalculator& other) {
     d->drawBounds = other.d->drawBounds;
     d->painter = other.d->painter;
     d->generatedRectName = other.d->generatedRectName;
+    d->boundsCalculationExcludeList = other.d->boundsCalculationExcludeList;
 }
 
 tPaintCalculator::~tPaintCalculator() {
@@ -84,13 +86,19 @@ void tPaintCalculator::addRect(QString name, QRectF rect, DrawFunction drawFunct
 }
 
 void tPaintCalculator::performPaint() {
+    for (const QString& rectName : d->namedRects) {
+        performPaint(rectName);
+    }
+}
+
+void tPaintCalculator::performPaint(QString rectName) {
+    if (!d->functions.contains(rectName)) return;
+
     if (d->painter) {
         d->painter->setLayoutDirection(d->direction);
     }
 
-    for (const QString& rectName : d->namedRects) {
-        d->functions.value(rectName)(this->boundsOf(rectName));
-    }
+    d->functions.value(rectName)(this->boundsOf(rectName));
 }
 
 QRectF tPaintCalculator::boundsOf(QString name) const {
@@ -105,9 +113,10 @@ QRectF tPaintCalculator::boundsOf(QString name) const {
 
 QRectF tPaintCalculator::boundingRect() const {
     if (d->rects.isEmpty()) return QRectF();
-    QRectF totalRect = d->rects.first();
-    for (QRectF rect : d->rects.values()) {
-        totalRect = totalRect.united(rect);
+    QRectF totalRect;
+    for (const QString& rectName : d->rects.keys()) {
+        if (d->boundsCalculationExcludeList.contains(rectName)) continue; //Exclude this from bounds calculations
+        totalRect = totalRect.united(d->rects.value(rectName));
     }
     return totalRect;
 }
@@ -119,8 +128,30 @@ QRectF tPaintCalculator::anchoredBoundingRect() const {
     return bounding;
 }
 
+QRectF tPaintCalculator::visualBoundingRect() const {
+    if (d->rects.isEmpty()) return QRectF();
+    QRectF totalRect;
+    for (const QString& rectName : d->rects.keys()) {
+        if (d->boundsCalculationExcludeList.contains(rectName)) continue; //Exclude this from bounds calculations
+        totalRect = totalRect.united(boundsOf(rectName));
+    }
+    return totalRect;
+}
+
 QSizeF tPaintCalculator::sizeWithMargins() const {
-    return boundingRect().size() + QSize(boundingRect().left(), boundingRect().top()) * 2;
+    return sizeWithMargins(QPointF(0, 0));
+}
+
+QSizeF tPaintCalculator::sizeWithMargins(QPointF origin) const {
+    return boundingRect().size() + QSize(boundingRect().left() - origin.x(), boundingRect().top() - origin.y()) * 2;
+}
+
+QStringList tPaintCalculator::rectNames() const {
+    return d->rects.keys();
+}
+
+void tPaintCalculator::setBoundsCalculationExcludeList(QStringList excludeList) {
+    d->boundsCalculationExcludeList = excludeList;
 }
 
 QStringList tPaintCalculator::hitTest(QPointF point, bool includeDefaultNamed) const {

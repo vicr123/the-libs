@@ -40,10 +40,16 @@ class THELIBSSHARED_EXPORT tPaintCalculator {
         void addRect(QRectF rect, DrawFunction drawFunction);
         void addRect(QString name, QRectF rect, DrawFunction drawFunction);
         void performPaint();
+        void performPaint(QString rectName);
         QRectF boundsOf(QString name) const;
         QRectF boundingRect() const;
         QRectF anchoredBoundingRect() const;
+        QRectF visualBoundingRect() const;
         QSizeF sizeWithMargins() const;
+        QSizeF sizeWithMargins(QPointF origin) const;
+        QStringList rectNames() const;
+
+        void setBoundsCalculationExcludeList(QStringList excludeList);
 
         QStringList hitTest(QPointF point, bool includeDefaultNamed = false) const;
 
