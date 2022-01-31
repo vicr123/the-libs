@@ -98,38 +98,38 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../tapplication.cpp" line="96"/>
+        <location filename="../tapplication.cpp" line="97"/>
         <source>Services</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="97"/>
+        <location filename="../tapplication.cpp" line="98"/>
         <source>Hide %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="98"/>
+        <location filename="../tapplication.cpp" line="99"/>
         <source>Hide Others</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="99"/>
+        <location filename="../tapplication.cpp" line="100"/>
         <source>Show All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="100"/>
+        <location filename="../tapplication.cpp" line="101"/>
         <source>Preferences...</source>
         <translation>Preferensi...</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="101"/>
+        <location filename="../tapplication.cpp" line="102"/>
         <location filename="../thelpmenu.cpp" line="46"/>
         <source>About %1</source>
         <translation>Tentang %1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="102"/>
+        <location filename="../tapplication.cpp" line="103"/>
         <source>Quit %1</source>
         <translation>Keluar %1</translation>
     </message>
@@ -137,52 +137,52 @@
 <context>
     <name>QCommandLineParser</name>
     <message>
-        <location filename="../tapplication.cpp" line="105"/>
+        <location filename="../tapplication.cpp" line="106"/>
         <source>Displays version information.</source>
         <translation>Menampilkan informasi versi.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="106"/>
+        <location filename="../tapplication.cpp" line="107"/>
         <source>Displays this help.</source>
         <translation>Menampilkan bantuan ini.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="107"/>
+        <location filename="../tapplication.cpp" line="108"/>
         <source>Unknown option &apos;%1&apos;.</source>
         <translation>Pilihan tak dikenal &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="108"/>
+        <location filename="../tapplication.cpp" line="109"/>
         <source>Unknown options: %1.</source>
         <translation>Beberapa pilihan tak dikenal: %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="109"/>
+        <location filename="../tapplication.cpp" line="110"/>
         <source>Missing value after &apos;%1&apos;.</source>
         <translation>Tidak ada nilai setelah &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="110"/>
+        <location filename="../tapplication.cpp" line="111"/>
         <source>Unexpected value after &apos;%1&apos;.</source>
         <translation>Nilai tak terduga setelah &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="111"/>
+        <location filename="../tapplication.cpp" line="112"/>
         <source>[options]</source>
         <translation>[pilihan]</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="112"/>
+        <location filename="../tapplication.cpp" line="113"/>
         <source>Usage: %1</source>
         <translation>Penggunaan: %1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="113"/>
+        <location filename="../tapplication.cpp" line="114"/>
         <source>Options:</source>
         <translation>Pilihan:</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="114"/>
+        <location filename="../tapplication.cpp" line="115"/>
         <source>Arguments:</source>
         <translation>Argumen:</translation>
     </message>
@@ -214,59 +214,59 @@
 <context>
     <name>tApplication</name>
     <message>
-        <location filename="../tapplication.cpp" line="596"/>
+        <location filename="../tapplication.cpp" line="600"/>
         <source>Copyright © %1.</source>
         <translation>Hak cipta © %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="568"/>
-        <location filename="../tapplication.cpp" line="571"/>
-        <location filename="../tapplication.cpp" line="574"/>
-        <location filename="../tapplication.cpp" line="577"/>
-        <location filename="../tapplication.cpp" line="580"/>
-        <location filename="../tapplication.cpp" line="583"/>
-        <location filename="../tapplication.cpp" line="586"/>
-        <location filename="../tapplication.cpp" line="589"/>
+        <location filename="../tapplication.cpp" line="572"/>
+        <location filename="../tapplication.cpp" line="575"/>
+        <location filename="../tapplication.cpp" line="578"/>
+        <location filename="../tapplication.cpp" line="581"/>
+        <location filename="../tapplication.cpp" line="584"/>
+        <location filename="../tapplication.cpp" line="587"/>
+        <location filename="../tapplication.cpp" line="590"/>
+        <location filename="../tapplication.cpp" line="593"/>
         <source>Licensed under the terms of the %1.</source>
         <translation>Dilisensi di bawah ketentuan %1.</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="568"/>
+        <location filename="../tapplication.cpp" line="572"/>
         <source>GNU General Public License, version 3</source>
         <translation>Lisensi Publik Umum GNU (GNU GPL), versi 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="571"/>
+        <location filename="../tapplication.cpp" line="575"/>
         <source>GNU General Public License, version 3, or later</source>
         <translation>Lisensi Publik Umum GNU (GNU GPL), versi 3 ke atas</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="574"/>
+        <location filename="../tapplication.cpp" line="578"/>
         <source>GNU General Public License, version 2</source>
         <translation>Lisensi Publik Umum GNU (GNU GPL), versi 2</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="577"/>
+        <location filename="../tapplication.cpp" line="581"/>
         <source>GNU General Public License, version 2, or later</source>
         <translation>Lisensi Publik Umum GNU (GNU GPL), versi 2 ke atas</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="580"/>
+        <location filename="../tapplication.cpp" line="584"/>
         <source>GNU Lesser General Public License, version 3</source>
         <translation>Lisensi Publik Sedikit Kurang Umum GNU (GNU LGPL), versi 3</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="583"/>
+        <location filename="../tapplication.cpp" line="587"/>
         <source>GNU Lesser General Public License, version 3, or later</source>
         <translation>Lisensi Publik Sedikit Kurang Umum GNU (GNU LGPL), versi 3 ke atas</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="586"/>
+        <location filename="../tapplication.cpp" line="590"/>
         <source>GNU Lesser General Public License, version 2.1</source>
         <translation>Lisensi Publik Sedikit Kurang Umum GNU (GNU LGPL), versi 2.1</translation>
     </message>
     <message>
-        <location filename="../tapplication.cpp" line="589"/>
+        <location filename="../tapplication.cpp" line="593"/>
         <source>GNU Lesser General Public License, version 2.1, or later</source>
         <translation>Lisensi Publik Sedikit Kurang Umum GNU (GNU LGPL), versi 2.1 ke atas</translation>
     </message>

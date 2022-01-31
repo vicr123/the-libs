@@ -75,6 +75,7 @@ SOURCES += tvariantanimation.cpp \
     jobs/jobspopover.cpp \
     private/debuglogpopover.cpp \
     private/debuglogwindow.cpp \
+    private/translatorproxy.cpp \
     taboutdialog.cpp \
     tconditionalwidget.cpp \
     tcsdtools.cpp \
@@ -119,6 +120,7 @@ HEADERS += tvariantanimation.h\
     jobs/jobspopover.h \
     private/debuglogpopover.h \
     private/debuglogwindow.h \
+    private/translatorproxy.h \
     taboutdialog.h \
     tconditionalwidget.h \
     tcsdtools.h \

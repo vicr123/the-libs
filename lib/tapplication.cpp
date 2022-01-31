@@ -13,6 +13,7 @@
 #include <QLocalSocket>
 #include <QThread>
 #include "tlogger.h"
+#include "private/translatorproxy.h"
 
 #ifdef T_OS_UNIX_NOT_MAC
     #include <signal.h>
@@ -42,7 +43,7 @@ struct tApplicationPrivate {
     QTranslator translator;
     QStringList pluginTranslators;
     QStringList libraryTranslators;
-    QList<QTranslator*> applicationTranslators;
+    QList<TranslatorProxy*> applicationTranslators;
     tApplication* applicationInstance;
 
     bool crashHandlingEnabled = false;
@@ -118,7 +119,7 @@ tApplication::tApplication(int& argc, char** argv) : QApplication(argc, argv) {
     Q_INIT_RESOURCE(thelibs_icons);
 
     d->translator.load(QLocale().name(), ":/the-libs/translations/");
-    installTranslator(&d->translator);
+    installTranslator(new TranslatorProxy(&d->translator));
 
 #ifdef Q_OS_MAC
     this->setAttribute(Qt::AA_DontShowIconsInMenus, true);
@@ -414,7 +415,7 @@ void tApplication::setShareDir(QString shareDir) {
 }
 
 void tApplication::installTranslators() {
-    for (QTranslator* translator : d->applicationTranslators) {
+    for (TranslatorProxy* translator : d->applicationTranslators) {
         removeTranslator(translator);
         translator->deleteLater();
     }
@@ -436,14 +437,16 @@ void tApplication::installTranslators() {
 #elif defined(Q_OS_WIN)
     localTranslator->load(locale, "", "", this->applicationDirPath() + "\\translations");
 #endif
-    this->installTranslator(localTranslator);
-    d->applicationTranslators.append(localTranslator);
+    TranslatorProxy* localTranslatorProxy = new TranslatorProxy(localTranslator);
+    this->installTranslator(localTranslatorProxy);
+    d->applicationTranslators.append(localTranslatorProxy);
 
     for (QString library : d->libraryTranslators) {
         QTranslator* translator = new QTranslator();
         translator->load(locale, "", "", d->shareDir + "/../" + library + "/translations");
-        installTranslator(translator);
-        d->applicationTranslators.append(translator);
+        TranslatorProxy* translatorProxy = new TranslatorProxy(translator);
+        installTranslator(translatorProxy);
+        d->applicationTranslators.append(translatorProxy);
     }
 
     for (QString plugin : d->pluginTranslators) {
@@ -460,8 +463,9 @@ void tApplication::installTranslators() {
 #elif defined(Q_OS_WIN)
         translator->load(locale, "", "", this->applicationDirPath() + "\\plugins\\" + plugin + "\\translations");
 #endif
-        installTranslator(translator);
-        d->applicationTranslators.append(translator);
+        TranslatorProxy* translatorProxy = new TranslatorProxy(translator);
+        installTranslator(translatorProxy);
+        d->applicationTranslators.append(translatorProxy);
     }
 
     this->setLayoutDirection(locale.textDirection());
