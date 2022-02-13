@@ -1,4 +1,5 @@
 function git_calculate_version {
     version_string="$(git describe --tags)"
-    echo ${version_string#*v}
+    version_string_substituted=${version_string//-/.}
+    echo ${version_string_substituted#*v}
 }
