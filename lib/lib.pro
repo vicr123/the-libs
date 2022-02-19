@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += widgets multimedia svg
+QT       += widgets multimedia svg printsupport
 
 TARGET = the-libs
 TEMPLATE = lib
@@ -95,6 +95,7 @@ SOURCES += tvariantanimation.cpp \
     tlocale.cpp \
     tlogger.cpp \
     tpaintcalculator.cpp \
+    tprintpopover.cpp \
     tpromise.cpp \
     tpropertyanimation.cpp \
     thelibsglobal.cpp \
@@ -142,6 +143,7 @@ HEADERS += tvariantanimation.h\
     tlocale.h \
     tlogger.h \
     tpaintcalculator.h \
+    tprintpopover.h \
     tpropertyanimation.h \
     tscrim.h \
     tsettings.h \
@@ -247,6 +249,7 @@ FORMS += \
     tcsdtools/csdbuttonbox.ui \
     tdocumenttabber.ui \
     tinputdialog.ui \
+    tprintpopover.ui \
     tshortcuthud.ui \
     tstatusframe.ui
 

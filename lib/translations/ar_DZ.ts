@@ -345,4 +345,42 @@
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
+    <name>tPrintPopover</name>
+    <message>
+        <location filename="../tprintpopover.ui" line="153"/>
+        <source>Copies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tprintpopover.ui" line="172"/>
+        <source>PRINT OPTIONS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tprintpopover.ui" line="142"/>
+        <source>Print</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tprintpopover.ui" line="128"/>
+        <source>Printer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tprintpopover.ui" line="112"/>
+        <source>Page Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tprintpopover.ui" line="135"/>
+        <source>Print in Grayscale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tprintpopover.ui" line="160"/>
+        <source>Double Sided</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>
