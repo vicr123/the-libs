@@ -77,7 +77,7 @@ struct tApplicationPrivate {
 
     static void qtMessageHandler(QtMsgType messageType, const QMessageLogContext& context, const QString& message) {
         tLogger::log(messageType, "QMessageLogger", message, context.file, context.line, context.function);
-        tApplication::d->oldMessageHandler(messageType, context, message);
+//        tApplication::d->oldMessageHandler(messageType, context, message);
     }
 
     QtMessageHandler oldMessageHandler;
@@ -653,7 +653,6 @@ tApplication::Platform tApplication::currentPlatform() {
         UINT32 length = PACKAGE_FAMILY_NAME_MAX_LENGTH + 1;
         wchar_t packageFamilyName[PACKAGE_FAMILY_NAME_MAX_LENGTH + 1];
         LONG result = GetPackageFamilyName(GetCurrentProcess(), &length, packageFamilyName);
-        tDebug("tApplication") << "your 23 bit number is " << QString::number(result);
         d->isRunningAsUwp = result == ERROR_SUCCESS;
         d->hasCheckedIsRunningAsUwp = true;
     }

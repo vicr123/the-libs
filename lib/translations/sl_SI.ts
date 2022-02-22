@@ -315,31 +315,31 @@
 <context>
     <name>tLogger</name>
     <message>
-        <location filename="../tlogger.cpp" line="105"/>
+        <location filename="../tlogger.cpp" line="106"/>
         <source>Debug</source>
         <comment>Severity Level</comment>
         <translation>Odpravljanje napak</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="107"/>
+        <location filename="../tlogger.cpp" line="108"/>
         <source>Warning</source>
         <comment>Severity Level</comment>
         <translation>Pozor</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="109"/>
+        <location filename="../tlogger.cpp" line="110"/>
         <source>Critical</source>
         <comment>Severity Level</comment>
         <translation>Kritično</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="111"/>
+        <location filename="../tlogger.cpp" line="112"/>
         <source>Fatal</source>
         <comment>Severity Level</comment>
         <translation>Usodno</translation>
     </message>
     <message>
-        <location filename="../tlogger.cpp" line="113"/>
+        <location filename="../tlogger.cpp" line="114"/>
         <source>Info</source>
         <comment>Severity Level</comment>
         <translation>Informacije</translation>

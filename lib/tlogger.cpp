@@ -21,6 +21,7 @@
 
 #include <QTextStream>
 #include <QMutex>
+#include <QDebug>
 #include "private/debuglogwindow.h"
 
 struct tLoggerPrivate {
@@ -128,6 +129,29 @@ tLogWriter::tLogWriter(QString context, QtMsgType severity, QString file, int li
 tLogWriter::~tLogWriter() {
     d->templ.text = d->bits.join(" ");
     tLogger::log(d->templ);
+
+    QTextStream output(stderr);
+
+    QString severity;
+    switch (d->templ.severity) {
+        case QtDebugMsg:
+            severity = "[ D ]";
+            break;
+        case QtWarningMsg:
+            severity = "[ ! ]";
+            break;
+        case QtCriticalMsg:
+            severity = "[! !]";
+            break;
+        case QtFatalMsg:
+            severity = "[!!!]";
+            break;
+        case QtInfoMsg:
+            severity = "[ i ]";
+    }
+
+    output << QStringLiteral("%1 %2 %3\n").arg(QDateTime::currentDateTime().toString("[hh:mm:ss]"), severity, d->templ.text);
+
     delete d;
 }
 
