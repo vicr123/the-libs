@@ -19,43 +19,44 @@
  * *************************************/
 #include "tpopover.h"
 
+#include "tcsdtools.h"
+#include "tpropertyanimation.h"
+#include "tscrim.h"
 #include <QFrame>
-#include <QGraphicsOpacityEffect>
 #include <QGraphicsBlurEffect>
+#include <QGraphicsOpacityEffect>
 #include <QPainter>
 #include <QTimer>
-#include "tscrim.h"
-#include "tpropertyanimation.h"
-#include "tcsdtools.h"
 
 #ifdef Q_OS_MAC
-    #include <QDialog>
     #include <QBoxLayout>
+    #include <QDialog>
 #endif
 
 struct tPopoverPrivate {
-    QWidget* popoverWidget;
-    QWidget* parentWidget;
-    QFrame* verticalSeperator;
+        QWidget* popoverWidget;
+        QWidget* parentWidget;
+        QFrame* verticalSeperator;
 
 #ifdef Q_OS_MAC
-    QDialog* wrapperDialog;
+        QDialog* wrapperDialog;
 #endif
 
-    tPopover::PopoverSide side = tPopover::Trailing;
+        tPopover::PopoverSide side = tPopover::Trailing;
 
-    int width = -1;
-    bool showing = false;
-    bool performBlanking = true;
-    bool dismissable = true;
+        int width = -1;
+        bool showing = false;
+        bool performBlanking = true;
+        bool dismissable = true;
 
-    const int blankerOverscan = 100;
+        const int blankerOverscan = 100;
 
-    static QMap<QWidget*, tPopover*> activePopovers;
+        static QMap<QWidget*, tPopover*> activePopovers;
 };
 QMap<QWidget*, tPopover*> tPopoverPrivate::activePopovers = QMap<QWidget*, tPopover*>();
 
-tPopover::tPopover(QWidget* popoverWidget, QObject* parent) : QObject(parent) {
+tPopover::tPopover(QWidget* popoverWidget, QObject* parent) :
+    QObject(parent) {
     d = new tPopoverPrivate();
     d->popoverWidget = popoverWidget;
     popoverWidget->setAutoFillBackground(true);
@@ -70,7 +71,7 @@ tPopover::~tPopover() {
 
 bool tPopover::isOpeningOnRight() {
     return (QApplication::layoutDirection() == Qt::LeftToRight && d->side == Trailing) ||
-        (QApplication::layoutDirection() == Qt::RightToLeft && d->side == Leading);
+           (QApplication::layoutDirection() == Qt::RightToLeft && d->side == Leading);
 }
 
 void tPopover::updateGeometry() {
@@ -108,14 +109,14 @@ void tPopover::setPopoverWidth(int width) {
         int endValue;
 
         if (width >= 0) {
-            //Normal width
+            // Normal width
             endValue = width;
         } else if (width == -1) {
-            //Full Screen
+            // Full Screen
             endValue = d->parentWidget->width();
         } else {
-            //Based on parent width
-            //Add because width will be negative
+            // Based on parent width
+            // Add because width will be negative
             endValue = d->parentWidget->width() + width;
         }
 
@@ -124,11 +125,11 @@ void tPopover::setPopoverWidth(int width) {
         animation->setEndValue(endValue);
         animation->setDuration(250);
         animation->setEasingCurve(QEasingCurve::OutCubic);
-        connect(animation, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
+        connect(animation, &tVariantAnimation::valueChanged, this, [=](QVariant value) {
             d->width = value.toInt();
             this->updateGeometry();
         });
-        connect(animation, &tVariantAnimation::finished, this, [ = ] {
+        connect(animation, &tVariantAnimation::finished, this, [=] {
             d->width = width;
             this->updateGeometry();
             animation->deleteLater();
@@ -161,7 +162,7 @@ void tPopover::show(QWidget* parent) {
     tPopoverPrivate::activePopovers.insert(d->popoverWidget, this);
 
 #ifdef Q_OS_MAC
-    //Just show the popover as a sheet
+    // Just show the popover as a sheet
 
     d->wrapperDialog = new QDialog(parent);
     d->wrapperDialog->resize(d->popoverWidget->size());
@@ -171,7 +172,7 @@ void tPopover::show(QWidget* parent) {
     l->addWidget(d->popoverWidget);
     d->wrapperDialog->setLayout(l);
 
-    d->wrapperDialog->setWindowModality(Qt::ApplicationModal); //Keyboard focus issues if this is window modal
+    d->wrapperDialog->setWindowModality(Qt::ApplicationModal); // Keyboard focus issues if this is window modal
     d->wrapperDialog->setWindowFlag(Qt::Sheet);
     d->wrapperDialog->open();
 #else
@@ -213,8 +214,8 @@ void tPopover::show(QWidget* parent) {
 
     if (d->performBlanking) {
         tScrim* scrim = tScrim::scrimForWidget(parent);
-        if (d->dismissable) connect(scrim, &tScrim::scrimClicked, this, [ = ] {
-            this->dismiss();
+        connect(scrim, &tScrim::scrimClicked, this, [=] {
+            if (d->dismissable) this->dismiss();
         });
         scrim->show();
     }
@@ -232,7 +233,7 @@ void tPopover::show(QWidget* parent) {
     }
     popoverAnim->setDuration(250);
     popoverAnim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(popoverAnim, &tVariantAnimation::valueChanged, [ = ](QVariant value) {
+    connect(popoverAnim, &tVariantAnimation::valueChanged, [=](QVariant value) {
         if (d->side == Bottom) {
             d->popoverWidget->move(0, value.toInt());
             d->verticalSeperator->move(0, value.toInt() - 1);
@@ -264,7 +265,7 @@ void tPopover::dismiss() {
     if (!d->showing) return;
 
 #ifdef Q_OS_MAC
-    //d->popoverWidget->hide();
+    // d->popoverWidget->hide();
     d->wrapperDialog->close();
     d->wrapperDialog->deleteLater();
     d->showing = false;
@@ -278,21 +279,21 @@ void tPopover::dismiss() {
 
     tVariantAnimation* popoverAnim = new tVariantAnimation();
     if (d->side == Bottom) {
-        //Opening on the bottom
+        // Opening on the bottom
         popoverAnim->setStartValue(d->popoverWidget->y());
         popoverAnim->setEndValue(d->parentWidget->height());
     } else if (isOpeningOnRight()) {
-        //Opening on the right
+        // Opening on the right
         popoverAnim->setStartValue(d->popoverWidget->x());
         popoverAnim->setEndValue(d->parentWidget->width());
     } else {
-        //Opening on the left
+        // Opening on the left
         popoverAnim->setStartValue(d->popoverWidget->x());
         popoverAnim->setEndValue(-d->parentWidget->width());
     }
     popoverAnim->setDuration(250);
     popoverAnim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(popoverAnim, &tVariantAnimation::valueChanged, [ = ](QVariant value) {
+    connect(popoverAnim, &tVariantAnimation::valueChanged, [=](QVariant value) {
         if (d->side == Bottom) {
             d->popoverWidget->move(0, value.toInt());
             d->verticalSeperator->move(0, value.toInt() - 1);
@@ -304,7 +305,7 @@ void tPopover::dismiss() {
             d->verticalSeperator->move(value.toInt() + d->popoverWidget->width(), 0);
         }
     });
-    connect(popoverAnim, &tVariantAnimation::finished, [ = ] {
+    connect(popoverAnim, &tVariantAnimation::finished, [=] {
         d->popoverWidget->hide();
         d->verticalSeperator->hide();
 

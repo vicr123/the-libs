@@ -40,9 +40,11 @@ class THELIBSSHARED_EXPORT tPopover : public QObject {
         void setPopoverSide(PopoverSide side);
         void setPerformBlanking(bool performBlanking);
         void setDismissable(bool dismissable);
-        Q_DECL_DEPRECATED void setPerformBlur(bool performBlur); //Use tScrim::setBlurEnabled(bool) instead
+        Q_DECL_DEPRECATED void setPerformBlur(bool performBlur); // Use tScrim::setBlurEnabled(bool) instead
 
         static tPopover* popoverForWidget(QWidget* popoverWidget);
+
+        // Iterates through all of popoverWidget's children to find the tPopover
         static tPopover* popoverForPopoverWidget(QWidget* popoverWidget);
 
     signals:
