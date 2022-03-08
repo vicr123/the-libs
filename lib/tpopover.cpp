@@ -156,6 +156,10 @@ void tPopover::setPerformBlur(bool performBlur) {
     tScrim::scrimForWidget(d->parentWidget)->setBlurEnabled(performBlur);
 }
 
+QWidget* tPopover::parentWidget() {
+    return d->parentWidget;
+}
+
 void tPopover::show(QWidget* parent) {
     parent = tCsdTools::widgetForPopover(parent);
     if (d->showing) return;
