@@ -179,12 +179,12 @@
     <message>
         <location filename="../tapplication.cpp" line="114"/>
         <source>Options:</source>
-        <translation type="unfinished"></translation>
+        <translation>Možnosti:</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="115"/>
         <source>Arguments:</source>
-        <translation type="unfinished"></translation>
+        <translation>Argumenty:</translation>
     </message>
 </context>
 <context>
@@ -192,23 +192,23 @@
     <message>
         <location filename="../taboutdialog.ui" line="194"/>
         <source>SOFTWARE</source>
-        <translation type="unfinished"></translation>
+        <translation>SOFTWARE</translation>
     </message>
     <message>
         <location filename="../taboutdialog.ui" line="239"/>
         <source>COPYRIGHT</source>
-        <translation type="unfinished"></translation>
+        <translation>AUTORSKÉ PRÁVO</translation>
     </message>
     <message>
         <location filename="../taboutdialog.ui" line="299"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../taboutdialog.cpp" line="15"/>
         <location filename="../taboutdialog.cpp" line="16"/>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>O %1</translation>
     </message>
 </context>
 <context>
@@ -216,7 +216,7 @@
     <message>
         <location filename="../tapplication.cpp" line="600"/>
         <source>Copyright © %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright © %1.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="572"/>
@@ -228,47 +228,47 @@
         <location filename="../tapplication.cpp" line="590"/>
         <location filename="../tapplication.cpp" line="593"/>
         <source>Licensed under the terms of the %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Licencováno pod podmínkami %1.</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="572"/>
         <source>GNU General Public License, version 3</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU General Public License, verze 3</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="575"/>
         <source>GNU General Public License, version 3, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU General Public License, verze 3 nebo pozdější</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="578"/>
         <source>GNU General Public License, version 2</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU General Public License, verze 2</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="581"/>
         <source>GNU General Public License, version 2, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU General Public License, verze 2 nebo pozdější</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="584"/>
         <source>GNU Lesser General Public License, version 3</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU Lesser General Public License, verze 3</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="587"/>
         <source>GNU Lesser General Public License, version 3, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU Lesser General Public License, verze 3 nebo pozdější</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="590"/>
         <source>GNU Lesser General Public License, version 2.1</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU Lesser General Public License, verze 2.1</translation>
     </message>
     <message>
         <location filename="../tapplication.cpp" line="593"/>
         <source>GNU Lesser General Public License, version 2.1, or later</source>
-        <translation type="unfinished"></translation>
+        <translation>GNU Lesser General Public License, verze 2.1 nebo pozdější</translation>
     </message>
 </context>
 <context>
@@ -276,27 +276,27 @@
     <message>
         <location filename="../thelpmenu.cpp" line="40"/>
         <source>%1 Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Nápověda k %1</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="43"/>
         <source>File Bug</source>
-        <translation type="unfinished"></translation>
+        <translation>Nahlásit chybu</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="44"/>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Zdroje</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="45"/>
         <source>View Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit Debug Log</translation>
     </message>
     <message>
         <location filename="../thelpmenu.cpp" line="73"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Nápověda</translation>
     </message>
 </context>
 <context>
@@ -304,12 +304,12 @@
     <message>
         <location filename="../tinputdialog.ui" line="48"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <location filename="../tinputdialog.ui" line="55"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -318,31 +318,31 @@
         <location filename="../tlogger.cpp" line="106"/>
         <source>Debug</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Debug</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="108"/>
         <source>Warning</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Varování</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="110"/>
         <source>Critical</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Závažné</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="112"/>
         <source>Fatal</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fatální</translation>
     </message>
     <message>
         <location filename="../tlogger.cpp" line="114"/>
         <source>Info</source>
         <comment>Severity Level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Informace</translation>
     </message>
 </context>
 <context>
@@ -350,37 +350,37 @@
     <message>
         <location filename="../tprintpopover.ui" line="153"/>
         <source>Copies</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopie</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="172"/>
         <source>PRINT OPTIONS</source>
-        <translation type="unfinished"></translation>
+        <translation>MOŽNOSTI TISKU</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="142"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytisknout</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="128"/>
         <source>Printer</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiskárna</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="112"/>
         <source>Page Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Velikost strany</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="135"/>
         <source>Print in Grayscale</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytisknout černobíle</translation>
     </message>
     <message>
         <location filename="../tprintpopover.ui" line="160"/>
         <source>Double Sided</source>
-        <translation type="unfinished"></translation>
+        <translation>Oboustranné</translation>
     </message>
 </context>
 </TS>
